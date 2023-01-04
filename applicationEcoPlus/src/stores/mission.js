@@ -3,7 +3,11 @@ import { defineStore } from 'pinia'
 export const missionStore = defineStore('mission', {
   state: () => ({
     missions: [
-      {id: 0, name: 'Arranjar folhas', quantity: 2, description: 'É o que é', duration:'unkown'}]
+      {id: 0, 
+        name: 'Arranjar folhas', 
+        quantity: 2, 
+        description: 'É o que é', 
+        duration:'unkown'}]
   }),
   getters: {
     getMissionById: (state) =>
