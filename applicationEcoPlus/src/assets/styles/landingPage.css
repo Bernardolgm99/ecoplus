@@ -10,12 +10,12 @@ body {
 }
 
 #bgImg {
-    position:absolute;
-    z-index: -1;
-}
-
-#whiteText {
-    color: white;
+    background-image: url(../landingPage/background.jpg);
+    background-repeat: no-repeat;
+    outline: 2px solid black;
+    background-position: top center;
+    height: 75vh;
+    width: 100%;
 }
 
 #signs {
@@ -32,4 +32,41 @@ body {
     margin-left: auto;
     display: flex;
     justify-content: space-around;
+}
+
+.whiteText {
+    color: white;
+}
+
+
+.content {
+    margin-top: 25vh;
+    justify-content: center;
+}
+
+
+
+.bgWhiteText {
+    color: white;
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+#inputEmail {
+    padding-right: 20%;
+    padding-left: 20%;
+    padding-top: 10%;
+}
+
+#textInput {
+    background-color: white;
+    border-radius: 5;
+}
+
+#btnStarted {
+    background-color: #323232;
+    padding-left: 2%;
+    padding-right: 2%;
+    border-radius: 5;
 }
