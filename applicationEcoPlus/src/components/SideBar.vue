@@ -5,11 +5,11 @@
         icon="mdi-minus"
         @click="model = Math.max(model - 1, 0)"
       ></v-btn>
-      {{quests.Titles[model]}}
+      {{titles[model]}}
       <v-btn
         variant="text"
         icon="mdi-plus"
-        @click="model = Math.min(model + 1, 2)"
+        @click="model = Math.min(model + 1, 3)"
       ></v-btn>
     </div>
     <v-carousel hide-delimiters :show-arrows="false" v-model="model" id="bg">
@@ -21,9 +21,7 @@
               <div v-for="item in quests.Quest">
                 {{item}}
               </div>
-              <br>
-              <br>
-              <br>
+              <br>  
               <div>
                 progress: 2 out of 3 done 
               </div>

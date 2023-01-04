@@ -1,0 +1,35 @@
+body {
+    background: #FFFAF6;
+}
+
+#logo {
+    margin-left: 5vw;
+}
+#logo:hover {
+    cursor: pointer;
+}
+
+#bgImg {
+    position:absolute;
+    z-index: -1;
+}
+
+#whiteText {
+    color: white;
+}
+
+#signs {
+    color: white;
+}
+
+#signs:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#entry {
+    margin-top: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: space-around;
+}
