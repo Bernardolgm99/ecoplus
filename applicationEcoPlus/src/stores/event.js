@@ -8,7 +8,7 @@ export const eventStore = defineStore('event', {
       subtitle: 'Event in the woods', 
       location: 'Porto - Portugal', 
       description: 'Recolher lixo', 
-      members:[{memberId:0, memberId:1, memberId:2}],
+      membersId:[0, 1, 2, 4, 8],
       comments: [{id: 0, user: 0, comment: 'Yau', classification: 45}]
         }
     ]
