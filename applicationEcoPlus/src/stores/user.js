@@ -9,10 +9,10 @@ export const userStore = defineStore('user', {
         email: 'admin', 
         password: 'admin', 
         gender: 'undefined', 
-        address: 'undefined', 
+        city: 'undefined', 
         postalcode: 'undefined', 
        birthDate: 'undefined', 
-       contact: 'undefined', 
+       district: 'undefined', 
        school: 'undefined',
        joined: [{
         eventId: [1, 3, 5, 6],
@@ -32,11 +32,32 @@ export const userStore = defineStore('user', {
     getJoinedEvents: (state) => state.joined.eventId,
     getJoinedActivities: (state) => state.joined.activityId,
     getOccurrenceIds: (state) => state.occurrenceId,
+    getUserChecked: (state) => (userName, userPw) => {
+      let userNameChecked = state.users.find(user => user.username == userName)
+      let userPwChecked = state.users.find(user => user.password == userPw)
+
+      if(userNameChecked.id == userPwChecked.id){
+        return true 
+      } else {
+        return false
+      }
+    },
+    getExistingAccount: (state) => (userName, userEmail) => {
+      if(!state.users.find(user => user.username == userName) && !state.users.find(user => user.email == userEmail)){
+        return true
+      }
+    },
+    getEmailExistence: (state) => (userEmail) => state.users.find(user => user.email == userEmail),
+    getUserId: (state) => (userName) => {
+      let userNameChecked = state.users.find(user => user.username == userName)
+
+      return userNameChecked.id
+    },
     getUserById: (state) =>
     (userId) => state.users.find(user => user.id == userId)
   },
   actions: {
-    addUser(username, name, email, password, gender, address, postalcode, birthDate, contact, school){
+    addUser(username, name, email, birthday, gender, city, district, postalcode, school, password){
       this.users.push({
         id: this.users[this.users.length - 1].id + 1,
         username: username,
@@ -44,10 +65,10 @@ export const userStore = defineStore('user', {
         email: email,
         password: password,
         gender: gender,
-        address: address,
+        city: city,
         postalcode: postalcode,
-        birthDate: birthDate,
-        contact: contact,
+        birthDate: birthday,
+        district: district,
         school: school
         }
       )

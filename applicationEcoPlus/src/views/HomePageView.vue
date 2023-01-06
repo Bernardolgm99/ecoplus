@@ -4,6 +4,14 @@ import NavBar from '../components/NavBar.vue'
 export default {
     components: {
         SideBar, NavBar
+    },
+
+    created() {
+
+      if(!JSON.parse(localStorage.getItem('currentUser'))){
+          this.$router.push({name: 'signin'})
+      }
+
     }
 }
 </script>
