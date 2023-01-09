@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
+
+body {
+    background: #FFFAF6;
+    font-family: Quicksand;
+}
+
+.hover:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.whiteText {
+    color: white !important;
+}
+
+.orderColumnCenter {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.alignContentCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bgFooter {
+    background-color: black;
+    height: 65px;
+}
+
+
+.textSmall {
+    font-size: 16px !important;
+}
+.textMedium {
+    font-size: 18px !important;
+}
+.textMediumLarge {
+    font-size: 20px !important;
+}
+.textBig {
+    font-size: 30px !important;
+}
+.textTitle {
+    font-size: 50px !important;
+}
