@@ -30,25 +30,16 @@ export default {
         
         let occurrenceArray = this.occurrenceStore.getOccurrences
         let eventArray = this.eventStore.getEvents
-        let longerArray 
-        let max = Infinity
-        
-        if(occurrenceArray.length < eventArray.length){
-          longerArray = eventArray
-        } else {
-          longerArray = occurrenceArray
+
+        for(let event of eventArray) {
+          this.feed.push(event)
+        }
+        for(let occurrence of occurrenceArray) {
+          this.feed.push(occurrence)
         }
 
-        for(let i = 0; i < longerArray.length; i++) {
-          if(occurrenceArray[i] != undefined){
-            this.feed.push(occurrenceArray[i])
-          }
-          if(eventArray[i] != undefined){
-            this.feed.push(eventArray[i])
-          }
-        }
-
-        this.feed.sort()
+        console.log(this.feed)
+        this.feed.sort((a,b) => (b.dateHour.date + b.dateHour.hour) - (a.dateHour.date + a.dateHour.hour))
 
       }
     }
