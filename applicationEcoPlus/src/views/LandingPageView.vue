@@ -25,24 +25,26 @@
                 <v-row class="contentBgImg">
                     <span id="bgText" class="textTitle whiteText">REGISTER NOW</span>
                 </v-row>
-                <v-row id="inputEmail">
-                    <v-text-field id="textInput"
-                    ref="input"
-                    :rules="rules"
-                    v-model="inputEmail"
-                    placeholder="example@gmail.com"
-                    hide-details="auto"
-                    persistent-hint
-                    outlined
-                    ></v-text-field>
-                    <v-btn @click="sendSignUp" id="btnStarted" class="whiteText textMediumLarge">Get Started ></v-btn>
-                </v-row>
+                <v-form @submit.prevent="sendSignUp" ref="input">
+                    <v-row id="inputEmail">
+                        <v-text-field id="textInput"
+                        type="email"
+                        :rules="rules"
+                        v-model="inputEmail"
+                        placeholder="example@gmail.com"
+                        hide-details="auto"
+                        persistent-hint
+                        outlined
+                        ></v-text-field>
+                        <v-btn type="submit" id="btnStarted" class="whiteText textMediumLarge">Get Started ></v-btn>
+                    </v-row> 
+                </v-form>
             </v-col>
         </v-container>
     </div>
     <!-- information text and image content -->
     <div>
-        <div class="bgGreen textContentInit orderColumnCenter textMedium">
+        <div id="textContentInit" class="bgGreen orderColumnCenter textMedium">
             <p>Welcome to <strong>Eco+</strong></p>
             <p>We inspire to create a <strong>helpful tool</strong> to <strong>Eco-Escolas</strong> and develop a <strong>helping and caring community.</strong></p>
         </div>
@@ -107,10 +109,8 @@
         </v-container>
         </div>    
     <!-- join now image -->
-        <v-container class="alignContentCenter">
-            <div id="bgImgJoinNow" class="alignContentCenter">
-                <v-btn @click="this.$router.push('/signup')" id="btnJoinNow" class="whiteText textBig">Join Now</v-btn>
-            </div>
+        <v-container id="bgImgJoinNow" class="alignContentCenter">
+            <v-btn @click="this.$router.push('/signup')" id="btnJoinNow" class="whiteText textBig ">Join Now</v-btn>
         </v-container>
     </div>
     <Footer></Footer>
@@ -132,12 +132,12 @@
               },
             ],
             inputEmail: '',
-            pattern: ''
         }),
         methods: {
-            sendSignUp() {
-                if(this.$refs.input.validate()){
-                    this.$router.push('/signup')
+            async sendSignUp() {
+                let isValid = await this.$refs['input'].validate()
+                if(isValid.valid){
+                    this.$router.push({name: 'signup' , query: { inputEmailLP: this.inputEmail }})
                 }
             },
         },

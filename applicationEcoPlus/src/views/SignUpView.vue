@@ -64,6 +64,8 @@
 import { userStore } from '../stores/user'
 
     export default {
+        name: 'signup',
+        props: ['inputEmailLP'],
         data() {
             return {
                 userStore: userStore(),
@@ -118,6 +120,7 @@ import { userStore } from '../stores/user'
                 this.$router.push({name: 'home'})
             }
 
+            this.email = this.$route.query.inputEmailLP
         }
     }
 </script>
