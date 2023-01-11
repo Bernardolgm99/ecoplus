@@ -12,7 +12,8 @@ const router = createRouter({
     {
       path: '/',
       name: 'landingPage',
-      component: LandingPage
+      component: LandingPage,
+      props: true
     },
     {
       path: '/home',
@@ -27,7 +28,8 @@ const router = createRouter({
     {
       path: '/signup',
       name: 'signup',
-      component: SignUpPage
+      component: SignUpPage,
+      props: true
     },
     {
       path: '/occurrence/:occurrenceid',
