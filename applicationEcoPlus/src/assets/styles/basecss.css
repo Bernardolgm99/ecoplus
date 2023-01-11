@@ -28,11 +28,16 @@ body {
     align-items: center;
 }
 
+.alignContentSpaceAround {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
 .bgFooter {
     background-color: black;
     height: 65px;
 }
-
 
 .textSmall {
     font-size: 16px !important;

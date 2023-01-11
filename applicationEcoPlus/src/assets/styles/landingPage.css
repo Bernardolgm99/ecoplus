@@ -21,7 +21,8 @@
     background-position: top center;
     background-size: 100%;
     width: 45vw;
-    height: 420px;
+    height: 25vw;
+    margin-top: 2vw;
 }
 
 #btnJoinNow {
@@ -30,6 +31,7 @@
     background-color: #69b580;
     color: white;
     font-weight: bold;
+    margin-top: 4vw;
 }
 
 

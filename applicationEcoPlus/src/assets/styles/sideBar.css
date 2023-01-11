@@ -1,0 +1,15 @@
+#carouselItems {
+    margin-top: 20%;
+}
+
+.rowMission {
+    max-width: 260px;
+    margin-top: 5%;
+}
+
+.rowStyle {
+    padding: 3%;
+    background-color: #69B580;
+    border-radius: 5px;
+    border: solid 1px black;
+}
