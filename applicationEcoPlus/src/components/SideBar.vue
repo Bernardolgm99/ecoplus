@@ -12,11 +12,14 @@
       <!-- quests -->
         <v-carousel-item>
           <div class="rowMission textSmall" v-for="missions in this.missionStore.getMissions">
-            <v-row>
-              <img :src="this.missionStore.getIcon" alt="">
-              <div class="rowStyle">{{ missions.name }}</div>
-              <div id="desc">{{ missions.description }}</div>
-            </v-row>
+            <div class="rowStyle">
+                <div class="orderRow">
+                  <img :src="this.missionStore.getIcon" alt="">
+                  <p>{{ missions.name }}</p>
+                </div>
+                <div></div>
+              </div>
+              <div id="desc" class="rowDesc">{{ missions.description }}</div>
           </div>
         </v-carousel-item>
       <!-- Recent Posts -->
@@ -46,17 +49,19 @@
         data () {
           return {
             missionStore: missionStore(),
-            titles: ['Quests','Recent Posts','Badges','Ranking'],
+            titles: [],
             model: 0,
       }
     },
-    updated () {
+    created () {
+
+      this.titles = 
       console.log(this.missionStore.getMissions);
+      console.log(this.missionStore.get)
     },
     }
 </script>
 
 <style lang="scss" scoped>
-    @import '../assets/styles/basecss.css';
     @import '../assets/styles/sideBar.css';
 </style>

@@ -1,10 +1,9 @@
 #carouselItems {
-    margin-top: 20%;
+    margin-top: 10%;
 }
 
 .rowMission {
     max-width: 260px;
-    margin-top: 5%;
 }
 
 .rowStyle {
@@ -12,4 +11,14 @@
     background-color: #69B580;
     border-radius: 5px;
     border: solid 1px black;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.rowDesc {
+    padding-top: 3%;
+    padding-left: 5%;
+    padding-right: 5%;
 }

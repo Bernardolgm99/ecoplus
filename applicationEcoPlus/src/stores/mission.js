@@ -23,9 +23,11 @@ export const missionStore = defineStore('mission', {
     '../assets/missionIcons/',
     '../assets/missionIcons/',
     '../assets/missionIcons/',
-    '../assets/missionIcons/']
+    '../assets/missionIcons/'],
+    titles: ['Quests','Recent Posts','Badges','Ranking']
   }),
   getters: {
+    getTitles: (state) => state.titles,
     getIcon: (state) => {
       let random = Math.floor(Math.random() * state.icons.length);
       return state.icons[random]
