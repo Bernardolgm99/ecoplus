@@ -57,6 +57,16 @@
 #inputEmail input {
     color: #767676;
     background-color: #ddefe3; 
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.v-field__outline{
+    visibility: hidden;
+}
+
+.v-field--variant-filled .v-field__overlay{
+    background-color: transparent !important;
 }
 
 #btnStarted {
@@ -64,7 +74,10 @@
     padding-left: 2%;
     padding-right: 2%;
     height: 56px;
-    font-weight: medium;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
 }
 
 #textContentInit {

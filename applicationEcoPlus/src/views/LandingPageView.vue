@@ -27,7 +27,7 @@
                 </v-row>
                 <v-form @submit.prevent="sendSignUp" ref="input">
                     <v-row id="inputEmail">
-                        <v-text-field id="textInput"
+                        <v-text-field id="textInput" class="rounded-t-xl"
                         type="email"
                         :rules="rules"
                         v-model="inputEmail"
