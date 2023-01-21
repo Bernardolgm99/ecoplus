@@ -24,8 +24,8 @@
         </v-carousel-item>
       <!-- Recent Posts -->
         <v-carousel-item>
-          <div >
-            mulheres sao lixo
+          <div>
+            
           </div>
         </v-carousel-item>
       <!-- Badges -->
@@ -55,7 +55,7 @@
     },
     created () {
 
-      this.titles = 
+      this.titles = ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação']
       console.log(this.missionStore.getMissions);
       console.log(this.missionStore.get)
     },

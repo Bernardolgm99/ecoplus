@@ -11,31 +11,33 @@ export const userStore = defineStore('user', {
         gender: 'undefined', 
         city: 'undefined', 
         postalcode: 'undefined', 
-       birthDate: 'undefined', 
-       district: 'undefined', 
-       school: 'undefined',
-       joined: [{
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-       }],
-       occurrenceId: [2, 5, 6, 7, 4]
-        },
-        {id: 1, 
-          username: 'João', 
-          name: 'admin', 
-          email: 'admin', 
-          password: 'admin', 
-          gender: 'undefined', 
-          city: 'undefined', 
-          postalcode: 'undefined', 
-         birthDate: 'undefined', 
-         district: 'undefined', 
-         school: 'undefined',
-         joined: [{
-          eventId: [1, 3, 5, 6],
-          activityId: [1, 2, 3, 4]
-         }],
-         occurrenceId: [2, 5, 6, 7, 4]
+        birthDate: 'undefined', 
+        district: 'undefined', 
+        school: 'undefined',
+        joined: [{
+         eventId: [1, 3, 5, 6],
+         activityId: [1, 2, 3, 4]
+        }],
+        occurrenceId: [2, 5, 6, 7, 4],
+        MissionsId: [1, 2, 3]
+      },
+      {id: 1, 
+        username: 'João', 
+        name: 'admin', 
+        email: 'admin', 
+        password: 'admin', 
+        gender: 'undefined', 
+        city: 'undefined', 
+        postalcode: 'undefined', 
+        birthDate: 'undefined', 
+        district: 'undefined', 
+        school: 'undefined',
+        joined: [{
+            eventId: [1, 3, 5, 6],
+            activityId: [1, 2, 3, 4]
+          }],
+          occurrenceId: [2, 5, 6, 7, 4],
+          MissionsId: [2, 3, 4]
           }
       ]
   }),
