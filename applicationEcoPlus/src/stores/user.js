@@ -1,45 +1,53 @@
 import { defineStore } from 'pinia'
 
-export const userStore = defineStore('user', {
-  state: () => ({
-    users: [
-      {id: 0, 
-        username: 'admin', 
-        name: 'admin', 
-        email: 'admin', 
-        password: 'admin', 
-        gender: 'undefined', 
-        city: 'undefined', 
-        postalcode: 'undefined', 
-        birthDate: 'undefined', 
-        district: 'undefined', 
-        school: 'undefined',
-        joined: [{
-         eventId: [1, 3, 5, 6],
-         activityId: [1, 2, 3, 4]
+let user
+
+if(!JSON.parse(localStorage.getItem('users'))) {
+  user = [
+    {id: 0, 
+      username: 'admin', 
+      name: 'admin', 
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: [{
+       eventId: [1, 3, 5, 6],
+       activityId: [1, 2, 3, 4]
+      }],
+      occurrenceId: [2, 5, 6, 7, 4],
+      MissionsId: [1, 2, 3]
+    },
+    {id: 1, 
+      username: 'João', 
+      name: 'admin', 
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: [{
+          eventId: [1, 3, 5, 6],
+          activityId: [1, 2, 3, 4]
         }],
         occurrenceId: [2, 5, 6, 7, 4],
-        MissionsId: [1, 2, 3]
-      },
-      {id: 1, 
-        username: 'João', 
-        name: 'admin', 
-        email: 'admin', 
-        password: 'admin', 
-        gender: 'undefined', 
-        city: 'undefined', 
-        postalcode: 'undefined', 
-        birthDate: 'undefined', 
-        district: 'undefined', 
-        school: 'undefined',
-        joined: [{
-            eventId: [1, 3, 5, 6],
-            activityId: [1, 2, 3, 4]
-          }],
-          occurrenceId: [2, 5, 6, 7, 4],
-          MissionsId: [2, 3, 4]
-          }
-      ]
+        MissionsId: [2, 3, 4]
+        }
+    ]
+} else {
+  user = JSON.parse(localStorage.getItem('users'))
+}
+
+export const userStore = defineStore('user', {
+  state: () => ({
+    users: user
   }),
   getters: {
     getId: (state) => state.id,
@@ -53,9 +61,8 @@ export const userStore = defineStore('user', {
     getOccurrenceIds: (state) => state.occurrenceId,
     getUserChecked: (state) => (userName, userPw) => {
       let userNameChecked = state.users.find(user => user.username == userName)
-      let userPwChecked = state.users.find(user => user.password == userPw)
 
-      if(userNameChecked.id == userPwChecked.id){
+      if(userNameChecked.password == userPw){
         return true 
       } else {
         return false
@@ -91,6 +98,18 @@ export const userStore = defineStore('user', {
         school: school
         }
       )
+
+      const userArray = JSON.parse(localStorage.getItem('users'))
+      
+      userArray.push(this.users[this.users.length - 1])
+
+      localStorage.setItem('users', JSON.stringify(userArray))
+
+      this.updateUsers()
+
+    },
+    updateUsers(){
+      this.users = JSON.parse(localStorage.getItem('users'))
     },
     addOccurrence(occurrenceId){
       this.occurrenceId.push(occurrenceId)

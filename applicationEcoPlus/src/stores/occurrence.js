@@ -15,6 +15,7 @@ export const occurrenceStore = defineStore('occurrence', {
         type: 'occurrence'
         },
         {id: 1, 
+          userId: 1,
           title: 'occurrence 4º date',
           location: 'Rio Tinto, Porto, Portugal',
           image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',

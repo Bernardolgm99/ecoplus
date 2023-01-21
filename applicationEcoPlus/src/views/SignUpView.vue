@@ -96,6 +96,8 @@ import { userStore } from '../stores/user'
                         localStorage.setItem('currentUser', JSON.stringify(this.userStore.getUserById(this.currentUser)))
 
                         alert('Account created')
+
+                        this.$router.push({name: 'home'})
                         
                     } else {
                         alert(`Passwords doesn't match`)

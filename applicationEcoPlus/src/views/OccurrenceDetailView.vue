@@ -57,6 +57,7 @@ export default {
         created() {
             this.occurrence = this.occurrenceStore.getOccurrenceById(this.$route.params.occurrenceid)
             this.user = this.userStore.getUserById(this.occurrence.userId)
+
         },
         computed: {
             turnDateHour() {
