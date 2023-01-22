@@ -59,20 +59,20 @@
             user: {}
       }
     },
-    computed: {
-      progressBar(/* index */) {
-        let index = 1
-        console.log(this.$el.querySelectorAll('.circularProgress')[index])
-        let progressBar = this.$el.querySelector('.circularProgress')
-        let progressValue = this.userStore.getUserMissionState(this.user.id)[index]
+    // computed: {
+    //   progressBar(/* index */) {
+    //     let index = 1
+    //     console.log(this.$el.querySelectorAll('.circularProgress')[index])
+    //     let progressBar = this.$el.querySelector('.circularProgress')
+    //     let progressValue = this.userStore.getUserMissionState(this.user.id)[index]
         
-        progressBar.style.background = `conic-gradient(
-        #ffffff 50deg,#3045ff 20deg)`
-        /* progressBar.style.background = `conic-gradient(~
-        #ffffff ${progressValue * 3.6}deg,
-        #3045ff ${progressValue * 3.6}deg)` */
-      }
-    },
+    //     progressBar.style.background = `conic-gradient(
+    //     #ffffff 50deg,#3045ff 20deg)`
+    //     /* progressBar.style.background = `conic-gradient(~
+    //     #ffffff ${progressValue * 3.6}deg,
+    //     #3045ff ${progressValue * 3.6}deg)` */
+    //   }
+    // },
     created () {
       this.user = JSON.parse(localStorage.getItem('currentUser'))
       console.log(this.userStore.getUserMissionState(this.user.id))

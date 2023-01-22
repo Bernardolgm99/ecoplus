@@ -89,11 +89,9 @@ export default {
             for (const activity of this.activities) {
                 if (!(activity.participants.indexOf(this.user.id) != -1) && this.user.joined.activityId.indexOf(activity.id) != -1) {
                     activity.participants.push(this.user.id);
-                    console.log("push 1");
                 };
                 if (activity.participants.indexOf(this.user.id) != -1 && !(this.user.joined.activityId.indexOf(activity.id) != -1)) {
                     activity.participants.splice(this.user.joined.activityId.indexOf(activity.id), 1);
-                    console.log("push 2");
                 };
             }
             this.activityStore.updateActivities(this.activities)
