@@ -82,10 +82,7 @@ export default {
                 <div id="routerLink" v-else>
                   <h5><RouterLink :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">View More!</RouterLink> </h5>
                 </div>
-                
-
             </div>
-
           </v-sheet>
         </v-col>
         <v-col cols="3">

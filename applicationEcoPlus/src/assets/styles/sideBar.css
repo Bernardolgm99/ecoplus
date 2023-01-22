@@ -22,3 +22,19 @@
     padding-left: 5%;
     padding-right: 5%;
 }
+
+.imgIcon {
+    width: 30px;
+}
+
+.circularProgress {
+    position: relative;
+    background: black;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+}
+
+.textMission {
+    padding-top: 2%;
+}

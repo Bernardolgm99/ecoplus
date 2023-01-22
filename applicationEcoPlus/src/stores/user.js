@@ -20,7 +20,7 @@ if(!JSON.parse(localStorage.getItem('users'))) {
        activityId: [1, 2, 3, 4]
       }],
       occurrenceId: [2, 5, 6, 7, 4],
-      MissionsId: [1, 2, 3],
+      MissionsState: [1, 2, 1],
       title: 'Legend'
     },
     {id: 1, 
@@ -39,7 +39,7 @@ if(!JSON.parse(localStorage.getItem('users'))) {
           activityId: [1, 2, 3, 4]
         }],
         occurrenceId: [2, 5, 6, 7, 4],
-        MissionsId: [2, 3, 4],
+        MissionsState: [0, 1, 0],
         title: 'Newbie'
         }
     ]
@@ -82,7 +82,12 @@ export const userStore = defineStore('user', {
       return userNameChecked.id
     },
     getUserById: (state) =>
-    (userId) => state.users.find(user => user.id == userId)
+    (userId) => state.users.find(user => user.id == userId),
+    getUserMissionState: (state) => (userId) => {
+      let user = state.users.find(user => user.id == userId)
+      console.log(user)
+      return user.MissionsState
+    }
   },
   actions: {
     addUser(username, name, email, birthday, gender, city, district, postalcode, school, password, title="Newbie"){
