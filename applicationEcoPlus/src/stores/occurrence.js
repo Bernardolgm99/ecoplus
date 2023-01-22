@@ -5,7 +5,7 @@ export const occurrenceStore = defineStore('occurrence', {
     occurrences: [
       {id: 0,
         userId: 0, 
-      title: 'occurrence1 2º date',
+        title: 'occurrence1 2º date',
         location: 'Vila do Conde, Porto, Portugal',
         image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
         dateHour: {date: '20220525', hour: '1228'},

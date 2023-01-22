@@ -22,7 +22,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         activityId: [1, 2, 3, 4]
       },
       occurrenceId: [2, 5, 6, 7, 4],
-      missionsId: [1, 2, 3],
+      missionsState: [1, 2, 3],
       title: 'Legend'
     },
     {
@@ -42,7 +42,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         activityId: [1, 2, 3, 4]
       },
       occurrenceId: [2, 5, 6, 7, 4],
-      missionsId: [2, 3, 4],
+      missionsState: [2, 3, 4],
       title: 'Newbie'
     }
   ]
@@ -87,7 +87,11 @@ export const userStore = defineStore('user', {
       return userNameChecked.id
     },
     getUserById: (state) =>
-      (userId) => state.users.find(user => user.id == userId)
+    (userId) => state.users.find(user => user.id == userId),
+    getUserMissionState: (state) => (userId) => {
+      let user = state.users.find(user => user.id == userId)
+      return user.missionsState
+    }
   },
   actions: {
     addUser(username, name, email, birthday, gender, city, district, postalcode, school, password) {
@@ -108,7 +112,7 @@ export const userStore = defineStore('user', {
           activityId: []
         },
         occurrenceId: [],
-        missionsId: [],
+        missionsState: [],
         title: 'Newbie'
       }
       )
@@ -116,7 +120,6 @@ export const userStore = defineStore('user', {
       localStorage.setItem('users', JSON.stringify(this.users))
     },
     updateUser(currentUser) {
-      console.log(currentUser);
       let indexCurrentUser = this.users.findIndex(user => user.id == currentUser.id);
       this.users[indexCurrentUser] = currentUser;
       localStorage.setItem('users', JSON.stringify(this.users))
