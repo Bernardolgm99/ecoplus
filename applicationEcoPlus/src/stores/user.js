@@ -1,55 +1,60 @@
 import { defineStore } from 'pinia'
 
-let user
 
-if(!JSON.parse(localStorage.getItem('users'))) {
-  user = [
-    {id: 0, 
-      username: 'admin', 
+let users
+
+if (!JSON.parse(localStorage.getItem('users'))) {
+  users = [
+    {
+      id: 0,
+      username: 'admin',
       name: 'admin',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
+      email: 'admin',
+      password: 'admin',
+      gender: 'undefined',
+      city: 'undefined',
+      postalcode: 'undefined',
+      birthDate: 'undefined',
+      district: 'undefined',
       school: 'undefined',
-      joined: [{
-       eventId: [1, 3, 5, 6],
-       activityId: [1, 2, 3, 4]
-      }],
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
       occurrenceId: [2, 5, 6, 7, 4],
-      MissionsId: [1, 2, 3],
+      missionsId: [1, 2, 3],
       title: 'Legend'
     },
-    {id: 1, 
-      username: 'João', 
-      name: 'admin', 
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
+    {
+      id: 1,
+      username: 'João',
+      name: 'admin',
+      email: 'admin',
+      password: 'admin',
+      gender: 'undefined',
+      city: 'undefined',
+      postalcode: 'undefined',
+      birthDate: 'undefined',
+      district: 'undefined',
       school: 'undefined',
-      joined: [{
-          eventId: [1, 3, 5, 6],
-          activityId: [1, 2, 3, 4]
-        }],
-        occurrenceId: [2, 5, 6, 7, 4],
-        MissionsId: [2, 3, 4],
-        title: 'Newbie'
-        }
-    ]
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsId: [2, 3, 4],
+      title: 'Newbie'
+    }
+  ]
 } else {
-  user = JSON.parse(localStorage.getItem('users'))
+  users = JSON.parse(localStorage.getItem('users'))
 }
+
+
 
 export const userStore = defineStore('user', {
   state: () => ({
-    users: user
+    users: users
   }),
   getters: {
     getId: (state) => state.id,
@@ -64,14 +69,14 @@ export const userStore = defineStore('user', {
     getUserChecked: (state) => (userName, userPw) => {
       let userNameChecked = state.users.find(user => user.username == userName)
 
-      if(userNameChecked.password == userPw){
-        return true 
+      if (userNameChecked.password == userPw) {
+        return true
       } else {
         return false
       }
     },
     getExistingAccount: (state) => (userName, userEmail) => {
-      if(!state.users.find(user => user.username == userName) && !state.users.find(user => user.email == userEmail)){
+      if (!state.users.find(user => user.username == userName) && !state.users.find(user => user.email == userEmail)) {
         return true
       }
     },
@@ -82,10 +87,10 @@ export const userStore = defineStore('user', {
       return userNameChecked.id
     },
     getUserById: (state) =>
-    (userId) => state.users.find(user => user.id == userId)
+      (userId) => state.users.find(user => user.id == userId)
   },
   actions: {
-    addUser(username, name, email, birthday, gender, city, district, postalcode, school, password, title="Newbie"){
+    addUser(username, name, email, birthday, gender, city, district, postalcode, school, password) {
       this.users.push({
         id: this.users[this.users.length - 1].id + 1,
         username: username,
@@ -97,29 +102,33 @@ export const userStore = defineStore('user', {
         postalcode: postalcode,
         birthDate: birthday,
         district: district,
-        school: school
-        }
+        school: school,
+        joined: {
+          eventId: [],
+          activityId: []
+        },
+        occurrenceId: [],
+        missionsId: [],
+        title: 'Newbie'
+      }
       )
 
-      const userArray = JSON.parse(localStorage.getItem('users'))
-      
-      userArray.push(this.users[this.users.length - 1])
-
-      localStorage.setItem('users', JSON.stringify(userArray))
-
-      this.updateUsers()
-
+      localStorage.setItem('users', JSON.stringify(this.users))
     },
-    updateUsers(){
-      this.users = JSON.parse(localStorage.getItem('users'))
+    updateUser(currentUser) {
+      console.log(currentUser);
+      let indexCurrentUser = this.users.findIndex(user => user.id == currentUser.id);
+      this.users[indexCurrentUser] = currentUser;
+      localStorage.setItem('users', JSON.stringify(this.users))
+      localStorage.setItem('currentUser', JSON.stringify(currentUser))
     },
-    addOccurrence(occurrenceId){
+    addOccurrence(occurrenceId) {
       this.occurrenceId.push(occurrenceId)
     },
-    addJoinedActivity(activityId){
-      this.joined.activityId.push(activityId)
+    addJoinedActivity(activityId) {
+      this.joined.activityId = activityId
     },
-    addJoinedEvent(eventId){
+    addJoinedEvent(eventId) {
       this.joined.eventId.push(eventId)
     }
   },

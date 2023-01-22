@@ -8,6 +8,7 @@ import EventDetailPage from '../views/EventDetailView.vue'
 import EventsPage from '../views/EventsView.vue'
 import OccurrencesPage from '../views/OccurrencesView.vue'
 import ActivitiesPage from '../views/ActivitiesView.vue'
+import ActivityDetailPage from '../views/ActivityDetailView.vue'
 import SuggestionsPage from '../views/SuggestionsView.vue'
 import PostOccurrencePage from '../views/PostOccurrenceView.vue'
 import PerfilPage from '../views/PerfilView.vue'
@@ -61,6 +62,11 @@ const router = createRouter({
       path: '/activities',
       name: 'activities',
       component: ActivitiesPage
+    },
+    {
+      path: '/activities/:activityId',
+      name: 'activityDetail',
+      component: ActivityDetailPage
     },
     {
       path: '/suggestions',
