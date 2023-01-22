@@ -5,6 +5,12 @@ import SignInPage from '../views/SignInView.vue'
 import SignUpPage from '../views/SignUpView.vue'
 import OccurrenceDetailPage from '../views/OccurrenceDetailView.vue'
 import EventDetailPage from '../views/EventDetailView.vue'
+import EventsPage from '../views/EventsView.vue'
+import OccurrencesPage from '../views/OccurrencesView.vue'
+import ActivitiesPage from '../views/ActivitiesView.vue'
+import SuggestionsPage from '../views/SuggestionsView.vue'
+import PostOccurrencePage from '../views/PostOccurrenceView.vue'
+import PerfilPage from '../views/PerfilView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,14 +38,44 @@ const router = createRouter({
       props: true
     },
     {
+      path: '/occurrences',
+      name: 'occurrences',
+      component: OccurrencesPage
+    },
+    {
       path: '/occurrence/:occurrenceid',
       name: 'occurrenceDetail',
       component: OccurrenceDetailPage
     },
     {
+      path: '/events',
+      name: 'events',
+      component: EventsPage
+    },
+    {
       path: '/eventDetail/:eventid',
       name: 'eventDetail',
       component: EventDetailPage
+    },
+    {
+      path: '/activities',
+      name: 'activities',
+      component: ActivitiesPage
+    },
+    {
+      path: '/suggestions',
+      name: 'suggestions',
+      component: SuggestionsPage
+    },
+    {
+      path: '/postOccurrence',
+      name: 'post',
+      component: PostOccurrencePage
+    },
+    {
+      path: '/perfil/:perfilid',
+      name: 'perfil',
+      component: PerfilPage
     }
   ]
 })

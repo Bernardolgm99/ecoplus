@@ -6,7 +6,7 @@ if(!JSON.parse(localStorage.getItem('users'))) {
   user = [
     {id: 0, 
       username: 'admin', 
-      name: 'admin', 
+      name: 'admin',
       email: 'admin', 
       password: 'admin', 
       gender: 'undefined', 
@@ -20,7 +20,8 @@ if(!JSON.parse(localStorage.getItem('users'))) {
        activityId: [1, 2, 3, 4]
       }],
       occurrenceId: [2, 5, 6, 7, 4],
-      MissionsId: [1, 2, 3]
+      MissionsId: [1, 2, 3],
+      title: 'Legend'
     },
     {id: 1, 
       username: 'João', 
@@ -38,7 +39,8 @@ if(!JSON.parse(localStorage.getItem('users'))) {
           activityId: [1, 2, 3, 4]
         }],
         occurrenceId: [2, 5, 6, 7, 4],
-        MissionsId: [2, 3, 4]
+        MissionsId: [2, 3, 4],
+        title: 'Newbie'
         }
     ]
 } else {
@@ -83,7 +85,7 @@ export const userStore = defineStore('user', {
     (userId) => state.users.find(user => user.id == userId)
   },
   actions: {
-    addUser(username, name, email, birthday, gender, city, district, postalcode, school, password){
+    addUser(username, name, email, birthday, gender, city, district, postalcode, school, password, title="Newbie"){
       this.users.push({
         id: this.users[this.users.length - 1].id + 1,
         username: username,
