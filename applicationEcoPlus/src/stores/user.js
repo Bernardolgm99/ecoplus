@@ -112,11 +112,8 @@ export const userStore = defineStore('user', {
 
       localStorage.setItem('users', JSON.stringify(userArray))
 
-      this.updateUsers()
-
-    },
-    updateUsers(){
       this.users = JSON.parse(localStorage.getItem('users'))
+
     },
     addOccurrence(occurrenceId){
       this.occurrenceId.push(occurrenceId)
