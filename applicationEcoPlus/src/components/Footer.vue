@@ -9,5 +9,5 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../assets/styles/basecss.css'
+    @import '../assets/styles/base.css'
 </style>
