@@ -1,5 +1,4 @@
 <template>
-  {{createFeed}}
 <v-app id="inspire">
     <v-container>
       <v-row no-gutters>
@@ -14,9 +13,9 @@
           <v-sheet class="pa-2 ma-2" style="background-color: green">
             <!-- content -->
             <div id="title">
-                <div id="backBtn">
+<!--                 <div id="backBtn">
                     {{buttonBack}}
-                </div>
+                </div> -->
                 <div class="textTitle">
                     Post Occurrence
                 </div>
@@ -25,24 +24,15 @@
 
                 <div id="contTitle">
                     <span class="textMediumLarge">Title: </span>
-                    <v-text-field 
-                    label="Title"
-                    :rules="rules"
-                    hide-details="auto" v-model="title"></v-text-field>
+                    <v-text-field label="Title" variant="solo" v-model="title"></v-text-field>
                 </div>
                 <div id="contLocation">
                     <span class="textMediumLarge">Location: </span>
-                    <v-text-field 
-                    label="Location"
-                    :rules="rules"
-                    hide-details="auto" v-model="location"></v-text-field>
+                    <v-text-field label="Location" variant="solo" v-model="location"></v-text-field>
                 </div>
                 <div id="contLocationDesc">
                     <span class="textMediumLarge">Location description: </span>
-                    <v-text-field 
-                    label="Location description"
-                    :rules="rules"
-                    hide-details="auto" v-model="locationDesc"></v-text-field>
+                    <v-text-field label="Location Description" variant="solo" v-model="locationDesc"></v-text-field>
                 </div>
                 <div id="inputFile">
                     <span class="textMediumLarge">Image:</span>
@@ -85,7 +75,7 @@
 import SideBar from '../components/SideBar.vue'
 import NavBar from '../components/NavBar.vue'
 import { occurrenceStore } from '../stores/occurrence.js'
-import buttonBack from '../components/ButtonGoBack.vue'
+/* import buttonBack from '../components/ButtonGoBack.vue' */
 
     export default {
         components: {
@@ -105,7 +95,7 @@ import buttonBack from '../components/ButtonGoBack.vue'
         methods: {
             postOccurrence() {
                 this.occurrenceStore.addOccurrence(this.user.id, this.title, this.image, this.location, this.locationDesc, this.desc)
-                this.$router.push('/home')
+                this.$router.push('/home') 
             }
         },
         created() {
