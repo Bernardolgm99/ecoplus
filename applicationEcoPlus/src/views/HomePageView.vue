@@ -6,7 +6,6 @@ import { eventStore } from '../stores/event'
 import { userStore } from '../stores/user'
 
 export default {
-  
 
     components: {
         SideBar, NavBar
@@ -37,8 +36,7 @@ export default {
         for(let occurrence of occurrenceArray) {
           this.feed.push(occurrence)
         }
-
-        console.log(this.feed)
+        
         this.feed.sort((a,b) => (b.dateHour.date + b.dateHour.hour) - (a.dateHour.date + a.dateHour.hour))
 
       }
@@ -98,4 +96,7 @@ export default {
 
 <style lang="scss" scoped>
   @import '../assets/styles/base.css';
+  #inspire {
+    scroll-behavior: smooth;
+  }
 </style>

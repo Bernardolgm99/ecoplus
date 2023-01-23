@@ -13,7 +13,7 @@
                         <v-row id="entry">
                             <span @click="this.$router.push('/signin')" class="whiteText hover">Sign In</span>
                             <span class="whiteText">|</span>
-                            <span @click="this.$router.push('/signup')" class="whiteText hover">Log In</span>
+                            <span @click="this.$router.push('/signup')" class="whiteText hover">Sign Up</span>
                         </v-row>
                     </v-col>
                 </v-row>

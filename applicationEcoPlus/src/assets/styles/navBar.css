@@ -1,13 +1,111 @@
 #bg {
-    background-color: /* rgb(255, 250, 246) */ rgb(255, 115, 0);
+    position: fixed;
+    background-color: rgb(255, 250, 246);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 90vh;
 }
 
+#icon{
+    padding-left: 22px;
+}
+
+#logoIcon {
+    width: 80px;
+    padding-bottom: 60px;
+}
+
+#home,
+#occurrences,
+#events,
+#activities,
+#suggestions {
+    display: flex;
+    align-items: center;
+}
+
+#firstIcon,
+#secondIcon,
+#thirdIcon,
+#forthIcon,
+#fifthIcon,
+#sixthIcon {
+    width: 35px;
+}
+
+#firstLink,
+#secondLink,
+#thirdLink,
+#forthLink,
+#fifthLink {
+    padding-left: 15px;
+}
+
+#post {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    padding-top: 50px;
+}
+
+#postOccurrence {
+    display: flex;
+    justify-content: flex-start;
+}
+
+#postIcon {
+    display: flex;
+    width: 30px;
+}
+
+#top {
+    height: 40%;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
 #topperLinks {
-    
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 20px;
+}
+
+#bottomLinks {
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding-left: 20px;
+}
+
+#post {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-left: 20px;
+}
+
+#postOccurrence:hover{
+    text-decoration: none;
+}
+
+#postOccurrence {
+    height: 50px;
+    background: rgba(173, 242, 194, 1) !important;
+    color: rgba(60, 120, 78, 1) !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+}
+
+#bot {
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 a {
@@ -19,3 +117,27 @@ a {
 a:hover{
     text-decoration: underline;
 }
+
+#trace {
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 20px;
+}
+
+hr {
+    color: rgb(228, 216, 207);
+    width: 220px;
+}
+
+#perfil {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+}
+
+#perfilInfos {
+    padding-left: 20px;
+}
+
