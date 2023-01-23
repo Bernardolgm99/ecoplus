@@ -8,6 +8,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
     {
       id: 0,
       username: 'admin',
+      title: 'Legend',
       name: 'admin',
       perfilImage: '/src/assets/perfil/avatar.jpeg',
       email: 'admin', 
@@ -24,10 +25,11 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 2, 1],
-      title: 'Legend'
+      badgesState: [true, true, false, true, false, false]
     },
     {id: 1, 
       username: 'João', 
+      title: 'Newbie',
       name: 'admin', 
       perfilImage: '/src/assets/perfil/yoda.jpeg',
       email: 'admin', 
@@ -44,7 +46,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      title: 'Newbie'
+      badgesState: [true, false, false, true, false, false]
     }
   ]
   localStorage.setItem('users', JSON.stringify(users))
@@ -94,6 +96,10 @@ export const userStore = defineStore('user', {
     getUserMissionState: (state) => (userId) => {
       let user = state.users.find(user => user.id == userId)
       return user.missionsState
+    },
+    getBadgesState: (state) => (userId) => {
+      let user = state.users.find(user => user.id == userId)
+      return user.badgesState
     }
   },
   actions: {

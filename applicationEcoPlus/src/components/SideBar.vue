@@ -17,10 +17,8 @@
                   <img :src="mission.img" class="imgIcon">
                   <p class="textMission">{{ mission.name }}</p>
                 </div>
-                <div class="circularProgressContainer">
-                  <div ref="cProgress" class="circularProgress"></div>
-                </div>
-                <!-- {{ progressBar(index) }} -->
+                <div :style="{ 'background': 'conic-gradient( #bfbfbf ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg,#ffffff ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg)'}" class="circularProgress"></div>
+                
               </div>
               <div id="desc" class="rowDesc">{{ mission.description }}</div>
           </div>
@@ -61,8 +59,20 @@
         </v-carousel-item>
       <!-- Badges -->
         <v-carousel-item>
-          <div>
-            mulheres sao todas boas, estava a mentir
+          <div class="bgGrey orderColumnCenter">
+            <h3>Occurrences</h3>
+            <!-- items container -->
+            <div class="orderRow" v-for="badge in userStore.getBadgesState(this.user.id)">
+              <!-- container item -->
+              <div class="orderColumnCenter">
+                <img :src="badge.img">
+              </div>
+            </div>
+            <!-- divider -->
+            <h3>Event/Activities</h3>
+            <div>
+              <div></div>
+            </div>
           </div>
         </v-carousel-item>
       <!-- Ranking -->
@@ -95,22 +105,7 @@
             feed: []
       }
     },
-/*     computed: {
-      progressBar(index) {
-        let progressBar = document.querySelector('.circularProgress') */
-        /* console.log(progressBar) */
-        /* let progressValue = this.userStore.getUserMissionState(this.user.id)[index] */
-/*         console.log(index)
-        console.log(progressBar)
-        
-        progressBar.style.background = `conic-gradient(
-          #ffffff 50deg,#3045ff 20deg)` */
-          /* progressBar.style.background = `conic-gradient(~
-          #ffffff ${progressValue * 3.6}deg,
-          #3045ff ${progressValue * 3.6}deg)` */
-/*         }
-      }, */
-      created () {
+    created () {
       this.user = JSON.parse(localStorage.getItem('currentUser'))
       if(!JSON.parse(localStorage.getItem('currentUser'))){
           this.$router.push({name: 'signin'})
