@@ -64,7 +64,7 @@ import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
 import ButtonGoBack from "../components/ButtonGoBack.vue";
 import { activityStore } from "../stores/activity.js";
-import { userStore } from "../stores/user"
+import { userStore } from "../stores/user.js"
 
 export default {
     components: {

@@ -141,7 +141,7 @@ export default {
         activityStore: activityStore(),
         userStore: userStore(),
         users: [],
-        users: {},
+        user: {},
         activity: {},
         comments: [],
         newComment: "",

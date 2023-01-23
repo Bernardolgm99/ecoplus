@@ -16,7 +16,7 @@ if (!JSON.parse(localStorage.getItem('activities'))) {
       evaluationInd: 'nº 102',
       evalationInst: 'count',
       image: '/src/assets/images/example(1).jpg',
-      comments: [{messageId: 0, name: 'Jamal Almeida', message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
+      comments: [{messageId: 0, userId: 1, message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
       membersId: [0, 2], //ID of the member
     },
     {
@@ -31,7 +31,7 @@ if (!JSON.parse(localStorage.getItem('activities'))) {
       evaluationInd: 'nº 102',
       evalationInst: 'count',
       image: '/src/assets/images/example(1).jpg',
-      comments: [{messageId: 0, name: 'Jamal Almeida', message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
+      comments: [{messageId: 0, userId: 0, message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
       membersId: [0, 1], 
     },
   ]
@@ -69,8 +69,8 @@ export const activityStore = defineStore('activity', {
       });
       localStorage.setItem('activities', JSON.stringify(this.activities));
     },
-    updateActivities(activities) {
-      localStorage.setItem('activities', JSON.stringify(activities));
+    updateActivities() {
+      localStorage.setItem('activities', JSON.stringify(this.activities));
     },
     updateActivity(activity) {
       const index = this.activities.findIndex(activityIndex => activityIndex == activity)

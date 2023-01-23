@@ -2,30 +2,32 @@ import { defineStore } from 'pinia'
 
 let occurrences
 
-if(!JSON.parse(localStorage.getItem('occurrences'))){
+if (!JSON.parse(localStorage.getItem('occurrences'))) {
   occurrences = [
-    {id: 0,
-      userId: 0, 
+    {
+      id: 0,
+      userId: 0,
       title: 'occurrence1 2º date',
       location: 'Vila do Conde, Porto, Portugal',
       image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
       dateHour: 2000000000,
       locationDescription: 'Perto do rio',
       description: 'Tem aguinha o rio :)',
-      comments: [{id: 0, user: 0, comment: 'Yau', classification: 45}],
+      comments: [{ messageId: 0, userId: 0, message: 'Yau', classification: 45 }],
       type: 'occurrence'
-      },
-      {id: 1, 
-        userId: 1,
-        title: 'occurrence 4º date',
-        location: 'Rio Tinto, Porto, Portugal',
-        image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-        dateHour: 2100000000,
-        locationDescription: 'Perto do rio',
-        description: 'Tem aguinha o rio :)',
-        comments: [{id: 0, user: 1, comment: 'Yau', classification: 45}],
-        type: 'occurrence'
-      }
+    },
+    {
+      id: 1,
+      userId: 1,
+      title: 'occurrence 4º date',
+      location: 'Rio Tinto, Porto, Portugal',
+      image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
+      dateHour: 2100000000,
+      locationDescription: 'Perto do rio',
+      description: 'Tem aguinha o rio :)',
+      comments: [{ messageId: 0, userId: 1, message: 'Yau', classification: 45 }],
+      type: 'occurrence'
+    }
   ]
   localStorage.setItem('occurrences', JSON.stringify(occurrences))
 } else {
@@ -44,11 +46,11 @@ export const occurrenceStore = defineStore('occurrence', {
     getLocationDescription: (state) => state.locationDescription,
     getDescription: (state) => state.description,
     getOccurrenceById: (state) =>
-    (occurrenceId) => state.occurrences.find(occurrence => occurrence.id == occurrenceId),
+      (occurrenceId) => state.occurrences.find(occurrence => occurrence.id == occurrenceId),
     getOccurrences: (state) => state.occurrences,
   },
   actions: {
-    addOccurrence(userId, title, image, location, locationDescription, description){
+    addOccurrence(userId, title, image, location, locationDescription, description) {
       let today = new Date()
       this.occurrences.push({
         id: this.occurrences[this.occurrences.length - 1].id + 1,
@@ -59,8 +61,9 @@ export const occurrenceStore = defineStore('occurrence', {
         dateHour: today.getTime(),
         locationDescription: locationDescription,
         descripton: description,
+        comments: [],
         type: 'occurrence'
-        }
+      }
       )
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
     }
