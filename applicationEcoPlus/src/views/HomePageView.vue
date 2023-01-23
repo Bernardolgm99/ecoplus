@@ -37,8 +37,7 @@ export default {
         for(let occurrence of occurrenceArray) {
           this.feed.push(occurrence)
         }
-
-        console.log(this.feed)
+        
         this.feed.sort((a,b) => (b.dateHour.date + b.dateHour.hour) - (a.dateHour.date + a.dateHour.hour))
 
       }

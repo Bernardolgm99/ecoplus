@@ -11,17 +11,18 @@
     <v-carousel hide-delimiters :show-arrows="false" v-model="model" id="carouselItems" class="alignContentCenter">
       <!-- quests -->
         <v-carousel-item>
-          <div class="rowMission textSmall" v-for="missions in this.missionStore.getMissions">
+          <div class="rowMission textSmall" v-for="mission, index in this.missionStore.getMissions">
             <div class="rowStyle">
                 <div class="orderRow">
-                  <img :src="missions.img" class="imgIcon">
-                  <p class="textMission">{{ missions.name }}</p>
+                  <img :src="mission.img" class="imgIcon">
+                  <p class="textMission">{{ mission.name }}</p>
                 </div>
-                  <div class="circularProgressContainer">
-                    <div class="circularProgress"></div>
-                  </div>
+                <div class="circularProgressContainer">
+                  <div ref="cProgress" class="circularProgress"></div>
+                </div>
+                {{ progressBar(index) }}
               </div>
-              <div id="desc" class="rowDesc">{{ missions.description }}</div>
+              <div id="desc" class="rowDesc">{{ mission.description }}</div>
           </div>
         </v-carousel-item>
       <!-- Recent Posts -->
@@ -43,7 +44,6 @@
           </div>
         </v-carousel-item>
     </v-carousel>
-    {{ progressBar }}
 </template>
 
 <script>
@@ -59,23 +59,24 @@
             user: {}
       }
     },
-    // computed: {
-    //   progressBar(/* index */) {
-    //     let index = 1
-    //     console.log(this.$el.querySelectorAll('.circularProgress')[index])
-    //     let progressBar = this.$el.querySelector('.circularProgress')
-    //     let progressValue = this.userStore.getUserMissionState(this.user.id)[index]
+    computed: {
+      progressBar(index) {
+        let progressBar = document.querySelector('.circularProgress')
+        /* console.log(progressBar) */
+        /* let progressValue = this.userStore.getUserMissionState(this.user.id)[index] */
+        console.log(index)
+        console.log(progressBar)
         
-    //     progressBar.style.background = `conic-gradient(
-    //     #ffffff 50deg,#3045ff 20deg)`
-    //     /* progressBar.style.background = `conic-gradient(~
-    //     #ffffff ${progressValue * 3.6}deg,
-    //     #3045ff ${progressValue * 3.6}deg)` */
-    //   }
-    // },
-    created () {
+        progressBar.style.background = `conic-gradient(
+          #ffffff 50deg,#3045ff 20deg)`
+          /* progressBar.style.background = `conic-gradient(~
+          #ffffff ${progressValue * 3.6}deg,
+          #3045ff ${progressValue * 3.6}deg)` */
+        }
+      },
+      created () {
       this.user = JSON.parse(localStorage.getItem('currentUser'))
-      console.log(this.userStore.getUserMissionState(this.user.id))
+      console.log(this.$refs)
     },
     }
 </script>
