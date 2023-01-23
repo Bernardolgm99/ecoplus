@@ -26,7 +26,6 @@
     background-attachment: fixed !important;
 }
 
-
 body {
     background: rgb(255, 250, 246) !important;
     font-family: 'Quicksand';
@@ -41,7 +40,6 @@ a:hover {
     text-decoration: underline;
     color: aliceblue;
 }
-
 
 .hover:hover {
     text-decoration: underline;
