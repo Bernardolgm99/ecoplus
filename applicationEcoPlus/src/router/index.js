@@ -44,7 +44,7 @@ const router = createRouter({
       component: OccurrencesPage
     },
     {
-      path: '/occurrence/:occurrenceid',
+      path: '/occurrences/:occurrenceid',
       name: 'occurrenceDetail',
       component: OccurrenceDetailPage
     },
@@ -54,7 +54,7 @@ const router = createRouter({
       component: EventsPage
     },
     {
-      path: '/eventDetail/:eventid',
+      path: '/events/:eventid',
       name: 'eventDetail',
       component: EventDetailPage
     },

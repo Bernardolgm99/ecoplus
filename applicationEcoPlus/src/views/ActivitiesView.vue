@@ -2,7 +2,7 @@
     <v-app>
         <v-container>
             <v-row no-gutters>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
                         <NavBar />

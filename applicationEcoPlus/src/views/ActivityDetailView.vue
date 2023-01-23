@@ -2,7 +2,7 @@
     <v-app>
         <v-container>
             <v-row no-gutters>
-                <v-col cols="2">
+                <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
                         <NavBar />
@@ -12,7 +12,7 @@
                     <v-sheet class="pa-2 ma-2" style="background-color: blue">
 
                         <div>
-                            <img :src="activity.img" />
+                            <img :src="activity.image" />
                         </div>
                         <div>
                             <ButtonGoBack />
@@ -155,7 +155,6 @@ export default {
         for (const memberId in this.activity.membersId) {
             this.members.push(this.users.find(user => user.id == memberId));
         }
-        console.log(this.members);
 
     },
     methods: {
@@ -188,8 +187,8 @@ export default {
         },
 
         addComment() {
-            this.comments.push({
-                messageId: this.comments[this.comments.length - 1].messageId + 1,
+            this.comments.splice(0,0,{
+                messageId: this.comments[0].messageId + 1,
                 name: this.user.username,
                 message: this.newComment,
                 likesDislikes: { likes: [], dislikes: [] },
@@ -222,5 +221,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+    img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
 </style>

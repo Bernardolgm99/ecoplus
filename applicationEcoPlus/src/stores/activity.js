@@ -15,6 +15,7 @@ if (!JSON.parse(localStorage.getItem('activities'))) {
       participants: 'Students',
       evaluationInd: 'nº 102',
       evalationInst: 'count',
+      image: '/src/assets/images/example(1).jpg',
       comments: [{messageId: 0, name: 'Jamal Almeida', message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
       membersId: [0, 2], //ID of the member
     },
@@ -29,6 +30,7 @@ if (!JSON.parse(localStorage.getItem('activities'))) {
       participants: 'Students',
       evaluationInd: 'nº 102',
       evalationInst: 'count',
+      image: '/src/assets/images/example(1).jpg',
       comments: [{messageId: 0, name: 'Jamal Almeida', message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
       membersId: [0, 1], 
     },
@@ -49,7 +51,7 @@ export const activityStore = defineStore('activity', {
     getActivities: (state) => state.activities
   },
   actions: {
-    addActivity(title, diagnosis, schedule, description, objectives, resources, participants, evaluationInd, evaluationInst) {
+    addActivity(title, diagnosis, schedule, description, objectives, resources, participants, evaluationInd, evaluationInst, image) {
       this.activities.push({
         id: activities[this.activities.length - 1].id + 1,
         title: title,
@@ -61,6 +63,7 @@ export const activityStore = defineStore('activity', {
         participants: participants,
         evaluationInd: evaluationInd,
         evaluationInst: evaluationInst,
+        image: image,
         comments: [],
         membersId: [],
       });
