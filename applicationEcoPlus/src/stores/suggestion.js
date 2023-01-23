@@ -11,6 +11,7 @@ if(!JSON.parse(localStorage.getItem('suggestions'))){
       location: 'School'
       }
   ]
+  localStorage.setItem('suggestions', JSON.stringify(suggestions))
 } else {
   suggestions = JSON.parse(localStorage.getItem('suggestions'))
 }

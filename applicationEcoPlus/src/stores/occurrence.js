@@ -1,31 +1,40 @@
 import { defineStore } from 'pinia'
 
-export const occurrenceStore = defineStore('occurrence', {
-  state: () => ({
-    occurrences: [
-      {id: 0,
-        userId: 0, 
-        title: 'occurrence1 2º date',
-        location: 'Vila do Conde, Porto, Portugal',
+let occurrences
+
+if(!JSON.parse(localStorage.getItem('occurrences'))){
+  occurrences = [
+    {id: 0,
+      userId: 0, 
+      title: 'occurrence1 2º date',
+      location: 'Vila do Conde, Porto, Portugal',
+      image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
+      dateHour: 2000000000,
+      locationDescription: 'Perto do rio',
+      description: 'Tem aguinha o rio :)',
+      comments: [{id: 0, user: 0, comment: 'Yau', classification: 45}],
+      type: 'occurrence'
+      },
+      {id: 1, 
+        userId: 1,
+        title: 'occurrence 4º date',
+        location: 'Rio Tinto, Porto, Portugal',
         image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-        dateHour: {date: '20220525', hour: '1228'},
+        dateHour: 2100000000,
         locationDescription: 'Perto do rio',
         description: 'Tem aguinha o rio :)',
-        comments: [{id: 0, user: 0, comment: 'Yau', classification: 45}],
+        comments: [{id: 0, user: 1, comment: 'Yau', classification: 45}],
         type: 'occurrence'
-        },
-        {id: 1, 
-          userId: 1,
-          title: 'occurrence 4º date',
-          location: 'Rio Tinto, Porto, Portugal',
-          image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-          dateHour: {date: '20220510', hour: '1045'},
-          locationDescription: 'Perto do rio',
-          description: 'Tem aguinha o rio :)',
-          comments: [{id: 0, user: 1, comment: 'Yau', classification: 45}],
-          type: 'occurrence'
-        }
-    ]
+      }
+  ]
+  localStorage.setItem('occurrences', JSON.stringify(occurrences))
+} else {
+  occurrences = JSON.parse(localStorage.getItem('occurrences'))
+}
+
+export const occurrenceStore = defineStore('occurrence', {
+  state: () => ({
+    occurrences: occurrences
   }),
   getters: {
     getId: (state) => state.id,
@@ -39,20 +48,21 @@ export const occurrenceStore = defineStore('occurrence', {
     getOccurrences: (state) => state.occurrences,
   },
   actions: {
-    addOccurrence(userId, title, location, locationDescription, description){
+    addOccurrence(userId, title, image, location, locationDescription, description){
+      let today = new Date()
       this.occurrences.push({
         id: this.occurrences[this.occurrences.length - 1].id + 1,
         userId: userId,
         title: title,
         location: location,
-        image: '',
-        dateHour: {date: today.getFullYear() + "" + today.getMonth() + "" + today.getDate(),
-                   hour: today.getHours() + "" + today.getMinutes() + "" + today.getSeconds()},
+        image: image,
+        dateHour: today.getTime(),
         locationDescription: locationDescription,
         descripton: description,
         type: 'occurrence'
         }
       )
+      localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
     }
   },
 })

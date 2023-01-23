@@ -1,9 +1,11 @@
 <template>
     <div id="bg" class="textBig">
         <div id="top">
-            <div id="icon">
-                <v-img id="logoIcon" :src="ecoIcon"></v-img>
-            </div>
+            <v-button @click="this.$router.push">
+                <div id="icon">
+                    <v-img id="logoIcon" :src="ecoIcon"></v-img>
+                </div>
+            </v-button>
             <div id="topperLinks">
                     <div id="home" class="topperRow">
                         <div id="firstIcon">

@@ -8,7 +8,7 @@ export const eventStore = defineStore('event', {
       title: 'Event1 3º date',
       subtitle: 'Event in the woods',
       image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg', 
-      dateHour: {date: '20220517', hour: '1648'},
+      dateHour: 2200000000,
       location: 'Custoias - Portugal', 
       description: 'Recolher lixo', 
       membersId:[0, 1, 2, 4, 8],
@@ -19,7 +19,7 @@ export const eventStore = defineStore('event', {
       title: 'Event2 1º date',
       subtitle: 'Event in the woods',
       image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg', 
-      dateHour: {date: '20220530', hour: '1702'},
+      dateHour: 2300000000,
       location: 'Senhora da Hora - Portugal', 
       description: 'Recolher lixo', 
       membersId:[0, 1, 2, 4, 8],
@@ -42,14 +42,14 @@ export const eventStore = defineStore('event', {
   },
   actions: {
     addEvent(userId, title, subtitle, image, location, description, members, comments){
+      let today = new Date()
       this.events.push({
         id: this.events[this.events.length - 1].id + 1,
         userId: userId,
         title: title,
         subtitle: subtitle,
         image: image,
-        dateHour: {date: today.getFullYear() + "" + today.getMonth() + "" + today.getDate(),
-                   hour: today.getHours() + "" + today.getMinutes() + "" + today.getSeconds()},
+        dateHour: today.getTime(),
         location: location,
         description: description,
         members: members,
