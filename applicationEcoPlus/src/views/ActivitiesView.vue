@@ -11,6 +11,7 @@
                 <v-col>
                     <v-sheet class="pa-2 ma-2" style="background-color: blue">
                         <!-- content -->
+                        <ButtonGoBack />
                         <h1>20XX - Plan</h1>
                         <h3>Here is the list of proposed activities for 20XX. We hope you all enroll your selves in
                             every
@@ -61,6 +62,7 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
+import ButtonGoBack from "../components/ButtonGoBack.vue";
 import { activityStore } from "../stores/activity.js";
 import { userStore } from "../stores/user"
 
@@ -68,6 +70,7 @@ export default {
     components: {
         NavBar,
         SideBar,
+        ButtonGoBack,
     },
     data() {
         return {

@@ -15,9 +15,7 @@
                             <img :src="activity.img" />
                         </div>
                         <div>
-                            <RouterLink to='/activities'>
-                                <button>&lt;</button>
-                            </RouterLink>
+                            <ButtonGoBack />
                             <h1>
                                 {{ activity.title }}
                             </h1>
@@ -128,13 +126,15 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
+import ButtonGoBack from "../components/ButtonGoBack.vue";
 import { activityStore } from "../stores/activity.js";
 import { userStore } from "../stores/user"
 
 export default {
     components: {
         NavBar,
-        SideBar
+        SideBar,
+        ButtonGoBack,
     },
     data: () => ({
         tab: null,
