@@ -1,11 +1,9 @@
 <template>
     <div id="bg" class="textBig">
         <div id="top">
-            <v-button @click="this.$router.push">
-                <div id="icon">
-                    <v-img id="logoIcon" :src="ecoIcon"></v-img>
-                </div>
-            </v-button>
+            <div id="icon">
+                <v-img id="logoIcon" @click="this.$router.push" :src="ecoIcon"></v-img>
+            </div>
             <div id="topperLinks">
                     <div id="home" class="topperRow">
                         <div id="firstIcon">
@@ -67,9 +65,7 @@
         <div id="bot">
             <div id="perfil" class="textMediumLarge">
                 <div id="perfilIcon">
-                    <v-button @click="this.$router.push({name: 'perfil', params: {perfilid: user.id}})">
-                        <v-img id="perfil" :src="user.perfilImage"></v-img>
-                    </v-button>
+                        <v-img @click="this.$router.push({name: 'perfil', params: {perfilid: user.id}})" id="perfil" :src="user.perfilImage"></v-img>
                 </div>
                 <div id="perfilInfos">
                     <RouterLink :to="{name: 'perfil', params:{perfilid: user.id}}">{{user.username }}</RouterLink>
