@@ -132,6 +132,7 @@ export const userStore = defineStore('user', {
         },
         occurrenceId: [],
         missionsState: [],
+        badgesState: [],
         title: 'Newbie'
       }
       )

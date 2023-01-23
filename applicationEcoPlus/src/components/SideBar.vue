@@ -116,9 +116,31 @@
         </v-carousel-item>
       <!-- Ranking -->
         <v-carousel-item>
-          <div>
-            
-          </div>
+          <v-card class="rankingBgContainer">
+            <v-tabs v-model="tab">
+              <v-tab value="one">Madalhas</v-tab>
+              <v-tab value="two">Ocorrências</v-tab>
+              <v-tab value="three">Eventos/Atividades</v-tab>
+            </v-tabs>
+
+            <v-card-text>
+              <v-window v-model="tab">
+
+                <v-window-item value="one">
+                  One
+                </v-window-item>
+              
+                <v-window-item value="two">
+                  Two
+                </v-window-item>
+
+                <v-window-item value="three">
+                  Three
+                </v-window-item>
+
+              </v-window>
+            </v-card-text>
+          </v-card>
         </v-carousel-item>
     </v-carousel>
 </template>
@@ -136,7 +158,7 @@
             missionStore: missionStore(),
             userStore: userStore(),
             titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
-            model: 0,
+            model: 3,
             user: {},
 
             /* recent posts */
@@ -146,6 +168,9 @@
 
             /* badges */
             badgeStore: badgeStore(),
+
+            /* ranking */
+            tab: null
       }
     },
     methods: {

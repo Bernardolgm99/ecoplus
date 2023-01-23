@@ -122,3 +122,17 @@ a {
     background-color: #CAC2BC;
     margin-bottom: 5%;
 }
+
+/* raking */
+.v-slide-group__next, .v-slide-group__prev {
+    display: none !important;
+}
+
+.v-tab.v-tab.v-tab {
+    margin: 0px;
+    padding: 0px;
+}
+
+.rankingBgContainer {
+    width: 260px;
+}
