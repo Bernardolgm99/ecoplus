@@ -22,7 +22,7 @@
                 </div>
               </div>
 
-              <div class="comments" v-for=",i in post.comments.lenght > 1 ? 2 : post.comments.lenght == 1 ? 1 : 0">
+              <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : post.comments.length == 1 ? 1 : 0">
                 <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}</p>
                 <p class="comment">{{ post.comments[i].message }}</p>
               </div>
