@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 90vh;
+    height: 98vh;
 }
 
 #icon{
@@ -29,7 +29,7 @@
 #forthIcon,
 #fifthIcon,
 #sixthIcon {
-    width: 35px;
+    width: 25px;
 }
 
 #firstLink,
@@ -38,24 +38,9 @@
 #forthLink,
 #fifthLink {
     padding-left: 15px;
+    font-size: 24px;
 }
 
-#post {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    padding-top: 50px;
-}
-
-#postOccurrence {
-    display: flex;
-    justify-content: flex-start;
-}
-
-#postIcon {
-    display: flex;
-    width: 30px;
-}
 
 #top {
     height: 40%;
@@ -81,17 +66,22 @@
 
 #post {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    flex-direction: row;
+    padding-top: 50px;
     align-items: stretch;
     padding-left: 20px;
 }
 
 #postOccurrence:hover{
     text-decoration: none;
+    display: flex;
+    justify-content: center;
 }
 
 #postOccurrence {
     height: 50px;
+    width: 256px;
     background: rgba(173, 242, 194, 1) !important;
     color: rgba(60, 120, 78, 1) !important;
     font-size: 15px !important;
@@ -124,7 +114,9 @@ a:hover{
 
 hr {
     color: rgb(228, 216, 207);
-    width: 220px;
+    width: 190px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #perfil {

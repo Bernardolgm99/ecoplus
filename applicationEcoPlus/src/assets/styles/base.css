@@ -1,12 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
 
+
 .v-theme--light {
     --v-theme-surface: none;
 }
 
 .pa-2 {
     padding: 0px !important;
+    overflow: auto !important;
 }
 
 .v-application__wrap{
@@ -21,6 +23,7 @@
     background-size: auto 100% !important;
     height: 100vh !important;
     width: 100vw !important;
+    background-attachment: fixed !important;
 }
 
 

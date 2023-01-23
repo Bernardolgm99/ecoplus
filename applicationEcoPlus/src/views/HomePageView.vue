@@ -58,7 +58,7 @@ export default {
         <v-col>
           <v-sheet class="pa-2 ma-2" style="background-color: blue">
             <!-- content -->
-            <div v-for="post in feed">
+            <div v-for="post in feed" class="content">
             
                 <div id="card">
                   <img :src = post.image width="500">
