@@ -45,6 +45,12 @@ a:hover {
     align-items: center;
 }
 
+.alignContentCenterBottom {
+    display: flex;
+    justify-content: center;
+    align-items: bottom;
+}
+
 .alignContentSpaceAround {
     display: flex;
     justify-content: space-around;

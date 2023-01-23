@@ -7,7 +7,7 @@ if(!JSON.parse(localStorage.getItem('mission'))) {
   mission =  { missions: [
     {id: 0, 
       name: 'Go to Campos2', 
-      quantity: 2,
+      quantity: 1,
       description: 'Go to Campos2 and submit your location', 
       duration:'weekly',
       img: '/src/assets/icons/missionIcons/apple.png'

@@ -22,7 +22,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         activityId: [1, 2, 3, 4]
       },
       occurrenceId: [2, 5, 6, 7, 4],
-      missionsState: [1, 2, 3],
+      missionsState: [1, 2, 1],
       title: 'Legend'
     },
     {
@@ -42,7 +42,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         activityId: [1, 2, 3, 4]
       },
       occurrenceId: [2, 5, 6, 7, 4],
-      missionsState: [2, 3, 4],
+      missionsState: [1, 0, 1],
       title: 'Newbie'
     }
   ]
