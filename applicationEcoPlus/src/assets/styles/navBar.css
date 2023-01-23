@@ -1,5 +1,4 @@
 #bg {
-    position: fixed;
     background-color: rgb(255, 250, 246);
     display: flex;
     flex-direction: column;

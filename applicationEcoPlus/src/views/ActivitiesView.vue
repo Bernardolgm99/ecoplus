@@ -87,11 +87,11 @@ export default {
             this.user.joined.activityId = this.checkedActivities;
             this.userStore.updateUser(this.user);
             for (const activity of this.activities) {
-                if (!(activity.participants.indexOf(this.user.id) != -1) && this.user.joined.activityId.indexOf(activity.id) != -1) {
-                    activity.participants.push(this.user.id);
+                if (!(activity.membersId.indexOf(this.user.id) != -1) && this.user.joined.activityId.indexOf(activity.id) != -1) {
+                    activity.membersId.push(this.user.id);
                 };
-                if (activity.participants.indexOf(this.user.id) != -1 && !(this.user.joined.activityId.indexOf(activity.id) != -1)) {
-                    activity.participants.splice(this.user.joined.activityId.indexOf(activity.id), 1);
+                if (activity.membersId.indexOf(this.user.id) != -1 && !(this.user.joined.activityId.indexOf(activity.id) != -1)) {
+                    activity.membersId.splice(this.user.joined.activityId.indexOf(activity.id), 1);
                 };
             }
             this.activityStore.updateActivities(this.activities)

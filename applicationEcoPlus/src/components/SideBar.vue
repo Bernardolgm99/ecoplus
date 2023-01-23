@@ -17,19 +17,12 @@
                   <img :src="mission.img" class="imgIcon">
                   <p class="textMission">{{ mission.name }}</p>
                 </div>
-<<<<<<< Updated upstream
-                <div :style="{ 'background': 'conic-gradient(#bfbfbf ' + (this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360 + 
-                'deg,#fff ' + (this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360 + 'deg)'}" ref="cProgress" class="circularProgress"></div>
-            </div>
-            <div id="desc" class="rowDesc">{{ mission.description }}</div>
-=======
                 <div class="circularProgressContainer">
                   <div ref="cProgress" class="circularProgress"></div>
                 </div>
                 <!-- {{ progressBar(index) }} -->
               </div>
               <div id="desc" class="rowDesc">{{ mission.description }}</div>
->>>>>>> Stashed changes
           </div>
         </v-carousel-item>
       <!-- Recent Posts -->
@@ -102,9 +95,6 @@
             feed: []
       }
     },
-<<<<<<< Updated upstream
-    created () {
-=======
 /*     computed: {
       progressBar(index) {
         let progressBar = document.querySelector('.circularProgress') */
@@ -121,7 +111,6 @@
 /*         }
       }, */
       created () {
->>>>>>> Stashed changes
       this.user = JSON.parse(localStorage.getItem('currentUser'))
       if(!JSON.parse(localStorage.getItem('currentUser'))){
           this.$router.push({name: 'signin'})
