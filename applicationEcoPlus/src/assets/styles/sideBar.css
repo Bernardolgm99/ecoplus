@@ -1,7 +1,7 @@
 #carouselItems {
     margin-top: 10%;
 }
-
+/* mission */
 .rowMission {
     max-width: 260px;
 }
@@ -43,6 +43,7 @@
     padding-top: 2%;
 }
 
+/* recent posts */
 .recentPost {
     max-width: 260px;
 }
@@ -88,4 +89,36 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+/* badges */
+.bgGrey {
+    background-color: #E4DBD3;
+    border-radius: 5px;
+}
+
+.orderBadges {
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.contentBadgesCat {
+    padding: 5%;
+    align-self: flex-start;
+}
+
+.badgeImgContainer {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.badgeImg {
+    width: 46px;
+}
+
+.divider {
+    width: 150px;
+    height: 3px;
+    background-color: #CAC2BC;
+    margin-bottom: 5%;
 }

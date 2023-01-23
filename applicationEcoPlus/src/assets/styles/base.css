@@ -50,6 +50,20 @@ a:hover {
     color: white !important;
 }
 
+.displayWarp {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.displayFlexStart {
+    display: flex;
+}
+
+.displayColumn {
+    display: flex;
+    flex-direction: column;
+}
+
 .orderColumnCenter {
     display: flex;
     flex-direction: column;

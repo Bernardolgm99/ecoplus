@@ -25,7 +25,12 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 2, 1],
-      badgesState: [true, true, false, true, false, false]
+      badgesState: [
+        true, false, false,
+        true, false, false,
+        true, true, true,
+        true, false
+      ]
     },
     {id: 1, 
       username: 'João', 
@@ -46,7 +51,12 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [true, false, false, true, false, false]
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
     }
   ]
   localStorage.setItem('users', JSON.stringify(users))
@@ -98,8 +108,8 @@ export const userStore = defineStore('user', {
       return user.missionsState
     },
     getBadgesState: (state) => (userId) => {
-      let user = state.users.find(user => user.id == userId)
-      return user.badgesState
+      let userBadge = state.users.find(user => user.id == userId)
+      return userBadge.badgesState
     }
   },
   actions: {

@@ -59,35 +59,75 @@
         </v-carousel-item>
       <!-- Badges -->
         <v-carousel-item>
-          <div class="bgGrey orderColumnCenter">
-            <h3>Occurrences</h3>
+          <div class="bgGrey">
             <!-- items container -->
-            <div class="orderRow" v-for="badge in userStore.getBadgesState(this.user.id)">
-              <!-- container item -->
-              <div class="orderColumnCenter">
-                <img :src="badge.img">
+            <div class="contentBadgesCat" v-if="getBadges('occurrence').length > 0">
+              <h3>Ocorrências</h3>
+              <div class="orderBadges">
+                <!-- container item -->
+                <div class="orderColumnCenter badgeImgContainer displayWarp"  v-for="badge in getBadges('occurrence')">
+                  <img :src="badge.img" class="badgeImg">
+                  <!-- <p>{{ badge.name }}</p> -->
+                </div>
               </div>
             </div>
-            <!-- divider -->
-            <h3>Event/Activities</h3>
-            <div>
-              <div></div>
+
+            <div class="orderColumnCenter" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
+
+              <!-- divider -->
+              <div class="divider"></div>
+              <!-- divider -->
+              <div class="contentBadgesCat">
+                <h3>Eventos/Atividades</h3>
+                <div class="orderBadges">
+                  <!-- container item -->
+                  <div class="orderColumnCenter badgeImgContainer"  v-for="badge in getBadges('events')">
+                    <img :src="badge.img" class="badgeImg">
+                    <!-- <p>{{ badge.name }}</p> -->
+                  </div>
+                  <div class="orderColumnCenter badgeImgContainer"  v-for="badge in getBadges('activity')">
+                    <img :src="badge.img" class="badgeImg">
+                    <!-- <p>{{ badge.name }}</p> -->
+                  </div>
+                </div>
+              </div>
+
             </div>
+              
+            <div class="orderColumnCenter" v-if="getBadges('other').length > 0">
+
+              <!-- divider -->
+              <div class="divider"></div>
+              <!-- divider -->
+              <div class="contentBadgesCat displayColumn" v-if="getBadges('occurrence').length > 0">
+              <h3>Ocorrências</h3>
+              <div class="orderBadges">
+                <!-- container item -->
+                <div class="orderColumnCenter badgeImgContainer displayWarp"  v-for="badge in getBadges('other')">
+                  <img :src="badge.img" class="badgeImg">
+                  <!-- <p>{{ badge.name }}</p> -->
+                </div>
+              </div>
+            </div>
+
+            </div>
+
           </div>
         </v-carousel-item>
       <!-- Ranking -->
         <v-carousel-item>
           <div>
-            homens sao gays
+            
           </div>
         </v-carousel-item>
     </v-carousel>
 </template>
 
 <script>
-  import {missionStore} from '../stores/mission.js'
+  import {missionStore} from '../stores/mission'
   import { occurrenceStore } from '../stores/occurrence'
   import { eventStore } from '../stores/event'
+  import { badgeStore } from '../stores/badge'
   import { userStore } from '../stores/user'
     export default {
         data () {
@@ -102,16 +142,31 @@
             /* recent posts */
             occurrenceStore: occurrenceStore(),
             eventStore: eventStore(),
-            feed: []
+            feed: [],
+
+            /* badges */
+            badgeStore: badgeStore(),
+      }
+    },
+    methods: {
+      getBadges(type) {
+        let userBadges = []
+        let userState = this.userStore.getBadgesState(this.user.id)
+        let allBadges = this.badgeStore.getBadges
+
+
+        for(let i = 0; i < allBadges.length; i++) {
+          if(allBadges[i].type == type && userState[i] == true) userBadges.push(allBadges[i])
+        }
+
+        return userBadges
       }
     },
     created () {
+      
       this.user = JSON.parse(localStorage.getItem('currentUser'))
-      if(!JSON.parse(localStorage.getItem('currentUser'))){
-          this.$router.push({name: 'signin'})
-      }
 
-      /* CREATE FEED */
+      /* create most recent */
       let recentArray = []
       let occurrenceArray = this.occurrenceStore.getOccurrences
       let eventArray = this.eventStore.getEvents
@@ -121,13 +176,10 @@
       for(let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
-      
       this.feed.sort((a,b) => (b.dateHour.date + b.dateHour.hour) - (a.dateHour.date + a.dateHour.hour))
-      
       for(let i = 0; i < 3; i++) {
         recentArray.push(this.feed[i])
       }
-
       this.feed = recentArray
       
     },
