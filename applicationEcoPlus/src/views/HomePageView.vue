@@ -6,7 +6,6 @@ import { eventStore } from '../stores/event'
 import { userStore } from '../stores/user'
 
 export default {
-  
 
     components: {
         SideBar, NavBar
@@ -97,4 +96,7 @@ export default {
 
 <style lang="scss" scoped>
   @import '../assets/styles/base.css';
+  #inspire {
+    scroll-behavior: smooth;
+  }
 </style>

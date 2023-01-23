@@ -9,13 +9,14 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       id: 0,
       username: 'admin',
       name: 'admin',
-      email: 'admin',
-      password: 'admin',
-      gender: 'undefined',
-      city: 'undefined',
-      postalcode: 'undefined',
-      birthDate: 'undefined',
-      district: 'undefined',
+      perfilImage: '/src/assets/perfil/avatar.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
       school: 'undefined',
       joined: {
         eventId: [1, 3, 5, 6],
@@ -25,17 +26,17 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       missionsState: [1, 2, 1],
       title: 'Legend'
     },
-    {
-      id: 1,
-      username: 'João',
-      name: 'admin',
-      email: 'admin',
-      password: 'admin',
-      gender: 'undefined',
-      city: 'undefined',
-      postalcode: 'undefined',
-      birthDate: 'undefined',
-      district: 'undefined',
+    {id: 1, 
+      username: 'João', 
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
       school: 'undefined',
       joined: {
         eventId: [1, 3, 5, 6],
@@ -46,6 +47,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       title: 'Newbie'
     }
   ]
+  localStorage.setItem('users', JSON.stringify(users))
 } else {
   users = JSON.parse(localStorage.getItem('users'))
 }
