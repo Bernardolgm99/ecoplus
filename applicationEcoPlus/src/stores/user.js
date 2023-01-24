@@ -24,7 +24,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 2, 1],
-      badgesState: [0]
+      badgesState: [0, 1, 2, 3, 6, 9]
     },
     {id: 1, 
       username: 'João', 
@@ -64,9 +64,9 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         eventId: [1, 3, 5, 6],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [5],
       missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
+      badgesState: [3, 4, 5, 6]
     },
     {id: 3, 
       username: 'miguel', 
@@ -85,9 +85,9 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         eventId: [1, 3, 5, 6],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [2],
       missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
+      badgesState: [3, 4, 5]
     },
     {id: 4, 
       username: 'joana', 
@@ -106,9 +106,9 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         eventId: [1, 3, 5, 6],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [2, 5, 6, 7, 4, 1],
       missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
+      badgesState: [3, 4]
     },
     {id: 5, 
       username: 'Maria', 
@@ -127,7 +127,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         eventId: [1, 3, 5, 6],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [2, 5, 6, 7],
       missionsState: [1, 0, 1],
       badgesState: [3, 4, 5, 6, 9]
     },
@@ -148,7 +148,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         eventId: [1, 3, 5, 6],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [2, 5],
       missionsState: [1, 0, 1],
       badgesState: [3, 4, 5, 6, 9]
     },
@@ -169,7 +169,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         eventId: [1, 3, 5, 6],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [2, 5, 6, 7],
       missionsState: [1, 0, 1],
       badgesState: [3, 4, 5, 6, 9]
     },
@@ -190,7 +190,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         eventId: [1, 3, 5, 6],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [2, 5, 6, 7, 4, 0],
       missionsState: [1, 0, 1],
       badgesState: [3, 4, 5, 6, 9]
     },
@@ -234,6 +234,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 11, 
       username: 'bernardo', 

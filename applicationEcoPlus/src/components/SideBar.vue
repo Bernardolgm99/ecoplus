@@ -123,9 +123,9 @@
         <v-carousel-item> 
           <v-col class="rankingBgContainer">
             <v-row class="paddingRanking rowSpaceAround">
-              <button @click="filter('badges')" class="btnFilter" variant="plain">Medalhas</button>
-              <button @click="filter('occurrences')" class="btnFilter" variant="plain">Ocorrências</button>
-              <button @click="filter('events')" class="btnFilter" variant="plain">Eventos</button>
+              <button @click="filterRanking('badges')" class="btnFilter" variant="plain">Medalhas</button>
+              <button @click="filterRanking('occurrences')" class="btnFilter" variant="plain">Ocorrências</button>
+              <button @click="filterRanking('events')" class="btnFilter" variant="plain">Eventos</button>
               <div class="dividerBlack"></div>
             </v-row>
             <div class="mt-2 paddingRanking">
@@ -143,31 +143,31 @@
             </div>
 
             <div class="hiddenScroll">
-              <v-row class=" alignContentCenter mt-5 mb-1 heightRanking" v-for="user in userStore.getUsers">
+              <v-row class=" alignContentCenter mt-5 mb-1 heightRanking" v-for="user, index in filterRanking(this.rankByFilter)">
                 
-                <v-row class="top3Container " v-if="user.id < 3" :style="{'background-color': rankingBackground[user.id]}">
+                <v-row class="top3Container " v-if="index < 3" :style="{'background-color': rankingBackground[index]}">
                   <v-col cols="3" class="top3 alignContentCenter">
-                    <img class="iconTop" :src="rankingImg[user.id]">
+                    <img class="iconTop" :src="rankingImg[index]">
                   </v-col>
                   <v-col class="alignContentCenter top3">
                     <p class="textTop3">{{ user.username }}</p>
                   </v-col>
                   <v-col cols="3" class="top3 alignContentCenter">
-                    <p class="numTop3">{{ user.id }}</p>
+                    <p class="numTop3">{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p>
                   </v-col>
                   <!-- divider -->
-                  <div v-if="user.id == 2" class="dividerDark"></div>
+                  <div v-if="index == 2" class="dividerDark"></div>
                 </v-row>
-
+                
                 <v-row class="heightRanking alignContentCenter" v-else>
                   <v-col cols="4" class="alignContentCenter heightRanking">
-                    <p>{{ user.id }}</p>
+                    <p>{{ index}}</p>
                   </v-col>
                   <v-col class="alignContentCenter heightRanking">
                     <p>{{ user.username }}</p>
                   </v-col>
                   <v-col cols="4" class="alignContentCenter heightRanking">
-                    <p>{{ user.id }}</p>
+                    <p>{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p>
                   </v-col>
                   <div class="dividerRank my-2"></div>
                 </v-row>
@@ -189,11 +189,10 @@
     export default {
         data () {
           return {
-            /* missions */
             missionStore: missionStore(),
             userStore: userStore(),
             titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
-            model: 2,
+            model: 3,
             user: {},
 
             /* recent posts */
@@ -207,7 +206,8 @@
             /* ranking */
             selected: '',
             rankingImg: ['/src/assets/icons/leafFirstPlace.svg','/src/assets/icons/leafSecondPlace.svg','/src/assets/icons/leafThirdPlace.svg'],
-            rankingBackground: ['rgba(156, 209, 171, 0.9)','rgba(156, 209, 171, 0.5)','rgba(156, 209, 171, 0.3)']
+            rankingBackground: ['rgba(156, 209, 171, 0.9)','rgba(156, 209, 171, 0.5)','rgba(156, 209, 171, 0.3)'],
+            rankByFilter: 'badges'
 
       }
     },
@@ -235,12 +235,18 @@
         }*/
 
         return userBadges
+      },
+      filterRanking(type) {
+        this.rankByFilter = type
+        let users = this.userStore.getUsers
+        if(type == 'badges') users.sort((a,b) => b.badgesState.length - a.badgesState.length)
+        if(type == 'occurrences') users.sort((a,b) => b.occurrenceId.length - a.occurrenceId.length)
+        if(type == 'events') users.sort((a,b) => (b.joined.eventId.length + b.joined.activityId.length) - (a.joined.eventId.length + a.joined.activityId.length))
+        return users
       }
     },
     created () {
-      
       this.user = JSON.parse(localStorage.getItem('currentUser'))
-
       /* create most recent */
       let recentArray = []
       let occurrenceArray = this.occurrenceStore.getOccurrences
