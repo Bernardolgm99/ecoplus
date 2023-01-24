@@ -71,6 +71,13 @@ a:hover {
     align-items: center;
 }
 
+.rowSpaceAround {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .orderRow {
     display:flex;
     flex-direction: row;

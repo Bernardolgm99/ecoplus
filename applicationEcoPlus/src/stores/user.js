@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 
-
 let users
 
 if (!JSON.parse(localStorage.getItem('users'))) {
@@ -57,6 +56,240 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         true, false, false,
         true, true
       ]
+    },
+    {id: 2, 
+      username: 'Antonio', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 3, 
+      username: 'miguel', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 4, 
+      username: 'joana', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 5, 
+      username: 'Maria', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 6, 
+      username: 'frederico', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 7, 
+      username: 'Bessa', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 8, 
+      username: 'julio', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 9, 
+      username: 'catarina', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
+    },
+    {id: 10, 
+      username: 'catia', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
     }
   ]
   localStorage.setItem('users', JSON.stringify(users))
@@ -71,6 +304,7 @@ export const userStore = defineStore('user', {
     users: users
   }),
   getters: {
+    getUsers: (state) => state.users,
     getId: (state) => state.id,
     getUsername: (state) => state.username,
     getName: (state) => state.username,
