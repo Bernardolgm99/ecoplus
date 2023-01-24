@@ -91,14 +91,14 @@
                                                         <button @click="dislike(comment)"> Dislike </button>
                                                     </div>
                                                     <div>
-                                                        {{ comment.name }}
+                                                        {{ userStore.getUserById(comment.userId).username }}
                                                         {{ comment.message }}
                                                     </div>
                                                 </div>
                                             </v-window-item>
                                             <v-window-item value="members">
                                                 <div v-for="member in members">
-                                                    <!-- <img :src="member.src" /> -->
+                                                    <img :src="member.perfilImage" />
                                                     <div>
                                                         {{ member.username }}
                                                         {{ member.title }}
@@ -167,7 +167,7 @@ export default {
             } else {
                 comment.likesDislikes.likes.splice(comment.likesDislikes.likes.indexOf(this.user.id), 1)
             }
-            const index = this.comments.findIndex(commentIndex => commentIndex.id == comment.id)
+            const index = this.comments.findIndex(commentIndex => commentIndex.messageId == comment.messageId)
             this.comments[index] = comment
             this.update()
         },
@@ -181,7 +181,7 @@ export default {
             } else {
                 comment.likesDislikes.dislikes.splice(comment.likesDislikes.dislikes.indexOf(this.user.id), 1)
             }
-            const index = this.comments.findIndex(commentIndex => commentIndex.id == comment.id)
+            const index = this.comments.findIndex(commentIndex => commentIndex.messageId == comment.messageId)
             this.comments[index] = comment
             this.update()
         },
@@ -189,7 +189,7 @@ export default {
         addComment() {
             this.comments.splice(0,0,{
                 messageId: this.comments[0].messageId + 1,
-                name: this.user.username,
+                userId: this.user.id,
                 message: this.newComment,
                 likesDislikes: { likes: [], dislikes: [] },
             });
@@ -211,7 +211,6 @@ export default {
         },
 
         update() {
-            console.log(this.members)
             this.activity.membersId = this.members.map(member => member.id)
             this.activity.comments = this.comments;
             this.activityStore.updateActivity(this.activity);
