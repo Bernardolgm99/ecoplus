@@ -61,6 +61,11 @@
         <v-carousel-item>
           <div class="bgGrey">
             <!-- items container -->
+            <div class="contentBadgesCat" v-if="getBadges('occurrence').length == 0 && getBadges('activity').length == 0 && getBadges('events').length == 0 && getBadges('other').length == 0">
+              <h3>Não tens Medalhas!</h3>
+              <p>Não te preocupes, consegues obtelas participando em Atividades e Eventos, publicando Ocorrências que encontres na tua escola e por classificares Atividades/Eventos</p>
+            </div>
+
             <div class="contentBadgesCat" v-if="getBadges('occurrence').length > 0">
               <h3>Ocorrências</h3>
               <div class="orderBadges">
@@ -72,12 +77,13 @@
               </div>
             </div>
 
-            <div class="orderColumnCenter" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
+          <div class="orderColumnCenter" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0 && getBadges('occurrence').length > 0">
+            <!-- divider -->
+            <div class="divider"></div>
+            <!-- divider -->
+          </div>
 
-              <!-- divider -->
-              <div class="divider"></div>
-              <!-- divider -->
-              <div class="contentBadgesCat">
+              <div class="contentBadgesCat"  v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
                 <h3>Eventos/Atividades</h3>
                 <div class="orderBadges">
                   <!-- container item -->
@@ -92,15 +98,15 @@
                 </div>
               </div>
 
-            </div>
-              
-            <div class="orderColumnCenter" v-if="getBadges('other').length > 0">
+            
+          <div class="orderColumnCenter" v-if="getBadges('other').length > 0 && getBadges('activity').length > 0 || getBadges('events').length > 0">
+            <!-- divider -->
+            <div class="divider"></div>
+            <!-- divider -->
+          </div>
 
-              <!-- divider -->
-              <div class="divider"></div>
-              <!-- divider -->
-              <div class="contentBadgesCat displayColumn" v-if="getBadges('occurrence').length > 0">
-              <h3>Ocorrências</h3>
+              <div class="contentBadgesCat displayColumn" v-if="getBadges('other').length > 0">
+              <h3>Outros</h3>
               <div class="orderBadges">
                 <!-- container item -->
                 <div class="orderColumnCenter badgeImgContainer displayWarp"  v-for="badge in getBadges('other')">
@@ -110,7 +116,6 @@
               </div>
             </div>
 
-            </div>
 
           </div>
         </v-carousel-item>
@@ -154,7 +159,7 @@
                   <div v-if="user.id == 2" class="dividerDark"></div>
                 </v-row>
 
-                <v-row class="heightRanking alignContentCenter" v-if="user.id > 2">
+                <v-row class="heightRanking alignContentCenter" v-else>
                   <v-col cols="4" class="alignContentCenter heightRanking">
                     <p>{{ user.id }}</p>
                   </v-col>
@@ -188,7 +193,7 @@
             missionStore: missionStore(),
             userStore: userStore(),
             titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
-            model: 0,
+            model: 2,
             user: {},
 
             /* recent posts */
@@ -212,10 +217,22 @@
         let userState = this.userStore.getBadgesState(this.user.id)
         let allBadges = this.badgeStore.getBadges
 
-
         for(let i = 0; i < allBadges.length; i++) {
-          if(allBadges[i].type == type && userState[i] == true) userBadges.push(allBadges[i])
+          if(allBadges[i].type == type) {
+            if(userState.findIndex(element => element == allBadges[i].id)  != -1) userBadges.push(allBadges[i])
+          } 
         }
+
+        /* if(type == 'badges') {
+          let countBadges = 0
+          userState.forEach(element => {
+            element.badgesState.forEach(item => {
+              if(item == true) countBadges++
+            });
+            userBadges.sort((b,a) => ())
+            
+          }); 
+        }*/
 
         return userBadges
       }
@@ -227,20 +244,20 @@
       /* create most recent */
       let recentArray = []
       let occurrenceArray = this.occurrenceStore.getOccurrences
-      // // let eventArray = this.eventStore.getEvents
-      // for(let event of eventArray) {
-      //   this.feed.push(event)
-      // }
+      let eventArray = this.eventStore.getEvents
+      for(let event of eventArray) {
+        this.feed.push(event)
+      }
       for(let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
-      this.feed.sort((a,b) => (b.dateHour.date + b.dateHour.hour) - (a.dateHour.date + a.dateHour.hour))
-      for(let i = 0; i < 3; i++) {
-        recentArray.push(this.feed[i])
-      }
-      this.feed = recentArray
+      this.feed.sort((a,b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
 
-      console.log(this.feed)
+      for(let i = 0; i < 3; i++) {
+        if(this.feed[i] != undefined) recentArray.push(this.feed[i])
+      }
+      
+      this.feed = recentArray
       
     },
     }

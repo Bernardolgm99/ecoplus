@@ -24,12 +24,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 2, 1],
-      badgesState: [
-        true, false, false,
-        true, false, false,
-        true, true, true,
-        true, false
-      ]
+      badgesState: [0]
     },
     {id: 1, 
       username: 'João', 
@@ -50,12 +45,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 2, 
       username: 'Antonio', 
@@ -76,12 +66,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 3, 
       username: 'miguel', 
@@ -102,12 +87,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 4, 
       username: 'joana', 
@@ -128,12 +108,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 5, 
       username: 'Maria', 
@@ -154,12 +129,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 6, 
       username: 'frederico', 
@@ -180,12 +150,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 7, 
       username: 'Bessa', 
@@ -206,12 +171,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 8, 
       username: 'julio', 
@@ -232,12 +192,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 9, 
       username: 'catarina', 
@@ -258,12 +213,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     },
     {id: 10, 
       username: 'catia', 
@@ -284,12 +234,6 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
     },
     {id: 11, 
       username: 'bernardo', 
@@ -310,12 +254,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
-      badgesState: [
-        false, false, false,
-        true, true, true,
-        true, false, false,
-        true, true
-      ]
+      badgesState: [3, 4, 5, 6, 9]
     }
   ]
   localStorage.setItem('users', JSON.stringify(users))

@@ -95,6 +95,7 @@ a {
 .bgGrey {
     background-color: #E4DBD3;
     border-radius: 5px;
+    width: 255px;
 }
 
 .orderBadges {
@@ -105,6 +106,7 @@ a {
 .contentBadgesCat {
     padding: 5%;
     align-self: flex-start;
+    width: inherit;
 }
 
 .badgeImgContainer {
@@ -198,24 +200,8 @@ a {
 }
 
 .hiddenScroll::-webkit-scrollbar {
-  /* width: 3px; */
   display: none;
 }
-  
-  /* Track */
-.hiddenScroll::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-  }
-   
-  /* Handle */
-.hiddenScroll::-webkit-scrollbar-thumb {
-    background: #888; 
-  }
-  
-  /* Handle on hover */
-.hiddenScroll::-webkit-scrollbar-thumb:hover {
-    background: #555; 
-  }
 
 div.v-col.alignContentCenter {
     padding: 5px;
