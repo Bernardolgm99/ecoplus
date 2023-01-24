@@ -188,6 +188,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../assets/styles/base.css';
 img {
     width: 100%;
     height: 200px;

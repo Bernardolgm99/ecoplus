@@ -10,6 +10,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       title: 'Legend',
       name: 'admin',
       perfilImage: '/src/assets/perfil/avatar.jpeg',
+      perfilBgImage: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
       email: 'admin', 
       password: 'admin', 
       gender: 'undefined', 

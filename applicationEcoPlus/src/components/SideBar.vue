@@ -33,8 +33,8 @@
                 <div class="postBgImage alignContentBottom" :style="{'background-image': 'url(' + post.image + ')'}">
                   <div class="postTitleContent">
                     <div class="postIconBackground">
-                      <img v-if="post.type == 'occurrence'" class="postIcon" src="src/assets/icons/tool.svg">
-                      <img v-else class="postIcon" src="src/assets/icons/calendar.svg">
+                      <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
+                      <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
                     </div>
                     <h1 class="textMediumLarge postTitle">{{post.title}}</h1>
                   </div>
@@ -47,8 +47,8 @@
                 <div class="postBgImage alignContentBottom" :style="{'background-image': 'url(' + post.image + ')'}">
                   <div class="postTitleContent">
                     <div class="postIconBackground">
-                      <img v-if="post.type == 'occurrence'" class="postIcon" src="src/assets/icons/tool.svg">
-                      <img v-else class="postIcon" src="src/assets/icons/calendar.svg">
+                      <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
+                      <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
                     </div>
                     <h1 class="textMediumLarge postTitle">{{post.title}}</h1>
                   </div>
@@ -181,18 +181,18 @@
 </template>
 
 <script>
-  import {missionStore} from '../stores/mission'
+  import { userStore } from '../stores/user'
   import { occurrenceStore } from '../stores/occurrence'
   import { eventStore } from '../stores/event'
+  import { missionStore } from '../stores/mission'
   import { badgeStore } from '../stores/badge'
-  import { userStore } from '../stores/user'
     export default {
         data () {
           return {
             missionStore: missionStore(),
             userStore: userStore(),
             titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
-            model: 3,
+            model: 0,
             user: {},
 
             /* recent posts */
