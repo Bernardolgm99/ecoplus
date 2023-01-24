@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
 
+.contentColumn {
+    height: 96vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.contentColumn::-webkit-scrollbar {
+    display: none;
+  }
 
 .v-theme--light {
     --v-theme-surface: none;

@@ -53,7 +53,7 @@ export default {
             <NavBar />
           </v-sheet>
         </v-col>
-        <v-col>
+        <v-col class="contentColumn">
           <v-sheet class="pa-2 ma-2" style="background-color: blue">
             <!-- content -->
             <div v-for="post in feed" class="content">
