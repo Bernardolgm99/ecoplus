@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 94vh;
+    height: 94.8vh;
 }
 
 #icon{
@@ -81,7 +81,7 @@
 
 #postOccurrence {
     height: 50px;
-    width: 256px;
+    width: 230px;
     background: rgba(173, 242, 194, 1) !important;
     color: rgba(60, 120, 78, 1) !important;
     font-size: 15px !important;
@@ -120,8 +120,8 @@ hr {
 }
 
 #perfil {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     display: flex;
     align-items: center;
