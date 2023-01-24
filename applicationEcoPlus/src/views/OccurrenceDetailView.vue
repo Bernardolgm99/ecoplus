@@ -18,7 +18,7 @@
             <p>Submited by {{ user.name }}</p>
             <p>
                 {{ turnDateHour }}
-                Posted {{ this.date }} at {{ this.hour }}
+                Posted {{ this.date[2] }}/{{ this.date[1] }}/{{ this.date[3] }} at {{ this.date[4] }}
             </p>
             <img :src = occurrence.image width="500">
           </v-sheet>
@@ -61,25 +61,7 @@ export default {
         },
         computed: {
             turnDateHour() {
-                for(let i = 0; i < 8; i++) {
-                    if(i != 4 && i != 6){
-                        this.date += this.occurrence.dateHour.date[i]
-                    }
-                    if(i == 4){
-                        this.date += "/" + this.occurrence.dateHour.date[i]
-                    }
-                    if(i == 6) {
-                        this.date += "/" + this.occurrence.dateHour.date[i]
-                    }
-                }
-
-                for(let i = 0; i < 4; i++){
-                    if(i != 2){
-                        this.hour += this.occurrence.dateHour.hour[i]
-                    } else {
-                        this.hour += ":" + this.occurrence.dateHour.hour[i]
-                    }
-                }
+              this.date = this.occurrence.dateHour.date
             }
         }
 }

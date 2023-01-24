@@ -36,7 +36,7 @@ export default {
         this.feed.push(occurrence)
       }
 
-      this.feed.sort((a, b) => (b.dateHour + b.dateHour) - (a.dateHour + a.dateHour))
+      this.feed.sort((a, b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
     }
   }
 }
