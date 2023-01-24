@@ -115,7 +115,7 @@
           </div>
         </v-carousel-item>
       <!-- Ranking -->
-        <v-carousel-item>
+        <v-carousel-item> 
           <v-col class="rankingBgContainer">
             <v-row class="paddingRanking rowSpaceAround">
               <button @click="filter('badges')" class="btnFilter" variant="plain">Medalhas</button>
@@ -188,7 +188,7 @@
             missionStore: missionStore(),
             userStore: userStore(),
             titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
-            model: 3,
+            model: 0,
             user: {},
 
             /* recent posts */
@@ -239,6 +239,8 @@
         recentArray.push(this.feed[i])
       }
       this.feed = recentArray
+
+      console.log(this.feed)
       
     },
     }
