@@ -116,31 +116,60 @@
         </v-carousel-item>
       <!-- Ranking -->
         <v-carousel-item>
-          <v-card class="rankingBgContainer">
-            <v-tabs v-model="tab">
-              <v-tab value="one">Madalhas</v-tab>
-              <v-tab value="two">Ocorrências</v-tab>
-              <v-tab value="three">Eventos/Atividades</v-tab>
-            </v-tabs>
-
-            <v-card-text>
-              <v-window v-model="tab">
-
-                <v-window-item value="one">
-                  One
-                </v-window-item>
+          <v-col class="rankingBgContainer">
+            <v-row class="filterBtns rowSpaceAround">
+              <button @click="filter('badges')" class="btnFilter" variant="plain">Medalhas</button>
+              <button @click="filter('occurrences')" class="btnFilter" variant="plain">Ocorrências</button>
+              <button @click="filter('events')" class="btnFilter" variant="plain">Eventos</button>
+            </v-row>
+            
+            <div class="my-2">
+              <v-row>
+                <v-col cols="4" class="alignContentCenter">
+                  <p>Rank</p>
+                </v-col>
+                <v-col class="alignContentCenter">
+                  <p>Nome</p>
+                </v-col>
+                <v-col cols="4" class="alignContentCenter">
+                  <p>Num</p>
+                </v-col>
+              </v-row>
               
-                <v-window-item value="two">
-                  Two
-                </v-window-item>
+              <v-row class="alignContentCenter mt-5" v-for="user in userStore.getUsers">
+                
+                <v-row class="top3Container mb-1" v-if="user.id < 3" :style="{'background-color': rankingBackground[user.id]}">
+                  <v-col cols="3" class="top3 alignContentCenter">
+                    <img class="iconTop" :src="rankingImg[user.id]">
+                  </v-col>
+                  <v-col class="alignContentCenter top3">
+                    <p class="textTop3">{{ user.username }}</p>
+                  </v-col>
+                  <v-col cols="3" class="top3 alignContentCenter">
+                    <p class="numTop3">{{ user.id }}</p>
+                  </v-col>
+                  <!-- divider -->
+                  <div v-if="user.id == 2" class="dividerDark"></div>
+                </v-row>
 
-                <v-window-item value="three">
-                  Three
-                </v-window-item>
-
-              </v-window>
-            </v-card-text>
-          </v-card>
+                
+                <v-row class="otherRanking alignContentCenter mb-5" v-else>
+                  <v-col cols="4" class="alignContentCenter">
+                    <p>{{ user.id }}</p>
+                  </v-col>
+                  <v-col class="alignContentCenter">
+                    <p>{{ user.username }}</p>
+                  </v-col>
+                  <v-col cols="4" class="alignContentCenter">
+                    <p>{{ user.id }}</p>
+                  </v-col>
+                  <div class="dividerRank my-1"></div>
+                </v-row>
+                
+              </v-row>
+              
+            </div>
+          </v-col>
         </v-carousel-item>
     </v-carousel>
 </template>
@@ -170,7 +199,10 @@
             badgeStore: badgeStore(),
 
             /* ranking */
-            tab: null
+            selected: '',
+            rankingImg: ['/src/assets/icons/leafFirstPlace.svg','/src/assets/icons/leafSecondPlace.svg','/src/assets/icons/leafThirdPlace.svg'],
+            rankingBackground: ['rgba(156, 209, 171, 0.9)','rgba(156, 209, 171, 0.5)','rgba(156, 209, 171, 0.3)']
+
       }
     },
     methods: {

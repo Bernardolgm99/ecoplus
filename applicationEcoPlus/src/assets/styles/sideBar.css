@@ -124,15 +124,56 @@ a {
 }
 
 /* raking */
-.v-slide-group__next, .v-slide-group__prev {
-    display: none !important;
-}
-
-.v-tab.v-tab.v-tab {
-    margin: 0px;
-    padding: 0px;
-}
-
 .rankingBgContainer {
     width: 260px;
+    background-color: #E4DBD3;
+    border-radius: 5px;
+    border: 1px solid #8F9992;
+}
+
+.btnFilter {
+    margin: 2%;
+}
+
+.rankingContent {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+.top3 {
+    height: 40px;
+}
+.top3Container {
+    background-size: 260px !important;
+}
+
+.otherRanking {
+    height: 24px;
+}
+
+.top3Container {
+    max-width: 260px;
+}
+
+.iconTop {
+    width: 28px;
+}
+
+.dividerRank{
+    width: 244px;
+    height: 1px;
+    background-color: #bfbfbf;
+    margin-bottom: 2%;
+}
+
+.dividerDark {
+    width: 260px;
+    height: 1px;
+    background-color: #8F9992;
+}
+
+div.v-col.alignContentCenter {
+    padding: 5px;
 }
