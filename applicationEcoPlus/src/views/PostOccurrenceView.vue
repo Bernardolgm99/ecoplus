@@ -94,8 +94,8 @@ import { occurrenceStore } from '../stores/occurrence.js'
         },
         methods: {
             postOccurrence() {
-                this.occurrenceStore.addOccurrence(this.user.id, this.title, this.image, this.location, this.locationDesc, this.desc)
-                this.$router.push('/home') 
+                this.occurrenceStore.addOccurrence(this.user.id, this.title, '/src/assets/images/'+this.image[0].name, this.location, this.locationDesc, this.desc)
+                this.$router.push('/home')  
             }
         },
         created() {
