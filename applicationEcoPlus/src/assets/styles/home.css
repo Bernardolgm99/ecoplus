@@ -1,0 +1,98 @@
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-around;
+    padding-top: 30px;
+}
+
+.viewMore {
+    display: flex;
+    justify-content: center;
+
+}
+
+.viewMore a {
+    color: black;
+}
+
+.comments{
+    display: flex;
+    padding-left: 34px;
+    padding-top: 10px;
+}
+
+.image {
+    display: flex;
+    width: 500px; 
+    height: 300px;
+    background-size: cover !important;
+    background-size: 100% 100%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.topperIconsEvent {
+    width: 100%;
+    height: 80px;
+    background-color: rgba(205, 234, 143, 0.9);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.topperIconsOccurrence {
+    width: 500px;
+    height: 80px;
+    background-color: rgba(105, 181, 128, 0.9);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: flex;
+    align-self: flex-end;
+    align-items: center;
+    opacity: 90%;
+}
+
+.postIconBackground {
+    width: 30px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-left: 2%;
+    margin-right: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.postIcon {
+    width: 15px;
+    height: 15px;
+}
+
+.infos {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoCardContent {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.location {
+    padding-top: 50px;
+    padding-right: 10px;
+}
+
+hr {
+    background-color: rgba(111, 190, 135, 1);
+}
