@@ -194,10 +194,10 @@
       /* create most recent */
       let recentArray = []
       let occurrenceArray = this.occurrenceStore.getOccurrences
-      let eventArray = this.eventStore.getEvents
-      for(let event of eventArray) {
-        this.feed.push(event)
-      }
+      // // let eventArray = this.eventStore.getEvents
+      // for(let event of eventArray) {
+      //   this.feed.push(event)
+      // }
       for(let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
