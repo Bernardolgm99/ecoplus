@@ -124,15 +124,27 @@ a {
 }
 
 /* raking */
+.tableHeader {
+    padding-bottom: 5px;
+}
+
 .rankingBgContainer {
     width: 260px;
+    height: 490px;
     background-color: #E4DBD3;
     border-radius: 5px;
     border: 1px solid #8F9992;
+    padding: 0px;
+    padding-top: 12px;
 }
 
 .btnFilter {
     margin: 2%;
+}
+
+.paddingRanking {
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .rankingContent {
@@ -149,8 +161,8 @@ a {
     background-size: 260px !important;
 }
 
-.otherRanking {
-    height: 24px;
+.heightRanking {
+    height: 20px;
 }
 
 .top3Container {
@@ -173,6 +185,37 @@ a {
     height: 1px;
     background-color: #8F9992;
 }
+.dividerBlack {
+    width: 260px;
+    height: 1px;
+    background-color: black;
+}
+
+.hiddenScroll {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 430px;
+}
+
+.hiddenScroll::-webkit-scrollbar {
+  /* width: 3px; */
+  display: none;
+}
+  
+  /* Track */
+.hiddenScroll::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+.hiddenScroll::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+.hiddenScroll::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
 
 div.v-col.alignContentCenter {
     padding: 5px;

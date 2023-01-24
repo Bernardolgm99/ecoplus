@@ -117,28 +117,30 @@
       <!-- Ranking -->
         <v-carousel-item>
           <v-col class="rankingBgContainer">
-            <v-row class="filterBtns rowSpaceAround">
+            <v-row class="paddingRanking rowSpaceAround">
               <button @click="filter('badges')" class="btnFilter" variant="plain">Medalhas</button>
               <button @click="filter('occurrences')" class="btnFilter" variant="plain">Ocorrências</button>
               <button @click="filter('events')" class="btnFilter" variant="plain">Eventos</button>
+              <div class="dividerBlack"></div>
             </v-row>
-            
-            <div class="my-2">
-              <v-row>
-                <v-col cols="4" class="alignContentCenter">
+            <div class="mt-2 paddingRanking">
+              <v-row class="tableHeader">
+                <v-col cols="3" class="alignContentCenter">
                   <p>Rank</p>
                 </v-col>
                 <v-col class="alignContentCenter">
                   <p>Nome</p>
                 </v-col>
-                <v-col cols="4" class="alignContentCenter">
+                <v-col cols="3" class="alignContentCenter">
                   <p>Num</p>
                 </v-col>
               </v-row>
-              
-              <v-row class="alignContentCenter mt-5" v-for="user in userStore.getUsers">
+            </div>
+
+            <div class="hiddenScroll">
+              <v-row class=" alignContentCenter mt-5 mb-1 heightRanking" v-for="user in userStore.getUsers">
                 
-                <v-row class="top3Container mb-1" v-if="user.id < 3" :style="{'background-color': rankingBackground[user.id]}">
+                <v-row class="top3Container " v-if="user.id < 3" :style="{'background-color': rankingBackground[user.id]}">
                   <v-col cols="3" class="top3 alignContentCenter">
                     <img class="iconTop" :src="rankingImg[user.id]">
                   </v-col>
@@ -152,18 +154,17 @@
                   <div v-if="user.id == 2" class="dividerDark"></div>
                 </v-row>
 
-                
-                <v-row class="otherRanking alignContentCenter mb-5" v-else>
-                  <v-col cols="4" class="alignContentCenter">
+                <v-row class="heightRanking alignContentCenter" v-if="user.id > 2">
+                  <v-col cols="4" class="alignContentCenter heightRanking">
                     <p>{{ user.id }}</p>
                   </v-col>
-                  <v-col class="alignContentCenter">
+                  <v-col class="alignContentCenter heightRanking">
                     <p>{{ user.username }}</p>
                   </v-col>
-                  <v-col cols="4" class="alignContentCenter">
+                  <v-col cols="4" class="alignContentCenter heightRanking">
                     <p>{{ user.id }}</p>
                   </v-col>
-                  <div class="dividerRank my-1"></div>
+                  <div class="dividerRank my-2"></div>
                 </v-row>
                 
               </v-row>

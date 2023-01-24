@@ -290,6 +290,32 @@ if (!JSON.parse(localStorage.getItem('users'))) {
         true, false, false,
         true, true
       ]
+    },
+    {id: 11, 
+      username: 'bernardo', 
+      title: 'Newbie',
+      name: 'admin', 
+      perfilImage: '/src/assets/perfil/yoda.jpeg',
+      email: 'admin', 
+      password: 'admin', 
+      gender: 'undefined', 
+      city: 'undefined', 
+      postalcode: 'undefined', 
+      birthDate: 'undefined', 
+      district: 'undefined', 
+      school: 'undefined',
+      joined: {
+        eventId: [1, 3, 5, 6],
+        activityId: [1, 2, 3, 4]
+      },
+      occurrenceId: [2, 5, 6, 7, 4],
+      missionsState: [1, 0, 1],
+      badgesState: [
+        false, false, false,
+        true, true, true,
+        true, false, false,
+        true, true
+      ]
     }
   ]
   localStorage.setItem('users', JSON.stringify(users))
