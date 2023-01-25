@@ -5,3 +5,13 @@
     background-position: top center;
     background-size: auto 100%;
 }
+
+.contentColumnPerfil {
+    height: 57vh;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+.contentColumnPerfil::-webkit-scrollbar {
+    display: none;
+}

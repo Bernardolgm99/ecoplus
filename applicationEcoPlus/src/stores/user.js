@@ -303,7 +303,6 @@ export const userStore = defineStore('user', {
     },
     getUserById: (state) =>
       (userId) => state.users.find(user => user.id == userId),
-    getUsers: (state) => state.users,
     getUserMissionState: (state) => (userId) => {
       let user = state.users.find(user => user.id == userId)
       return user.missionsState

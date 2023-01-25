@@ -1,6 +1,6 @@
 <template>
     <v-app id="inspire">
-    <v-container>
+    <v-container class="noContainer">
       <v-row no-gutters>
         <!-- navbar -->
         <v-col cols="3">
@@ -10,39 +10,86 @@
         </v-col>
 
         <!-- content -->
-        <v-col class="contentColumn">
+        <v-col>
             <div class="perfilHeader bannerPerfil" :style="{'background-image': 'url(' + user.perfilBgImage + ')'}">
-            </div>
-            <div class="containUserInfo">
+              <div class="containUserInfo">
                 {{ user.username }}
                 {{ user.name }}
+              </div>
             </div>
-            <v-sheet class="pa-2 ma-2" style="background-color: blue">
-                <div v-for="post in userFeed" class="content">
-                  <div class="card">
-                    <img :src=post.image width="500">
-                    <div>
-                      <h1>{{ post.title }}</h1> &nbsp;
-                      <h3>{{ post.location }}</h3>
+            <v-sheet class="pa-2 contentColumnPerfil" style="background-color: rgba(255, 250, 246, 1); 
+              border-right: 1px solid rgba(111, 190, 135, 1);
+              border-left: 1px solid rgba(111, 190, 135, 1);">
+            <!-- content -->
+            <div v-for="post in userFeed" class="content">
+
+              <div>
+
+                <div class="card">
+                  <div class="image"  :style="`background: url(${post.image});`">
+                    <div v-if="post.type == 'event'" class="topperIconsEvent">
+                      <div class="infoCardContent">
+                        <div class="postIconBackground">
+                          <img class="postIcon" src="/src/assets/icons/calendar.svg">
+                        </div>
+                        <div class="infos">
+                          <div class="title">
+                            <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
+                          </div>
+                          <div class="location">
+                            <span class="textSmall txtLocation">{{ post.location }}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
+  
+                      <div v-else class="topperIconsOccurrence">
+                        <div class="infoCardContent">
+                          <div class="postIconBackground">
+                            <img class="postIcon" src="/src/assets/icons/tool.svg">
+                          </div>
+                          <div class="infos">
+                            <div class="title">
+                              <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
+                            </div>
+                            <div class="location">
+                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    
+                    
+
                   </div>
+
+
+                  </div>
+    
                   <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
-                    <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}</p>
+                    <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
                     <p class="comment">{{ post.comments[i].message }}</p>
                   </div>
+    
+    
                   <div class="routerLink" v-if="post.type == 'event'">
-                    <h5>
-                      <RouterLink :to="{ name: 'eventDetail', params: { eventid: post.id } }">View More!</RouterLink>
-                    </h5>
+                    <p class="viewMore textSmall">
+                      <RouterLink :to="{ name: 'eventDetail', params: { eventid: post.id } }">- View More -</RouterLink>
+                    </p>
                   </div>
                   <div class="routerLink" v-else>
-                    <h5>
-                      <RouterLink :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">View More!
+                    <p class="viewMore textSmall">
+                      <RouterLink :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">- View More -
                       </RouterLink>
-                    </h5>
+                    </p>
                   </div>
+                  <div>
+                    <hr class="line">
+                  </div>
+                  
                 </div>
-            </v-sheet>
+              </div>
+          </v-sheet>
         </v-col>
 
         <!-- sidebar -->
@@ -96,5 +143,6 @@ export default {
 
 <style lang="scss" scoped>
     @import '../assets/styles/perfil.css';
+    @import '../assets/styles/home.css';
     @import '../assets/styles/base.css';
 </style>

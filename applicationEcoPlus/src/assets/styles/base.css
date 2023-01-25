@@ -1,6 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
 
+.noContainer {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
 .contentColumn {
     height: 96vh;
     overflow: hidden;
