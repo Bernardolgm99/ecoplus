@@ -9,8 +9,8 @@ if (!JSON.parse(localStorage.getItem('events'))) {
       userId: 0,
       title: 'Event1 3º date',
       subtitle: 'Event in the woods',
-      image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-      dateHour: {compare: 1674515139743, date:''},
+      image: 'bumblebee-1280a_kck5.jpg',
+      dateHour: { compare: 1674515139743, date: '' },
       location: 'Custoias - Portugal',
       description: 'Recolher lixo',
       membersId: [0, 1],
@@ -23,7 +23,7 @@ if (!JSON.parse(localStorage.getItem('events'))) {
       title: 'Event2 1º date',
       subtitle: 'Event in the woods',
       image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-      dateHour: {compare: 1674515139745, date:''},
+      dateHour: { compare: 1674515139745, date: '' },
       location: 'Senhora da Hora - Portugal',
       description: 'Recolher lixo',
       membersId: [0, 1],
@@ -63,8 +63,10 @@ export const eventStore = defineStore('event', {
         title: title,
         subtitle: subtitle,
         image: image,
-        dateHour: {compare: today.getTime(),
-                   date: (new Date).toString().split(' ')},
+        dateHour: {
+          compare: today.getTime(),
+          date: (new Date).toString().split(' ')
+        },
         location: location,
         description: description,
         members: [],
@@ -73,10 +75,12 @@ export const eventStore = defineStore('event', {
       })
     },
     updateEvent(event) {
-      console.log("oi");
       const index = this.events.findIndex(eventIndex => eventIndex == event)
       events[index] = event;
       localStorage.setItem('events', JSON.stringify(events));
-    }
+    },
+    updateEvents() {
+      localStorage.setItem('events', JSON.stringify(this.events));
+    },
   },
 })

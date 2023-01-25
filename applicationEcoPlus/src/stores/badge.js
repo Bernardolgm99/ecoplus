@@ -29,6 +29,9 @@ export const badgeStore = defineStore('badge', {
                 image: image,
                 description: description
             })
+        },
+        updateBadges(){
+            localStorage.setItem('badges', JSON.stringify(this.badges));
         }
     }
 })

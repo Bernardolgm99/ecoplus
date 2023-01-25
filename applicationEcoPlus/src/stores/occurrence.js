@@ -10,11 +10,12 @@ if (!JSON.parse(localStorage.getItem('occurrences'))) {
       title: 'occurrence1 2º date',
       location: 'Vila do Conde, Porto, Portugal',
       image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-      dateHour: {compare: 1674515139744, date:''},
+      dateHour: { compare: 1674515139744, date: '' },
       locationDescription: 'Perto do rio',
       description: 'Tem aguinha o rio :)',
       comments: [{ messageId: 0, userId: 0, message: 'Yau', classification: 45 }],
-      type: 'occurrence'
+      type: 'occurrence',
+      stage: 'To Do',
     },
     {
       id: 1,
@@ -22,11 +23,12 @@ if (!JSON.parse(localStorage.getItem('occurrences'))) {
       title: 'occurrence 4º date',
       location: 'Rio Tinto, Porto, Portugal',
       image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-      dateHour: {compare: 1674515139742, date: ''},
+      dateHour: { compare: 1674515139742, date: '' },
       locationDescription: 'Perto do rio',
       description: 'Tem aguinha o rio :)',
       comments: [{ messageId: 0, userId: 1, message: 'Yau', classification: 45 }],
-      type: 'occurrence'
+      type: 'occurrence',
+      stage: 'Doing',
     }
   ]
   localStorage.setItem('occurrences', JSON.stringify(occurrences))
@@ -58,14 +60,20 @@ export const occurrenceStore = defineStore('occurrence', {
         title: title,
         location: location,
         image: image,
-        dateHour: {compare: today.getTime(),
-                   date: (new Date).toString().split(' ')},
+        dateHour: {
+          compare: today.getTime(),
+          date: (new Date).toString().split(' ')
+        },
         locationDescription: locationDescription,
         descripton: description,
         comments: [],
-        type: 'occurrence'
+        type: 'occurrence',
+        stage: 'To Do',
       }
       )
+      localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
+    },
+    updateOccurrences() {
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
     }
   },

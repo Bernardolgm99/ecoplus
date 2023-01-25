@@ -11,7 +11,7 @@ export const logStore = defineStore('log', {
     ]
   }),
   getters: {
-    logs: (state) => state.logs,
+    getLogs: (state) => state.logs,
     userLogs: (state) => 
     (getUser) => state.logs.filter(log => log.username == getUser)
   },
