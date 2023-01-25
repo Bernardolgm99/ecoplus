@@ -146,5 +146,5 @@
 
 <style>
     @import '../assets/styles/landingPage.css';
-    @import '../assets/styles/base.css';
+    @import '../assets/styles/base.css'; 
 </style>

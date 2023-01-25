@@ -11,15 +11,15 @@
         </v-col>
        
         <v-col>
-          <v-sheet class="pa-2 ma-2" style="background-color: yellow">
+          <v-sheet class="pa-2 ma-2" style="background-color: rgba(255, 250, 246, 1); 
+                                        border-right: 1px solid rgba(111, 190, 135, 1);
+                                        border-left: 1px solid rgba(111, 190, 135, 1)">
             <!-- content -->
-            
+    
             <div id="suggestionContent">
                 <div id="title">
-                    <button>
-                        yau
-                    </button>
                     <div class="textTitle">
+                        <ButtonGoBack />
                         <span>Suggestion</span>
                     </div>
                 </div>
@@ -38,6 +38,7 @@
                     <v-textarea label="Write here your suggestion..." v-model="txtSuggestion" variant="solo"></v-textarea>
                 </div>
                 <div id="buttons">
+                  <div id="btnOrganizer">
                     <div id="btnBack">
                         <v-btn variant="tonal">
                             Back
@@ -48,6 +49,7 @@
                             Send
                         </v-btn>
                     </div>
+                  </div>
                 </div>
 
             </div>
@@ -71,10 +73,11 @@
 import SideBar from '../components/SideBar.vue'
 import NavBar from '../components/NavBar.vue'
 import { suggestionStore } from '../stores/suggestion'
+import ButtonGoBack from "../components/ButtonGoBack.vue";
 
     export default {
         components: {
-            SideBar, NavBar
+            SideBar, NavBar, ButtonGoBack
         },
         data() {
             return {
@@ -102,6 +105,8 @@ import { suggestionStore } from '../stores/suggestion'
 
 <style lang="scss" scoped>
   @import '../assets/styles/base.css';
+  @import '../assets/styles/suggestion.css';
+
   #inspire {
     scroll-behavior: smooth;
   }

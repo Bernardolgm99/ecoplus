@@ -60,7 +60,7 @@ export default {
             <!-- content -->
             <div v-for="post in feed" class="content">
 
-              <div>
+              <div v-if="post.stage != 'To Do'">
 
                 <div class="card">
                   <div class="image"  :style="`background: url(${post.image});`">
@@ -87,7 +87,7 @@ export default {
                           </div>
                           <div class="infos">
                             <div class="title">
-                              <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
+                              <span class="textMediumLarge">{{ post.title }} {{ post.stage == "Done" ? `(${post.stage})` : ""}}</span> &nbsp;
                             </div>
                             <div class="location">
                               <span class="textSmall txtLocation">{{ post.location }}</span>
