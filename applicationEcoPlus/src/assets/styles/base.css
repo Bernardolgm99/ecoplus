@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
 
+.border-page {
+    border-right: 1px solid #69b580;
+    border-left: 1px solid #69b580;
+    height: 100%;
+}
+
+.height100 {
+    height: 100%;
+}
+
 .noContainer {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -11,9 +21,10 @@
     overflow: hidden;
     overflow-y: scroll;
 }
+
 .contentColumn::-webkit-scrollbar {
     display: none;
-  }
+}
 
 .v-theme--light {
     --v-theme-surface: none;
@@ -24,12 +35,12 @@
     overflow: auto !important;
 }
 
-.v-application__wrap{
+.v-application__wrap {
     background: rgb(255, 250, 246) !important;
     font-family: 'Quicksand';
 }
 
-.v-application__wrap{
+.v-application__wrap {
     background-image: url('/src/assets/images/bgImage.png') !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;
@@ -92,7 +103,7 @@ a:hover {
 }
 
 .orderRow {
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: center;
 }
@@ -123,15 +134,19 @@ a:hover {
 .textSmall {
     font-size: 16px !important;
 }
+
 .textMedium {
     font-size: 18px !important;
 }
+
 .textMediumLarge {
     font-size: 20px !important;
 }
+
 .textBig {
     font-size: 30px !important;
 }
+
 .textTitle {
     font-size: 50px !important;
 }

@@ -1,8 +1,7 @@
 <template>
-    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
     <v-app>
-        <v-container>
-            <v-row no-gutters>
+        <v-container class="noContainer height100">
+            <v-row no-gutters class="height100">
                 <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
@@ -10,137 +9,142 @@
                     </v-sheet>
                 </v-col>
                 <v-col>
-                    <v-sheet class="pa-2 ma-2">
-                        <div>
-                            <img class="img-thumbnail" :src="activity.image" />
-                        </div>
-                        <div>
-                            <div class="d-flex">
-                                <ButtonGoBack />
-                                <h1>
-                                    {{ activity.title }}
-                                </h1>
-                            </div>
-                            <div class="d-flex mb-2">
-                                <h2 class="align-self-start">Diagnosis: </h2>
-                                <span class="pt-1 ml-2"> {{ activity.diagnosis }} </span>
-                                <button class="btn-subscribe mr-2 ms-auto mt-1" color="" @click="subscribe">{{
-                                (this.members.findIndex(member => member.id == this.user.id) == -1) ? "Join Event" :
-                                    "Out Event"
-                                }}</button>
-                            </div>
-                            <hr class="mb-2">
-                            <div class="d-flex mb-4">
-                                <h2>Schedule: </h2>
-                                <span class="pt-1 ml-2"> {{ activity.schedule }}</span>
-                            </div>
-                            <p class="mb-4">
-                                {{ activity.description }}
-                            </p>
+                    <v-sheet class="pa-2 border-page">
+                        <!-- content -->
+                        <img class="img-thumbnail" :src="activity.image" />
+                        <v-container>
                             <div>
-                                <v-card>
-                                    <v-tabs fixed-tabs v-model="tab" bg-color="green">
-                                        <v-tab value="moreDetails">More details</v-tab>
-                                        <v-tab value="comments">Comments</v-tab>
-                                        <v-tab value="members">Members</v-tab>
-                                    </v-tabs>
-                                    <v-card-text>
-                                        <v-window v-model="tab">
-                                            <v-window-item value="moreDetails">
-                                                <h2>
-                                                    Objectives:
-                                                </h2>
-                                                <v-container>
-                                                    <p class="pl-6">
-                                                        {{ activity.objectives }}
-                                                    </p>
-                                                </v-container>
-                                                <h2>
-                                                    Resources:
-                                                </h2>
-                                                <v-container>
-                                                    <p class="pl-6">
-                                                        {{ activity.resouces }}
-                                                    </p>
-                                                </v-container>
-                                                <div class="d-flex mb-6">
+                                <div class="d-flex">
+                                    <ButtonGoBack />
+                                    <h1>
+                                        {{ activity.title }}
+                                        class="mt-1" </h1>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <h2 class="align-self-start">Diagnosis: </h2>
+                                    <span class="pt-1 ml-2"> {{ activity.diagnosis }} </span>
+                                    <button class="btn-subscribe mr-2 ms-auto mt-1" color="" @click="subscribe">{{
+                                    (this.members.findIndex(member => member.id == this.user.id) == -1) ? 
+                                    "Join Event" : "Out Event"
+                                    }}</button>
+                                </div>
+                                <hr class="mb-2">
+                                <div class="d-flex mb-4">
+                                    <h2>Schedule: </h2>
+                                    <span class="pt-1 ml-2"> {{ activity.schedule }}</span>
+                                </div>
+                                <p class="mb-4">
+                                    {{ activity.description }}
+                                </p>
+                                <div>
+                                    <v-card flat="true">
+                                        <v-tabs fixed-tabs v-model="tab" bg-color="transparent">
+                                            <v-tab value="moreDetails">More details</v-tab>
+                                            <v-tab value="comments">Comments</v-tab>
+                                            <v-tab value="members">Members</v-tab>
+                                        </v-tabs>
+                                        <v-card-text>
+                                            <v-window v-model="tab">
+                                                <v-window-item value="moreDetails">
                                                     <h2>
-                                                        Participants:
+                                                        Objectives:
                                                     </h2>
-                                                    <p class="pl-2">
-                                                        {{ activity.participants }}
-                                                    </p>
-                                                </div>
-                                                <div class="d-flex mb-6">
+                                                    <v-container>
+                                                        <p class="pl-6">
+                                                            {{ activity.objectives }}
+                                                        </p>
+                                                    </v-container>
                                                     <h2>
-                                                        Evalution(Indicators):
+                                                        Resources:
                                                     </h2>
-                                                    <p class="pl-2">
-                                                        {{ activity.evalutionInd }}
-                                                    </p>
-                                                </div>
-                                                <div class="d-flex mb-6">
-                                                    <h2>
-                                                        Evalution(Instruments):
-                                                    </h2>
-                                                    <p class="pl-2">
-                                                        {{ activity.evalutionInst }}
-                                                    </p>
-                                                </div>
-                                                <!-- WORK IN PROGRESS-->
-                                                <!-- <div>FILES</div> -->
-                                                <!-- <div>MAPS</div> -->
-                                            </v-window-item>
-                                            <v-window-item value="comments">
-                                                <v-textarea label="Comment" rows="1" auto-grow bg-color="grey-lighten-2"
-                                                    color="green" v-model="newComment"></v-textarea>
-                                                <v-btn color="green" @click="addComment">Sent</v-btn>
-                                                <div class="d-flex" v-for="comment in comments">
-                                                    <div class="d-flex flex-column align-center">
-                                                        <v-btn variant="text" icon="mdi-arrow-up-bold" size="x-large"
-                                                            :color="comment.likesDislikes.likes.indexOf(this.user.id) != -1 ? 'green' : 'gray'"
-                                                            @click="like(comment)">
-                                                        </v-btn>
-                                                        <span> {{
-                                                            comment.likesDislikes.likes.length -
-                                                                comment.likesDislikes.dislikes.length
-                                                        }} </span>
-                                                        <v-btn variant="text" icon="mdi-arrow-down-bold" size="x-large"
-                                                            :color="comment.likesDislikes.dislikes.indexOf(this.user.id) != -1 ? 'red' : 'gray'"
-                                                            @click="dislike(comment)">
-                                                        </v-btn>
-                                                    </div>
-                                                    <div class="d-flex flex-column justify-center">
-                                                        <h2 class="mb-1">
-                                                            {{ userStore.getUserById(comment.userId).username }}
+                                                    <v-container>
+                                                        <p class="pl-6">
+                                                            {{ activity.resouces }}
+                                                        </p>
+                                                    </v-container>
+                                                    <div class="d-flex mb-6">
+                                                        <h2>
+                                                            Participants:
                                                         </h2>
-                                                        <p class="mt-1">
-                                                            {{ comment.message }}
+                                                        <p class="pl-2">
+                                                            {{ activity.participants }}
                                                         </p>
                                                     </div>
-                                                </div>
-                                            </v-window-item>
-                                            <v-window-item value="members">
-                                                <div class="d-flex flex-column" v-for="member in members">
-                                                    <div class="members d-flex mx-6">
-                                                        <img class="img-members" :src="member.perfilImage" />
-                                                        <div class="ml-6 d-flex flex-column justify-center">
+                                                    <div class="d-flex mb-6">
+                                                        <h2>
+                                                            Evalution(Indicators):
+                                                        </h2>
+                                                        <p class="pl-2">
+                                                            {{ activity.evalutionInd }}
+                                                        </p>
+                                                    </div>
+                                                    <div class="d-flex mb-6">
+                                                        <h2>
+                                                            Evalution(Instruments):
+                                                        </h2>
+                                                        <p class="pl-2">
+                                                            {{ activity.evalutionInst }}
+                                                        </p>
+                                                    </div>
+                                                    <!-- WORK IN PROGRESS-->
+                                                    <!-- <div>FILES</div> -->
+                                                    <!-- <div>MAPS</div> -->
+                                                </v-window-item>
+                                                <v-window-item value="comments">
+                                                    <v-textarea label="Comment" rows="1" auto-grow
+                                                        bg-color="grey-lighten-2" color="green"
+                                                        v-model="newComment"></v-textarea>
+                                                    <v-btn color="green" @click="addComment">Sent</v-btn>
+                                                    <div class="d-flex" v-for="comment in comments">
+                                                        <div class="d-flex flex-column align-center">
+                                                            <v-btn variant="text" icon="mdi-arrow-up-bold"
+                                                                size="x-large"
+                                                                :color="comment.likesDislikes.likes.indexOf(this.user.id) != -1 ? 'green' : 'gray'"
+                                                                @click="like(comment)">
+                                                            </v-btn>
+                                                            <span> {{
+                                                                comment.likesDislikes.likes.length -
+                                                                    comment.likesDislikes.dislikes.length
+                                                            }} </span>
+                                                            <v-btn variant="text" icon="mdi-arrow-down-bold"
+                                                                size="x-large"
+                                                                :color="comment.likesDislikes.dislikes.indexOf(this.user.id) != -1 ? 'red' : 'gray'"
+                                                                @click="dislike(comment)">
+                                                            </v-btn>
+                                                        </div>
+                                                        <div class="d-flex flex-column justify-center">
                                                             <h2 class="mb-1">
-                                                                {{ member.username }}
+                                                                {{ userStore.getUserById(comment.userId).username }}
                                                             </h2>
-                                                            <h3 class="mt-1">
-                                                                {{ member.title }}
-                                                            </h3>
+                                                            <p class="mt-1">
+                                                                {{ comment.message }}
+                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div v-if="member != members[members.length-1]" class="spacing my-3 mx-auto"></div>
-                                                </div>
-                                            </v-window-item>
-                                        </v-window>
-                                    </v-card-text>
-                                </v-card>
+                                                </v-window-item>
+                                                <v-window-item value="members">
+                                                    <div class="d-flex flex-column" v-for="member in members">
+                                                        <div class="members d-flex mx-6">
+                                                            <img class="img-members" :src="member.perfilImage" />
+                                                            <div class="ml-6 d-flex flex-column justify-center">
+                                                                <h2 class="mb-1">
+                                                                    {{ member.username }}
+                                                                </h2>
+                                                                <h3 class="mt-1">
+                                                                    {{ member.title }}
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <div v-if="member != members[members.length - 1]"
+                                                            class="spacing my-3 mx-auto"></div>
+                                                    </div>
+                                                </v-window-item>
+                                            </v-window>
+                                        </v-card-text>
+                                    </v-card>
+                                </div>
                             </div>
-                        </div>
+                        </v-container>
                     </v-sheet>
                 </v-col>
                 <v-col cols="3">
@@ -252,36 +256,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/styles/base.css';
-@import '../assets/styles/activities.css';
-
-.img-thumbnail {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.members {
-    background-color: #B4D6BA;
-    border-radius: 25px;
-    padding: 10px;
-    max-width: 500px;
-}
-
-.img-members {
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid #fff;
-}
-
-.spacing {
-    background-color: #69b580;
-    height: 15px;
-    width: 80px;
-    border-radius: 50px;
-}
-
-span,
-p {
-    font-size: 20px;
-}
+@import '../assets/styles/details.css';
 </style>

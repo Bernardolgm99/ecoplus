@@ -13,7 +13,7 @@ if (!JSON.parse(localStorage.getItem('occurrences'))) {
       dateHour: { compare: 1674515139744, date: '' },
       locationDescription: 'Perto do rio',
       description: 'Tem aguinha o rio :)',
-      comments: [{ messageId: 0, userId: 0, message: 'Yau', classification: 45 }],
+      comments: [{ messageId: 0, userId: 0, message: 'Yau', likesDislikes: { likes: [0, 2], dislikes: [1] } }],
       type: 'occurrence',
       stage: 'To Do',
     },
@@ -26,7 +26,7 @@ if (!JSON.parse(localStorage.getItem('occurrences'))) {
       dateHour: { compare: 1674515139742, date: '' },
       locationDescription: 'Perto do rio',
       description: 'Tem aguinha o rio :)',
-      comments: [{ messageId: 0, userId: 1, message: 'Yau', classification: 45 }],
+      comments: [{ messageId: 0, userId: 1, message: 'Yau', likesDislikes: { likes: [0, 2], dislikes: [1] } }],
       type: 'occurrence',
       stage: 'Doing',
     }

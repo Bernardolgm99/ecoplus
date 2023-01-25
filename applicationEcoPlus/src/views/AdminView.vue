@@ -1,5 +1,4 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
   <v-container>
     <div class="d-flex justify-space-between">
       <h2>

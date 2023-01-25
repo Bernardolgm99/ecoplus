@@ -1,7 +1,7 @@
 <template>
     <v-app>
-        <v-container>
-            <v-row no-gutters>
+        <v-container class="noContainer height100">
+            <v-row no-gutters class="height100">
                 <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
@@ -9,45 +9,47 @@
                     </v-sheet>
                 </v-col>
                 <v-col>
-                    <v-sheet class="pa-2 ma-2">
+                    <v-sheet class="pa-2 border-page">
                         <!-- content -->
-                        <div class="d-flex">
-                            <ButtonGoBack />
-                            <h1>20XX - Plan</h1>
-                        </div>
-                        <h3> Here is the list of proposed activities for 20XX. We hope you all enroll your selves in
-                            every
-                            last one.</h3>
-                        <v-table class="mt-6">
-                            <thead>
-                                <tr>
-                                    <th scope="col"><b>#</b></th>
-                                    <th scope="col">Activities</th>
-                                    <th class="text-right" scope="col">Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="activity,index in activities" :class="index%2 == 0 ? 'even' : 'odd'" :key="activity.id">
-                                    <td>
-                                        <input type="checkbox" id="id{{ activity.title }}" :value="activity.id"
-                                            v-model="checkedActivities" />
-                                    </td>
-                                    <td>
-                                        {{ activity.title }}
-                                    </td>
-                                    <td class="text-right">
-                                        <RouterLink
-                                            :to="{ name: 'activityDetail', params: { activityId: activity.id } }">
-                                            <v-btn variant="flat" name="detail">Detail</v-btn>
-                                        </RouterLink>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </v-table>
-                        <div class="d-flex justify-space-around mt-4">
-                            <button class="btn-reset" @click="reset"> Reset </button>
-                            <button class="btn-subscribe" @click="subscribe"> Subscribe </button>
-                        </div>
+                        <v-container>
+                            <div class="d-flex">
+                                <ButtonGoBack />
+                                <h1>20XX - Plan</h1>
+                            </div>
+                            <h3> Here is the list of proposed activities for 20XX. We hope you all enroll your selves in
+                                every
+                                last one.</h3>
+                            <v-table class="mt-6">
+                                <thead>
+                                    <tr>
+                                        <th scope="col"><b>#</b></th>
+                                        <th scope="col">Activities</th>
+                                        <th class="text-right" scope="col">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="activity,index in activities" :class="index%2 == 0 ? 'even' : 'odd'" :key="activity.id">
+                                        <td>
+                                            <input type="checkbox" id="id{{ activity.title }}" :value="activity.id"
+                                                v-model="checkedActivities" />
+                                        </td>
+                                        <td>
+                                            {{ activity.title }}
+                                        </td>
+                                        <td class="text-right">
+                                            <RouterLink
+                                                :to="{ name: 'activityDetail', params: { activityId: activity.id } }">
+                                                <v-btn variant="flat" name="detail">Detail</v-btn>
+                                            </RouterLink>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </v-table>
+                            <div class="d-flex justify-space-around mt-4">
+                                <button class="btn-reset" @click="reset"> Reset </button>
+                                <button class="btn-subscribe" @click="subscribe"> Subscribe </button>
+                            </div>
+                        </v-container>
                     </v-sheet>
                 </v-col>
                 <v-col cols="3">
@@ -111,6 +113,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    @import '../assets/styles/activities.css';
-    // @import '../assets/styles/base.css';
+    @import '../assets/styles/details.css';
+    @import '../assets/styles/base.css';
 </style>
