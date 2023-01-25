@@ -1,0 +1,61 @@
+table button {
+    border: 1px solid #69b580;
+    color: #69b580;
+    font-size: 15px;
+    height: 20px;
+    width: 60px;
+    font-weight: bold;
+    text-transform: none;
+}
+
+.even {
+    background-color: #d7f4e0;
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: #e5e0d0;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid #000;
+    color: #69b580;
+    position: relative;
+}
+
+input[type="checkbox"]:checked:after {
+    content: "x";
+    color: #333;
+    font-size: 28px;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.btn-reset {
+    background-color: #a49e8d;
+    font-family: Quicksilver;
+    font-weight: none;
+    text-transform: none;
+    width: 88px;
+    height: 29px;
+    font-size: 18px;
+    border-radius: 90px;
+    color: #fff;
+}
+.btn-subscribe {
+    background-color: #69b580;
+    font-family: Quicksilver;
+    font-weight: none;
+    text-transform: none;
+    width: 88px;
+    height: 29px;
+    font-size: 18px;
+    border-radius: 90px;
+    color: #fff;
+}
