@@ -24,8 +24,8 @@
                                     <h2 class="align-self-start">Diagnosis: </h2>
                                     <span class="pt-1 ml-2"> {{ activity.diagnosis }} </span>
                                     <button class="btn-subscribe mr-2 ms-auto mt-1" color="" @click="subscribe">{{
-                                    (this.members.findIndex(member => member.id == this.user.id) == -1) ? 
-                                    "Join Event" : "Out Event"
+                                    (this.members.findIndex(member => member.id == this.user.id) == -1) ?
+                                        "Join Event" : "Out Event"
                                     }}</button>
                                 </div>
                                 <hr class="mb-2">
@@ -162,6 +162,7 @@
 import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
 import ButtonGoBack from "../components/ButtonGoBack.vue";
+import { eventStore } from "../stores/event.js";
 import { activityStore } from "../stores/activity.js";
 import { userStore } from "../stores/user"
 
@@ -171,8 +172,10 @@ export default {
         SideBar,
         ButtonGoBack,
     },
+
     data: () => ({
         tab: null,
+        eventStore: eventStore(),
         activityStore: activityStore(),
         userStore: userStore(),
         users: [],
@@ -182,16 +185,18 @@ export default {
         newComment: "",
         members: [],
     }),
+
     created() {
         this.user = JSON.parse(localStorage.getItem('currentUser'));
         this.activity = this.activityStore.getActivityById(this.$route.params.activityId);
         this.users = this.userStore.getUsers;
         this.comments = this.activity.comments;
-        for (const memberId in this.activity.membersId) {
+        for (const memberId of this.activity.membersId) {
+            console.log(memberId);
             this.members.push(this.users.find(user => user.id == memberId));
         }
-
     },
+
     methods: {
         like(comment) {
             if (!(comment.likesDislikes.likes.indexOf(this.user.id) != -1)) {
@@ -249,6 +254,30 @@ export default {
             this.activity.membersId = this.members.map(member => member.id)
             this.activity.comments = this.comments;
             this.activityStore.updateActivity(this.activity);
+            this.verifyBadge();
+        },
+
+        verifyBadge() {
+            let count = 0
+            this.eventStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
+            this.activityStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
+            if (count > 0) {
+                if (this.user.badgesState.indexOf(3) == -1) {
+                    this.user.badgesState.push(3);
+                    this.userStore.updateUser(this.user);
+                } else if (count > 2) {
+                    if (this.user.badgesState.indexOf(4) == -1) {
+                        this.user.badgesState.push(4);
+                        this.userStore.updateUser(this.user);
+                    } else if (count > 9) {
+                        if (this.user.badgesState.indexOf(5) == -1) {
+                            this.user.badgesState.push(5);
+                            this.userStore.updateUser(this.user);
+                        }
+                    }
+                }
+            }
+            console.log(count);
         }
     }
 }

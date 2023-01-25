@@ -26,7 +26,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 2, 1],
-      badgesState: [0, 1, 2, 3, 6, 9]
+      badgesState: []
     },
     {id: 1, 
       username: 'João', 

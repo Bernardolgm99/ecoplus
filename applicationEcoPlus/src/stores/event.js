@@ -13,7 +13,7 @@ if (!JSON.parse(localStorage.getItem('events'))) {
       dateHour: { compare: 1674515139743, date: '' },
       location: 'Custoias - Portugal',
       description: 'Recolher lixo',
-      membersId: [0, 1],
+      membersId: [1],
       comments: [{ messageId: 0, userId: 0, message: 'Yau', likesDislikes: { likes: [], dislikes: [] } }],
       type: 'event'
     },
@@ -26,7 +26,7 @@ if (!JSON.parse(localStorage.getItem('events'))) {
       dateHour: { compare: 1674515139745, date: '' },
       location: 'Senhora da Hora - Portugal',
       description: 'Recolher lixo',
-      membersId: [0, 1],
+      membersId: [1],
       comments: [{ messageId: 0, userId: 1, message: 'Yau meu pau', likesDislikes: { likes: [0, 2], dislikes: [1] } }],
       type: 'event'
     }
@@ -48,7 +48,7 @@ export const eventStore = defineStore('event', {
     getSubtitle: (state) => state.subtitle,
     getLocation: (state) => state.location,
     getDescription: (state) => state.description,
-    getMembers: (state) => state.members,
+    getMembers: (state) => state.events.map(event => event.membersId),
     getComments: (state) => state.comments,
     getEventById: (state) =>
       (eventId) => state.events.find(event => event.id == eventId),

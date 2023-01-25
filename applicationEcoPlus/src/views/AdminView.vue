@@ -4,7 +4,7 @@
       <h2>
         Welcome {{ user.name }} !!!
       </h2>
-      <v-btn class="mx-2" @click="exitAdmin" color="blue" icon="mdi-exit"> </v-btn>
+      <v-btn class="mx-2" @click="exitAdmin" color="blue darken-4" icon="mdi-exit-to-app"> </v-btn>
     </div>
   </v-container>
 

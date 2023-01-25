@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-container class="noContainer">
-      <v-row no-gutters>
+    <v-container class="noContainer height100">
+      <v-row no-gutters class="height100">
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->

@@ -17,7 +17,7 @@ if (!JSON.parse(localStorage.getItem('activities'))) {
       evalationInst: 'count',
       image: '/src/assets/images/example(1).jpg',
       comments: [{messageId: 0, userId: 1, message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
-      membersId: [0, 2], //ID of the member
+      membersId: [2], //ID of the member
     },
     {
       id: 1,
@@ -32,7 +32,7 @@ if (!JSON.parse(localStorage.getItem('activities'))) {
       evalationInst: 'count',
       image: '/src/assets/images/example(1).jpg',
       comments: [{messageId: 0, userId: 0, message: "Um bom dia para ser da ecoEscolas!!!", likesDislikes: { likes: [0, 2], dislikes: [1] } }],
-      membersId: [0, 1], 
+      membersId: [1], 
     },
   ]
 } else {
@@ -48,7 +48,8 @@ export const activityStore = defineStore('activity', {
   getters: {
     getActivityById: (state) =>
       (activityId) => state.activities.find(activity => activity.id == activityId),
-    getActivities: (state) => state.activities
+    getActivities: (state) => state.activities,
+    getMembers: (state) => state.activities.map(activity => activity.membersId),
   },
   actions: {
     addActivity(title, diagnosis, schedule, description, objectives, resources, participants, evaluationInd, evaluationInst, image) {

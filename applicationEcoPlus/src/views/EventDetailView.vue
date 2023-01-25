@@ -93,6 +93,7 @@ import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
 import ButtonGoBack from "../components/ButtonGoBack.vue";
 import { eventStore } from "../stores/event.js";
+import { activityStore } from "../stores/activity.js";
 import { userStore } from "../stores/user";
 
 export default {
@@ -101,9 +102,11 @@ export default {
         SideBar,
         ButtonGoBack,
     },
+
     data: () => ({
         tab: null,
         eventStore: eventStore(),
+        activityStore: activityStore(),
         userStore: userStore(),
         users: [],
         user: {},
@@ -112,16 +115,22 @@ export default {
         newComment: "",
         members: [],
     }),
+
     created() {
         this.user = JSON.parse(localStorage.getItem('currentUser'));
         this.event = this.eventStore.getEventById(this.$route.params.eventid);
         this.users = this.userStore.getUsers;
         this.comments = this.event.comments;
-        for (const memberId in this.event.membersId) {
+        for (const memberId of this.event.membersId) {
             this.members.push(this.users.find(user => user.id == memberId));
         }
-        console.log(this.comments);
+        console.log(this.eventStore.getMembers);
+        let count = 0
+        this.eventStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
+        console.log(count)
+
     },
+
     methods: {
         like(comment) {
             console.log(comment);
@@ -182,13 +191,38 @@ export default {
             this.event.membersId = this.members.map(member => member.id);
             this.event.comments = this.comments;
             this.eventStore.updateEvent(this.event);
+            this.verifyBadge();
         },
+
+        verifyBadge() {
+            let count = 0
+            this.eventStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
+            this.activityStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
+            if (count > 0) {
+                if (this.user.badgesState.indexOf(3) == -1) {
+                    this.user.badgesState.push(3);
+                    this.userStore.updateUser(this.user);
+                } else if (count > 2) {
+                    if (this.user.badgesState.indexOf(4) == -1) {
+                        this.user.badgesState.push(4);
+                        this.userStore.updateUser(this.user);
+                    } else if (count > 9) {
+                        if (this.user.badgesState.indexOf(5) == -1) {
+                            this.user.badgesState.push(5);
+                            this.userStore.updateUser(this.user);
+                        }
+                    }
+                }
+            }
+            console.log(count);
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/styles/base.css';
+
 img {
     width: 100%;
     height: 200px;

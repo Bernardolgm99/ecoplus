@@ -28,7 +28,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="activity,index in activities" :class="index%2 == 0 ? 'even' : 'odd'" :key="activity.id">
+                                    <tr v-for="activity, index in activities" :class="index % 2 == 0 ? 'even' : 'odd'"
+                                        :key="activity.id">
                                         <td>
                                             <input type="checkbox" id="id{{ activity.title }}" :value="activity.id"
                                                 v-model="checkedActivities" />
@@ -68,6 +69,7 @@ import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
 import ButtonGoBack from "../components/ButtonGoBack.vue";
 import { activityStore } from "../stores/activity.js";
+import { eventStore } from "../stores/event.js";
 import { userStore } from "../stores/user.js"
 
 export default {
@@ -76,19 +78,23 @@ export default {
         SideBar,
         ButtonGoBack,
     },
+
     data() {
         return {
             userStore: userStore(),
+            eventStore: eventStore(),
             activityStore: activityStore(),
             user: {},
             activities: [],
             checkedActivities: [],
         }
     },
+
     methods: {
         reset() {
             this.checkedActivities = this.user.joined.activityId
         },
+
         subscribe() {
             this.checkedActivities.sort();
             this.user.joined.activityId = this.checkedActivities;
@@ -102,17 +108,42 @@ export default {
                 };
             }
             this.activityStore.updateActivities(this.activities)
+            this.verifyBadge();
+        },
+
+        verifyBadge() {
+            let count = 0
+            this.eventStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
+            this.activityStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
+            if (count > 0) {
+                if (this.user.badgesState.indexOf(3) == -1) {
+                    this.user.badgesState.push(3);
+                    this.userStore.updateUser(this.user);
+                } else if (count > 2) {
+                    if (this.user.badgesState.indexOf(4) == -1) {
+                        this.user.badgesState.push(4);
+                        this.userStore.updateUser(this.user);
+                    } else if (count > 9) {
+                        if (this.user.badgesState.indexOf(5) == -1) {
+                            this.user.badgesState.push(5);
+                            this.userStore.updateUser(this.user);
+                        }
+                    }
+                }
+            }
+            console.log(count);
         }
     },
+
     created() {
         this.user = JSON.parse(localStorage.getItem('currentUser'));
         this.activities = this.activityStore.getActivities;
         this.checkedActivities = this.user.joined.activityId;
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-    @import '../assets/styles/details.css';
-    @import '../assets/styles/base.css';
+@import '../assets/styles/details.css';
+@import '../assets/styles/base.css';
 </style>
