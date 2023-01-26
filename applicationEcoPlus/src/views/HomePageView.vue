@@ -63,7 +63,7 @@ export default {
               <div v-if="post.stage != 'To Do'">
 
                 <div class="card">
-                  <div class="image"  :style="`background: url(${post.image});`">
+                    <div class="image"  :style="`background: url(${post.image});`">
                     <div v-if="post.type == 'event'" class="topperIconsEvent">
                       <div class="infoCardContent">
                         <div class="postIconBackground">

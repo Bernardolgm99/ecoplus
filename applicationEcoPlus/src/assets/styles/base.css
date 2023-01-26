@@ -152,3 +152,20 @@ a:hover {
 .textTitle {
     font-size: 50px !important;
 }
+
+
+.btnJoin:active {
+    color: white;
+    background-color: rgba(90, 154, 109, 1);
+    border: 1px solid rgba(118, 188, 139, 1);
+}
+
+.btnOut:active {
+    color: white;
+    background-color: rgba(90, 154, 109, 1);
+    border: 1px solid rgba(118, 188, 139, 1);
+}
+
+.alertPostOccurrence {
+    padding-bottom: 0px;
+}

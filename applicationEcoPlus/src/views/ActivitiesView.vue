@@ -89,6 +89,11 @@ export default {
             checkedActivities: [],
         }
     },
+    created(){
+        if (!JSON.parse(localStorage.getItem('currentUser'))) {
+        this.$router.push({ name: 'signin' })
+        }
+    },
 
     methods: {
         reset() {

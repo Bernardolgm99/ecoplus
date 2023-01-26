@@ -52,6 +52,21 @@
             <input type="password" placeholder="Write again you password here" v-model="checkPw">
         </div>
         <div>
+            <v-alert prominent type="error" variant="outlined" style="margin-bottom: 20px;" v-if="alert" id="alert">
+                <strong>All parameters are required!</strong>
+            </v-alert>
+            <v-alert prominent type="error" variant="outlined" style="margin-bottom: 20px;" v-if="alertPw" id="alert">
+                <strong>Passwords doesn't match!</strong>
+            </v-alert>
+            <v-alert prominent type="error" variant="outlined" style="margin-bottom: 20px;" v-if="alertEmail" id="alert">
+                <strong>Email already exists!</strong>
+            </v-alert>
+            <v-alert prominent type="error" variant="outlined" style="margin-bottom: 20px;" v-if="alertUsername" id="alert">
+                <strong>Username already exists!</strong>
+            </v-alert>
+            <v-alert density="comfortable" type="success" style="margin-bottom: 20px;"  variant="tonal" v-if="sucess">
+                <strong>Welcome Back!</strong>
+            </v-alert>
             <button @click="this.$router.push({name: 'signin'})">I already have an account!</button>
             <br>
             <button @click="createAccount">Register</button>
@@ -82,37 +97,62 @@ import { userStore } from '../stores/user'
                 checkPw: '',
                 emailExist: false,
                 currentUser: '',
+                alert: false,
+                alertPw: false,
+                alertEmail: false,
+                alertUsername: false,
+                sucess: false
             }
         },
         methods: {
             createAccount() {
-                if(this.userStore.getExistingAccount(this.username, this.email)){
-                    if(this.pw == this.checkPw) {
+                if(this.name != '' && this.username != '' && this.email != '' && this.birthday != '' && this.gender != '' && this.city != '' && this.district != '' && this.postalcode != '' && this.school != '' && this.pw != '' && this.checkPw){
+                    if(this.userStore.getExistingAccount(this.username, this.email)){
+                        if(this.pw == this.checkPw) {
+    
+                            this.alertPw = false
+                            this.alertEmail = false
+                            this.alertUsername = false
+                            this.alert = false
+                            this.sucess = true
 
-                        this.userStore.addUser(this.username, this.name, this.email, this.birthday, this.gender, this.city, this.district, this.postalcode, this.school, this.pw)
-                        
-                        this.currentUser = this.userStore.getUserId(this.username)
-
-                        localStorage.setItem('currentUser', JSON.stringify(this.userStore.getUserById(this.currentUser)))
-
-                        alert('Account created')
-
-                        this.$router.push({name: 'home'})
-                        
+                            this.userStore.addUser(this.username, this.name, this.email, this.birthday, this.gender, this.city, this.district, this.postalcode, this.school, this.pw)
+                            
+                            this.currentUser = this.userStore.getUserId(this.username)
+    
+                            localStorage.setItem('currentUser', JSON.stringify(this.userStore.getUserById(this.currentUser)))
+    
+                            this.$router.push({name: 'home'})
+                            
+                        } else {
+                            this.alertEmail = false
+                            this.alertUsername = false
+                            this.alert = false
+                            this.alertPw = true
+                        }
+    
                     } else {
-                        alert(`Passwords doesn't match`)
+    
+                        this.emailExist = this.userStore.getEmailExistence(this.email)
+    
+                        if(this.emailExist){
+                            this.alertPw = false
+                            this.alertUsername = false
+                            this.alert = false
+                            this.alertEmail = true
+                        }
+                        if(!this.emailExist){
+                            this.alertPw = false
+                            this.alertEmail = false
+                            this.alert = false
+                            this.alertUsername = true
+                        }
                     }
-
                 } else {
-
-                    this.emailExist = this.userStore.getEmailExistence(this.email)
-
-                    if(this.emailExist){
-                        alert('Email already exists')
-                    }
-                    if(!this.emailExist){
-                        alert('Username already exists')
-                    }
+                    this.alertPw = false
+                    this.alertEmail = false
+                    this.alertUsername = false
+                    this.alert = true
                 }
             },
         },

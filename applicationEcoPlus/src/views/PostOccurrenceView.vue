@@ -42,15 +42,20 @@
                         <span class="textMediumLarge">Description:</span>
                         <v-textarea label="Write here your suggestion..." v-model="desc" variant="solo"></v-textarea>
                     </div>
+                    <div>
+                      <v-alert prominent type="error" variant="outlined" style="margin-bottom: 20px;" v-if="alert" id="alert">
+                        <strong>All parameters are required!</strong>
+                      </v-alert>
+                    </div>
                   <div id="buttons">
                     <div id="btnOrganizer">
                       <div id="btnBack">
-                          <v-btn variant="tonal" class="btn" id="backBtn" @click="this.$router.push('/home')">
+                          <v-btn class="btn" id="backBtn" @click="this.$router.push('/home')">
                               Back
                           </v-btn>
                       </div>
                       <div id="btnCommit">
-                          <v-btn variant="tonal" class="btn" id="sendBtn" @click="sendSuggestion"> 
+                          <v-btn class="btn" id="sendBtn" @click="postOccurrence"> 
                               Send
                           </v-btn>
                       </div>
@@ -60,6 +65,9 @@
                 </div>
               </div>
             </v-container>
+
+
+
 
           </v-sheet>
         </v-col>
@@ -94,13 +102,19 @@ import ButtonGoBack from "../components/ButtonGoBack.vue";
                 locationDesc: '',
                 image: '',
                 desc: '',
-                user: {}
+                user: {},
+                alert: false
             }
         },
         methods: {
             postOccurrence() {
-                this.occurrenceStore.addOccurrence(this.user.id, this.title, '/src/assets/images/'+this.image[0].name, this.location, this.locationDesc, this.desc)
-                this.$router.push('/home')  
+                if(this.title != "" && this.image[0].name != undefined && this.location != "" && this.locationDesc != "" && this.desc != ""){
+                  this.alert = false
+                  this.occurrenceStore.addOccurrence(this.user.id, this.title, '/src/assets/images/'+this.image[0].name, this.location, this.locationDesc, this.desc)
+                  this.$router.push('/home')  
+                } else {
+                  this.alert = true
+                }
             }
         },
         created() {

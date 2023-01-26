@@ -21,10 +21,11 @@
                             </h1>
                             <div>
                                 <h2> {{ event.subtitle }} </h2>
-                                <button @click="subscribe">{{
-                                (this.members.findIndex(member => member.id == this.user.id) == -1) ? "Join Event" :
-                                    "Out Event"
-                                }}</button>
+                                <button class="btnJoin" @click="subscribe" v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)">
+                                 Join Event
+                                </button>
+                                <button class="btnOut" @click="subscribe" v-else>Out Event</button>
+                                    
                             </div>
                             <hr>
                             <p>
@@ -56,18 +57,22 @@
                                                         <button @click="dislike(comment)"> Dislike </button>
                                                     </div>
                                                     <div>
-                                                        {{ userStore.getUserById(comment.userId).username }}
+                                                        <RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserById(comment.userId).id}}">
+                                                            {{ userStore.getUserById(comment.userId).username }}
+                                                        </RouterLink>
                                                         {{ comment.message }}
                                                     </div>
                                                 </div>
                                             </v-window-item>
                                             <v-window-item value="members">
                                                 <div v-for="member in members">
-                                                    <img :src="member.perfilImage" />
-                                                    <div>
-                                                        {{ member.username }}
-                                                        {{ member.title }}
-                                                    </div>
+                                                    <RouterLink RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserId(member.username)}}">
+                                                        <img :src="member.perfilImage" />
+                                                        <div>
+                                                            {{ member.username }}
+                                                            {{ member.title }}
+                                                        </div>
+                                                    </RouterLink>
                                                 </div>
                                             </v-window-item>
                                         </v-window>
@@ -117,6 +122,9 @@ export default {
     }),
 
     created() {
+        if (!JSON.parse(localStorage.getItem('currentUser'))) {
+            this.$router.push({ name: 'signin' })
+        }
         this.user = JSON.parse(localStorage.getItem('currentUser'));
         this.event = this.eventStore.getEventById(this.$route.params.eventid);
         this.users = this.userStore.getUsers;

@@ -124,6 +124,9 @@ export default {
         }
     },
     created() {
+      if (!JSON.parse(localStorage.getItem('currentUser'))) {
+        this.$router.push({ name: 'signin' })
+      }
         this.userStore.getUsers.findIndex(user => {
             if(user.id == this.$route.params.perfilid) this.user = user
         })

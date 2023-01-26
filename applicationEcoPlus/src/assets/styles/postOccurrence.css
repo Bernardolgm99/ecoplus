@@ -10,7 +10,25 @@
 }
 
 #backBtn{
-    color: white;
+    color: rgba(105, 181, 128, 1);
+    background-color: white;
     border: 1px solid rgba(105, 181, 128, 1);
-    
+}
+
+#sendBtn {
+    color: rgba(105, 181, 128, 1);
+    background-color: rgba(215, 255, 227, 1);
+    border: 1px solid rgba(105, 181, 128, 1);
+}
+
+#backBtn:active{
+    color: rgba(105, 181, 128, 1);
+    background-color: rgba(211, 211, 211, 1);
+    border: 1px solid rgba(105, 181, 128, 1);
+}
+
+#sendBtn:active {
+    color: rgba(105, 181, 128, 1);
+    background-color: rgba(185, 255, 206, 1);
+    border: 1px solid rgba(105, 181, 128, 1);
 }

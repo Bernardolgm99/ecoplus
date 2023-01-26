@@ -40,12 +40,12 @@
                 <div id="buttons">
                   <div id="btnOrganizer">
                     <div id="btnBack">
-                        <v-btn variant="tonal" class="btn" id="backBtn" @click="this.$router.push('/home')">
+                        <v-btn class="btn" id="backBtn" @click="this.$router.push('/home')">
                             Back
                         </v-btn>
                     </div>
                     <div id="btnCommit">
-                        <v-btn variant="tonal" class="btn" id="sendBtn" @click="sendSuggestion">
+                        <v-btn class="btn" id="sendBtn" @click="sendSuggestion">
                             Send
                         </v-btn>
                     </div>

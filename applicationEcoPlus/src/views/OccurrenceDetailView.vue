@@ -25,7 +25,7 @@
               </div>
               <p>" {{ occurrence.description }} "</p>
               <v-container class="d-flex flex-column align-end mt-6">
-                <p style="font-size: 10px">Submited by {{ user.name }}</p>
+                <p style="font-size: 10px">Submited by <RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserId(user.username)}}">{{ user.username }}</RouterLink></p>
                 <p>
                   {{ turnDateHour }}
                   Posted {{ this.date[2] }}/{{ this.date[1] }}/{{ this.date[3] }} at {{ this.date[4] }}
@@ -36,7 +36,7 @@
               <div value="comments">
                 <v-textarea label="Comment" rows="1" auto-grow bg-color="grey-lighten-2" color="green"
                   v-model="newComment"></v-textarea>
-                <v-btn color="green" @click="addComment">Sent</v-btn>
+                <v-btn color="green" @click="addComment">Send</v-btn>
                 <div class="d-flex" v-for="comment in comments">
                   <div class="d-flex flex-column align-center">
                     <v-btn variant="text" icon="mdi-arrow-up-bold" size="x-large"
@@ -53,9 +53,11 @@
                     </v-btn>
                   </div>
                   <div class="d-flex flex-column justify-center">
-                    <h2>
-                      {{ userStore.getUserById(comment.userId).username }}
-                    </h2>
+                    <RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserById(comment.userId).id}}">
+                      <h2>
+                        {{ userStore.getUserById(comment.userId).username }}
+                      </h2>
+                    </RouterLink>
                     <p>
                       {{ comment.message }}
                     </p>
@@ -100,6 +102,9 @@ export default {
     }
   },
   created() {
+    if (!JSON.parse(localStorage.getItem('currentUser'))) {
+      this.$router.push({ name: 'signin' })
+    }
     this.occurrence = this.occurrenceStore.getOccurrenceById(this.$route.params.occurrenceid)
     this.user = this.userStore.getUserById(this.occurrence.userId)
     this.comments = this.occurrence.comments

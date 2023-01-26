@@ -71,6 +71,11 @@
                     <RouterLink :to="{name: 'perfil', params:{perfilid: user.id}}">{{user.username }}</RouterLink>
                     {{ user.title }}
                 </div>
+                <div>
+                    <button id="logOut" @click="funcLogOut">
+                        Log Out
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -92,6 +97,12 @@
         },
         created() {
             this.user = JSON.parse(localStorage.getItem('currentUser'))
+        },
+        methods: {
+            funcLogOut() {
+                localStorage.removeItem('currentUser')
+                this.$router.push('/signin')
+            }
         }
     }
 </script>

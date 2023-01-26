@@ -65,7 +65,7 @@ export const occurrenceStore = defineStore('occurrence', {
           date: (new Date).toString().split(' ')
         },
         locationDescription: locationDescription,
-        descripton: description,
+        description: description,
         comments: [],
         type: 'occurrence',
         stage: 'To Do',
