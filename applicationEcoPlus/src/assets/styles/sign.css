@@ -1,0 +1,15 @@
+.img-sign {
+    width: 100%;
+}
+
+a {
+    color: #000000
+}
+a:hover {
+    color: #a3ac4f
+}
+
+.v-application__wrap {
+    flex-direction: row !important;
+    background-image: url('/src/assets/images/bg.png') !important;
+}

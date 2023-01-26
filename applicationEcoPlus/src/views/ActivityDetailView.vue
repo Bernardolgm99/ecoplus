@@ -23,10 +23,12 @@
                                 <div class="d-flex mb-2">
                                     <h2 class="align-self-start">Diagnosis: </h2>
                                     <span class="pt-1 ml-2"> {{ activity.diagnosis }} </span>
-                                    <button v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)" class="btn-subscribe mr-2 ms-auto mt-1 btnJoin" color="" @click="subscribe">
+                                    <button v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
+                                        class="btn-subscribe mr-2 ms-auto mt-1 btnJoin" color="" @click="subscribe">
                                         Join Event
                                     </button>
-                                    <button v-else class="btn-subscribe mr-2 ms-auto mt-1 btnOut" color="" @click="subscribe">
+                                    <button v-else class="btn-subscribe mr-2 ms-auto mt-1 btnOut" color=""
+                                        @click="subscribe">
                                         Out Event
                                     </button>
                                 </div>
@@ -115,7 +117,8 @@
                                                             </v-btn>
                                                         </div>
                                                         <div class="d-flex flex-column justify-center">
-                                                            <RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserById(comment.userId).id}}">
+                                                            <RouterLink style="color: black;"
+                                                                :to="{ name: 'perfil', params: { perfilid: userStore.getUserById(comment.userId).id } }">
                                                                 <h2 class="mb-1">
                                                                     {{ userStore.getUserById(comment.userId).username }}
                                                                 </h2>
@@ -128,7 +131,8 @@
                                                 </v-window-item>
                                                 <v-window-item value="members">
                                                     <div class="d-flex flex-column" v-for="member in members">
-                                                        <RouterLink RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserId(member.username)}}">
+                                                        <RouterLink RouterLink style="color: black;"
+                                                            :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
                                                             <div class="members d-flex mx-6">
                                                                 <img class="img-members" :src="member.perfilImage" />
                                                                 <div class="ml-6 d-flex flex-column justify-center">
@@ -141,10 +145,10 @@
                                                                 </div>
                                                             </div>
                                                         </RouterLink>
-                            
-                                                            <div v-if="member != members[members.length - 1]"
-                                                                class="spacing my-3 mx-auto"></div>
-                                                        </div>
+
+                                                        <div v-if="member != members[members.length - 1]"
+                                                            class="spacing my-3 mx-auto"></div>
+                                                    </div>
                                                 </v-window-item>
                                             </v-window>
                                         </v-card-text>
@@ -237,12 +241,22 @@ export default {
         },
 
         addComment() {
-            this.comments.splice(0, 0, {
-                messageId: this.comments[0].messageId + 1,
-                userId: this.user.id,
-                message: this.newComment,
-                likesDislikes: { likes: [], dislikes: [] },
-            });
+            if (this.comments.length > 0) {
+                this.comments.splice(0, 0, {
+                    messageId: this.comments[0].messageId + 1,
+                    userId: this.user.id,
+                    message: this.newComment,
+                    likesDislikes: { likes: [], dislikes: [] },
+                });
+            }
+            else {
+                this.comments.push({
+                    messageId: 0,
+                    userId: this.user.id,
+                    message: this.newComment,
+                    likesDislikes: { likes: [], dislikes: [] },
+                });
+            }
             this.newComment = "";
             this.update();
         },

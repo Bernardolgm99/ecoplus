@@ -25,7 +25,10 @@
               </div>
               <p>" {{ occurrence.description }} "</p>
               <v-container class="d-flex flex-column align-end mt-6">
-                <p style="font-size: 10px">Submited by <RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserId(user.username)}}">{{ user.username }}</RouterLink></p>
+                <p style="font-size: 10px">Submited by <RouterLink style="color: black;"
+                    :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(user.username) } }">{{ user.username }}
+                  </RouterLink>
+                </p>
                 <p>
                   {{ turnDateHour }}
                   Posted {{ this.date[2] }}/{{ this.date[1] }}/{{ this.date[3] }} at {{ this.date[4] }}
@@ -53,7 +56,8 @@
                     </v-btn>
                   </div>
                   <div class="d-flex flex-column justify-center">
-                    <RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserById(comment.userId).id}}">
+                    <RouterLink style="color: black;"
+                      :to="{ name: 'perfil', params: { perfilid: userStore.getUserById(comment.userId).id } }">
                       <h2>
                         {{ userStore.getUserById(comment.userId).username }}
                       </h2>
@@ -145,12 +149,22 @@ export default {
     },
 
     addComment() {
-      this.comments.splice(0, 0, {
-        messageId: this.comments[0].messageId + 1,
-        userId: this.user.id,
-        message: this.newComment,
-        likesDislikes: { likes: [], dislikes: [] },
-      });
+      if (this.comments.length > 0) {
+        this.comments.splice(0, 0, {
+          messageId: this.comments[0].messageId + 1,
+          userId: this.user.id,
+          message: this.newComment,
+          likesDislikes: { likes: [], dislikes: [] },
+        });
+      }
+      else {
+        this.comments.push({
+          messageId: 0,
+          userId: this.user.id,
+          message: this.newComment,
+          likesDislikes: { likes: [], dislikes: [] },
+        });
+      }
       this.newComment = "";
       this.update();
     },
