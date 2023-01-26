@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
 
-export const badgeStore = defineStore('badge', {
-    state: () => ({
-      badges: [
+let badges
+
+if (!JSON.parse(localStorage.getItem('badges'))) {
+    badges = [
         {id: 0, name: 'Publique Ocorrências', desc: 'Procura pela tua escola e reporta 5 ocurências', img: '/src/assets/icons/badgesIcons/findOccurrenceTier1.svg', quantity: 5, type: 'occurrence'},
         {id: 1, name: 'Publique Ocorrências', desc: 'Procura pela tua escola e reporta 10 ocurências', img: '/src/assets/icons/badgesIcons/findOccurrenceTier2.svg', quantity: 10, type: 'occurrence'},
         {id: 2, name: 'Publique Ocorrências', desc: 'Procura pela tua escola e reporta 25 ocurências', img: '/src/assets/icons/badgesIcons/findOccurrenceTier3.svg', quantity: 25, type: 'occurrence'},
@@ -15,6 +16,14 @@ export const badgeStore = defineStore('badge', {
         {id: 9, name: 'Crie Comentários', desc: 'Cria 25 comentários, seja em atividades, eventos ou ocorrências', img: '/src/assets/icons/badgesIcons/makeCommentsTier1.svg', quantity: 25, type: 'other'},
         {id: 10, name: 'Crie Comentários', desc: 'Cria 50 comentários, seja em atividades, eventos ou ocorrências', img: '/src/assets/icons/badgesIcons/makeCommentsTier2.svg', quantity: 50, type: 'other'}
     ]
+    localStorage.setItem('badges', JSON.stringify(badges))
+} else {
+    badges = JSON.parse(localStorage.getItem('badges'))
+}
+
+export const badgeStore = defineStore('badge', {
+    state: () => ({
+      badges: badges
     }),
     getters: {
         getBadgeById: (state) =>

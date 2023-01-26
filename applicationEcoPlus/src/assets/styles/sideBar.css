@@ -3,10 +3,13 @@
 }
 /* mission */
 .rowMission {
-    max-width: 260px;
+    width: 260px;
+    padding-bottom: 5px;
 }
 
 .rowStyleMission {
+    width: inherit;
+    max-height: 50px !important;
     padding: 3%;
     background-color: #69B580;
     border-radius: 5px;
@@ -26,6 +29,7 @@
 
 .imgIcon {
     width: 30px;
+    height: 30px;
     padding-right: 2%;
 }
 
@@ -43,13 +47,52 @@
     padding-top: 2%;
 }
 
+.tooltip {
+    position: relative;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 40%;
+    margin-left: -60px;
+    font-size: 12px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 20%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+  }
+
 /* recent posts */
 .recentPost {
     max-width: 260px;
 }
 
-a {
+.postTitle{
     color: black;
+}
+
+a {
+    color: black !important;
 }
 
 .postBgImage {
@@ -125,6 +168,41 @@ a {
     margin-bottom: 5%;
 }
 
+.tooltipBadges {
+    position: relative;
+}
+
+.tooltipBadges .tooltiptextBadges {
+    visibility: hidden;
+    width: 90px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 110%;
+    left: 100%;
+    margin-left: -60px;
+    font-size: 10px;
+}
+
+.tooltipBadges .tooltiptextBadges::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 40%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}
+  
+.tooltipBadges:hover .tooltiptextBadges {
+    visibility: visible;
+}
+
 /* raking */
 .tableHeader {
     padding-bottom: 5px;
@@ -141,7 +219,12 @@ a {
 }
 
 .btnFilter {
-    margin: 2%;
+    padding: 2%;
+}
+
+.btnFilter:focus {
+    color: #E4DBD3;
+    background-color: #504841;
 }
 
 .paddingRanking {
@@ -205,4 +288,13 @@ a {
 
 div.v-col.alignContentCenter {
     padding: 5px;
+}
+
+.btnSideBar {
+    color: #69B580;
+    width: 40px;
+}
+
+.btnSideBar:hover {
+    color: #5A9A6D;
 }

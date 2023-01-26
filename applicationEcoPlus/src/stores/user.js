@@ -21,12 +21,12 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       district: 'undefined', 
       school: 'undefined',
       joined: {
-        eventId: [1, 3, 5, 6],
+        eventId: [1],
         activityId: [1, 2, 3, 4]
       },
-      occurrenceId: [2, 5, 6, 7, 4],
+      occurrenceId: [0],
       missionsState: [1, 2, 1],
-      badgesState: []
+      badgesState: [0, 1, 3, 4, 5, 6, 9]
     },
     {id: 1, 
       username: 'João', 

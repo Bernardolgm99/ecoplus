@@ -1,26 +1,26 @@
 <template>
     <div class="alignContentSpaceAround" id="bg">
-      <v-btn flat="true" icon="mdi-menu-left"
+      <v-btn flat="true" icon="mdi-menu-left" class="btnSideBar"
         @click="model = Math.max(model - 1, 0)"
       ></v-btn>
       {{ titles[model] }}
-      <v-btn flat="true" icon="mdi-menu-right"
+      <v-btn flat="true" icon="mdi-menu-right" class="btnSideBar"
         @click="model = Math.min(model + 1, 3)"
       ></v-btn>
     </div>
     <v-carousel hide-delimiters :show-arrows="false" v-model="model" id="carouselItems" class="alignContentCenter">
       <!-- quests -->
         <v-carousel-item>
-          <div class="rowMission textSmall" v-for="mission in this.missionStore.getMissions">
+          <div class="rowMission textSmall tooltip" v-for="mission in this.missionStore.getMissions">
             <div class="rowStyleMission">
-                <div class="orderRow">
+                <div class="orderRow ">
                   <img :src="mission.img" class="imgIcon">
                   <p class="textMission">{{ mission.name }}</p>
                 </div>
                 <div :style="{ 'background': 'conic-gradient( #bfbfbf ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg,#ffffff ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg)'}" class="circularProgress"></div>
                 
-              </div>
-              <div id="desc" class="rowDesc">{{ mission.description }}</div>
+            </div>
+              <div id="desc" class="rowDesc tooltiptext">{{ mission.description }}</div>
           </div>
         </v-carousel-item>
       <!-- Recent Posts -->
@@ -70,9 +70,12 @@
               <h3>Ocorrências</h3>
               <div class="orderBadges">
                 <!-- container item -->
-                <div class="orderColumnCenter badgeImgContainer displayWarp"  v-for="badge in getBadges('occurrence')">
+                <div class="orderColumnCenter badgeImgContainer tooltipBadges displayWarp"  v-for="badge in getBadges('occurrence')">
                   <img :src="badge.img" class="badgeImg">
-                  <!-- <p>{{ badge.name }}</p> -->
+                  <div class="tooltiptextBadges">
+                      <p><strong>{{ badge.name }}</strong></p>
+                      <p>{{ badge.desc }}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -87,13 +90,19 @@
                 <h3>Eventos/Atividades</h3>
                 <div class="orderBadges">
                   <!-- container item -->
-                  <div class="orderColumnCenter badgeImgContainer"  v-for="badge in getBadges('events')">
+                  <div class="orderColumnCenter badgeImgContainer tooltipBadges"  v-for="badge in getBadges('events')">
                     <img :src="badge.img" class="badgeImg">
-                    <!-- <p>{{ badge.name }}</p> -->
+                    <div class="tooltiptextBadges">
+                      <p><strong>{{ badge.name }}</strong></p>
+                      <p>{{ badge.desc }}</p>
+                    </div>
                   </div>
-                  <div class="orderColumnCenter badgeImgContainer"  v-for="badge in getBadges('activity')">
+                  <div class="orderColumnCenter badgeImgContainer tooltipBadges"  v-for="badge in getBadges('activity')">
                     <img :src="badge.img" class="badgeImg">
-                    <!-- <p>{{ badge.name }}</p> -->
+                    <div class="tooltiptextBadges">
+                      <p><strong>{{ badge.name }}</strong></p>
+                      <p>{{ badge.desc }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -109,9 +118,12 @@
               <h3>Outros</h3>
               <div class="orderBadges">
                 <!-- container item -->
-                <div class="orderColumnCenter badgeImgContainer displayWarp"  v-for="badge in getBadges('other')">
+                <div class="orderColumnCenter badgeImgContainer tooltipBadges displayWarp"  v-for="badge in getBadges('other')">
                   <img :src="badge.img" class="badgeImg">
-                  <!-- <p>{{ badge.name }}</p> -->
+                  <div class="tooltiptextBadges">
+                      <p><strong>{{ badge.name }}</strong></p>
+                      <p>{{ badge.desc }}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -271,4 +283,5 @@
 
 <style lang="scss" scoped>
     @import '../assets/styles/sideBar.css';
+    @import '../assets/styles/base.css';
 </style>

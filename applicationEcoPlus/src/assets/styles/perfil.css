@@ -1,17 +1,66 @@
 .bannerPerfil {
-    width: 25vh;
-    height: 25vw;
+    width: inherit;
+    height: 155px;
     background-repeat: no-repeat;
     background-position: top center;
-    background-size: auto 100%;
+    background-size: 100% auto;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.editProfile {
+    margin-right: 3%;
+    margin-top: 1%;
 }
 
 .contentColumnPerfil {
-    height: 57vh;
+    height: 70.5vh;
     overflow: hidden;
     overflow-y: scroll;
 }
 
 .contentColumnPerfil::-webkit-scrollbar {
     display: none;
+}
+
+.containUserInfo {
+    position: relative;
+    width: inherit;
+    height: 90px;
+    background-color: #94CBA5;
+}
+
+.imgPerfil {
+    border-radius: 50%;
+    width: 115px;
+    height: 115px;
+    margin-top: -60px;
+    border: 2px solid white;
+}
+
+.perfilElements {
+    margin-left: 20px;
+    height: inherit;
+}
+
+.perfilTextElements {
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.perfilName {
+    font-size: 24px;
+}
+
+.perfilDesc {
+    font-size: 14px;
+}
+
+.filterPerfil {
+    width: inherit;
+    height: 30px;
+}
+
+.v-tab.filterBtnPerfil {
+    height: 30px !important;
 }
