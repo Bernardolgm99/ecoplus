@@ -38,16 +38,16 @@
                             <div>
                                 <v-card>
                                     <v-tabs fixed-tabs v-model="tab" bg-color="transparent">
-                                        <v-tab value="moreDetails">More details</v-tab>
+                                        <!-- <v-tab value="moreDetails">More details</v-tab> -->
                                         <v-tab value="comments">Comments</v-tab>
                                         <v-tab value="members">Members</v-tab>
                                     </v-tabs>
                                     <v-card-text>
                                         <v-window v-model="tab">
-                                            <v-window-item value="moreDetails">
+                                            <!-- <v-window-item value="moreDetails">
                                                 <div>FILES</div>
                                                 <div>MAPS</div>
-                                            </v-window-item>
+                                            </v-window-item> -->
                                             <v-window-item value="comments">
                                                 <v-textarea label="Comment" rows="1" auto-grow bg-color="grey-lighten-2"
                                                     color="green" v-model="newComment"></v-textarea>
@@ -81,10 +81,10 @@
                                                 </div>
                                             </v-window-item>
                                             <v-window-item value="members">
-                                                <div class="d-flex flex-column" v-for="member in members">
-                                                    <RouterLink RouterLink style="color: black;"
+                                                <div class="d-flex flex-column align-center" v-for="member in members">
+                                                    <RouterLink class="w-100" RouterLink style="color: black;"
                                                         :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
-                                                        <div class="members d-flex mx-6">
+                                                        <div class="members d-flex mx-auto">
                                                             <img class="img-members" :src="member.perfilImage" />
                                                             <div class="ml-6 d-flex flex-column justify-center">
                                                                 <h2 class="mb-1">

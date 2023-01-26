@@ -1,8 +1,8 @@
 <template>
   {{ createFeed }}
   <v-app id="inspire">
-    <v-container>
-      <v-row no-gutters>
+    <v-container class="noContainer height100">
+      <v-row no-gutters class="height100">
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
@@ -10,10 +10,9 @@
           </v-sheet>
         </v-col>
         <v-col>
-          <v-sheet class="pa-2 ma-2" style="background-color: rgba(255, 250, 246, 1); 
-          border-right: 1px solid rgba(111, 190, 135, 1);
-          border-left: 1px solid rgba(111, 190, 135, 1)">
+          <v-sheet class="pa-2 border-page" style="background-color: rgba(255, 250, 246, 1);">
             <!-- content -->
+            <v-container>
             <div v-for="post in feed" class="content">
 
               <div class="card">
@@ -49,6 +48,7 @@
                     <hr class="line">
                   </div>
             </div>
+          </v-container>
           </v-sheet>
         </v-col>
         <v-col cols="3">

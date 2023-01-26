@@ -1,8 +1,8 @@
 <template>
   {{ createFeed }}
   <v-app id="inspire">
-    <v-container>
-      <v-row no-gutters>
+    <v-container class="noContainer height100">
+      <v-row no-gutters class="height100">
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
@@ -10,45 +10,45 @@
           </v-sheet>
         </v-col>
         <v-col>
-          <v-sheet class="pa-2 ma-2" style="background-color: rgba(255, 250, 246, 1); 
-          border-right: 1px solid rgba(111, 190, 135, 1);
-          border-left: 1px solid rgba(111, 190, 135, 1)">
+          <v-sheet class="pa-2 border-page" style="background-color: rgba(255, 250, 246, 1);">
             <!-- content -->
-            <div v-for="post in feed" class="content">
+            <v-container>
+              <div v-for="post in feed" class="content">
 
-              <div class="card">
-                  <div class="image"  :style="`background: url(${post.image});`">
-                      <div class="topperIconsOccurrence">
-                        <div class="infoCardContent">
-                          <div class="postIconBackground">
-                            <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                <div class="card">
+                  <div class="image" :style="`background: url(${post.image});`">
+                    <div class="topperIconsOccurrence">
+                      <div class="infoCardContent">
+                        <div class="postIconBackground">
+                          <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                        </div>
+                        <div class="infos">
+                          <div class="title">
+                            <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
                           </div>
-                          <div class="infos">
-                            <div class="title">
-                              <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                            </div>
-                            <div class="location">
-                              <span class="textSmall txtLocation">{{ post.location }}</span>
-                            </div>
+                          <div class="location">
+                            <span class="textSmall txtLocation">{{ post.location }}</span>
                           </div>
                         </div>
                       </div>
+                    </div>
                   </div>
+                </div>
+                <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
+                  <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
+                  <p class="comment">{{ post.comments[i].message }}</p>
+                </div>
+                <div class="routerLink">
+                  <p class="viewMore textSmall">
+                    <RouterLink :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">- View More -
+                    </RouterLink>
+                  </p>
+                </div>
+                <div>
+                  <hr class="line">
+                </div>
               </div>
-              <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
-                    <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
-                    <p class="comment">{{ post.comments[i].message }}</p>
-                  </div>
-                  <div class="routerLink">
-                    <p class="viewMore textSmall">
-                      <RouterLink :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">- View More -
-                      </RouterLink>
-                    </p>
-                  </div>
-                  <div>
-                    <hr class="line">
-                  </div>
-            </div>
+            </v-container>
           </v-sheet>
         </v-col>
         <v-col cols="3">

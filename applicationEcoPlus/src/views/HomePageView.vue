@@ -45,49 +45,32 @@ export default {
 <template>
   {{ createFeed }}
   <v-app id="inspire">
-    <v-container>
-      <v-row no-gutters>
+    <v-container class="noContainer height100">
+      <v-row no-gutters class="height100">
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
             <NavBar />
           </v-sheet>
         </v-col>
-        <v-col class="contentColumn">
-          <v-sheet class="pa-2 ma-2 " style="background-color: rgba(255, 250, 246, 1); 
-          border-right: 1px solid rgba(111, 190, 135, 1);
-          border-left: 1px solid rgba(111, 190, 135, 1)">
+        <v-col>
+          <v-sheet class="pa-2 border-page" style="background-color: rgba(255, 250, 246, 1);">
             <!-- content -->
-            <div v-for="post in feed" class="content">
+            <v-container >
+              <div v-for="post in feed" class="content">
 
-              <div v-if="post.stage != 'To Do'">
+                <div v-if="post.stage != 'To Do'">
 
-                <div class="card">
-                    <div class="image"  :style="`background: url(${post.image});`">
-                    <div v-if="post.type == 'event'" class="topperIconsEvent">
-                      <div class="infoCardContent">
-                        <div class="postIconBackground">
-                          <img class="postIcon" :src="'src/assets/icons/calendar.svg'">
-                        </div>
-                        <div class="infos">
-                          <div class="title">
-                            <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                          </div>
-                          <div class="location">
-                            <span class="textSmall txtLocation">{{ post.location }}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-  
-                      <div v-else class="topperIconsOccurrence">
+                  <div class="card">
+                    <div class="image" :style="`background: url(${post.image});`">
+                      <div v-if="post.type == 'event'" class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                            <img class="postIcon" :src="'src/assets/icons/calendar.svg'">
                           </div>
                           <div class="infos">
                             <div class="title">
-                              <span class="textMediumLarge">{{ post.title }} {{ post.stage == "Done" ? `(${post.stage})` : ""}}</span> &nbsp;
+                              <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
                             </div>
                             <div class="location">
                               <span class="textSmall txtLocation">{{ post.location }}</span>
@@ -95,20 +78,40 @@ export default {
                           </div>
                         </div>
                       </div>
-                    
-                    
+
+                      <div v-else class="topperIconsOccurrence">
+                        <div class="infoCardContent">
+                          <div class="postIconBackground">
+                            <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                          </div>
+                          <div class="infos">
+                            <div class="title">
+                              <span class="textMediumLarge">{{ post.title }} {{
+                                post.stage == "Done" ? `(${post.stage})`
+                                  : ""
+                              }}</span> &nbsp;
+                            </div>
+                            <div class="location">
+                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    </div>
+
 
                   </div>
 
-
-                  </div>
-    
-                  <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
+                  <div class="comments"
+                    v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
                     <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
                     <p class="comment">{{ post.comments[i].message }}</p>
                   </div>
-    
-    
+
+
                   <div class="routerLink" v-if="post.type == 'event'">
                     <p class="viewMore textSmall">
                       <RouterLink :to="{ name: 'eventDetail', params: { eventid: post.id } }">- View More -</RouterLink>
@@ -123,9 +126,10 @@ export default {
                   <div>
                     <hr class="line">
                   </div>
-                  
+
                 </div>
               </div>
+            </v-container>
           </v-sheet>
         </v-col>
         <v-col cols="3">

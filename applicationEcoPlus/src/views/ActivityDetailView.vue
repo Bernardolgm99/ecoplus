@@ -26,11 +26,11 @@
                                     <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true"
                                         v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
                                         class="mr-2 ms-auto mt-1" color="green-lighten-1" @click="subscribe">
-                                        Join Event
+                                        Join Activity
                                     </v-btn>
                                     <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true" v-else
                                         class="mr-2 ms-auto mt-1" color="green-darken-4" @click="subscribe">
-                                        Out Event
+                                        Out Activity
                                     </v-btn>
                                 </div>
                                 <hr class="mb-2">
@@ -131,10 +131,10 @@
                                                     </div>
                                                 </v-window-item>
                                                 <v-window-item value="members">
-                                                    <div class="d-flex flex-column" v-for="member in members">
-                                                        <RouterLink RouterLink style="color: black;"
+                                                    <div class="d-flex flex-column align-center" v-for="member in members">
+                                                        <RouterLink class="w-100" RouterLink style="color: black;"
                                                             :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
-                                                            <div class="members d-flex mx-6">
+                                                            <div class="members d-flex mx-auto">
                                                                 <img class="img-members" :src="member.perfilImage" />
                                                                 <div class="ml-6 d-flex flex-column justify-center">
                                                                     <h2 class="mb-1">
@@ -146,7 +146,6 @@
                                                                 </div>
                                                             </div>
                                                         </RouterLink>
-
                                                         <div v-if="member != members[members.length - 1]"
                                                             class="spacing my-3 mx-auto"></div>
                                                     </div>
