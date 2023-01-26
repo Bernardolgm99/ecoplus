@@ -47,8 +47,8 @@
                                 </tbody>
                             </v-table>
                             <div class="d-flex justify-space-around mt-4">
-                                <button class="btn-reset" @click="reset"> Reset </button>
-                                <button class="btn-subscribe" @click="subscribe"> Subscribe </button>
+                                <v-btn rounded="pill" size="large" style="font-family: Quicksand; text-transform: none;" flat="true" color="green-darken-4" variant="outlined" @click="reset"> Reset </v-btn>
+                                <v-btn rounded="pill" size="large" style="font-family: Quicksand; text-transform: none;" flat="true" color="green-lighten-1" @click="subscribe"> Subscribe </v-btn>
                             </div>
                         </v-container>
                     </v-sheet>

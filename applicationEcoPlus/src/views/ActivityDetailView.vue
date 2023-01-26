@@ -14,7 +14,7 @@
                         <img class="img-thumbnail" :src="activity.image" />
                         <v-container>
                             <div>
-                                <div class="d-flex">
+                                <div class="d-flex mt-2 mb-12">
                                     <ButtonGoBack />
                                     <h1>
                                         {{ activity.title }}
@@ -23,14 +23,15 @@
                                 <div class="d-flex mb-2">
                                     <h2 class="align-self-start">Diagnosis: </h2>
                                     <span class="pt-1 ml-2"> {{ activity.diagnosis }} </span>
-                                    <button v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
-                                        class="btn-subscribe mr-2 ms-auto mt-1 btnJoin" color="" @click="subscribe">
+                                    <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true"
+                                        v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
+                                        class="mr-2 ms-auto mt-1" color="green-lighten-1" @click="subscribe">
                                         Join Event
-                                    </button>
-                                    <button v-else class="btn-subscribe mr-2 ms-auto mt-1 btnOut" color=""
-                                        @click="subscribe">
+                                    </v-btn>
+                                    <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true" v-else
+                                        class="mr-2 ms-auto mt-1" color="green-darken-4" @click="subscribe">
                                         Out Event
-                                    </button>
+                                    </v-btn>
                                 </div>
                                 <hr class="mb-2">
                                 <div class="d-flex mb-4">

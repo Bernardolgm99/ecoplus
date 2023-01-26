@@ -1,12 +1,4 @@
-table button {
-    border: 1px solid #69b580;
-    color: #69b580;
-    font-size: 15px;
-    height: 20px;
-    width: 60px;
-    font-weight: bold;
-    text-transform: none;
-}
+
 
 .even {
     background-color: #d7f4e0;
@@ -37,28 +29,6 @@ input[type="checkbox"]:checked:after {
     transform: translate(-50%, -50%);
 }
 
-.btn-reset {
-    background-color: #a49e8d;
-    font-family: Quicksilver;
-    font-weight: none;
-    text-transform: none;
-    width: 88px;
-    height: 29px;
-    font-size: 18px;
-    border-radius: 90px;
-    color: #fff;
-}
-.btn-subscribe {
-    background-color: #69b580;
-    font-family: Quicksilver;
-    font-weight: none;
-    text-transform: none;
-    width: 88px;
-    height: 29px;
-    font-size: 18px;
-    border-radius: 90px;
-    color: #fff;
-}
 
 .img-thumbnail {
     width: 100%;

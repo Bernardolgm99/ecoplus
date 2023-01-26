@@ -10,30 +10,34 @@
                 </v-col>
                 <v-col>
                     <v-sheet class="pa-2 border-page">
-
                         <div>
-                            <img :src="event.image" />
+                            <img class="img-thumbnail" :src="event.image" />
                         </div>
-                        <div>
-                            <ButtonGoBack />
-                            <h1>
-                                {{ event.title }}
-                            </h1>
-                            <div>
+                        <v-container>
+                            <div class="d-flex mt-2 mb-12">
+                                <ButtonGoBack />
+                                <h1>
+                                    {{ event.title }}
+                                </h1>
+                            </div>
+                            <div class="d-flex justify-space-between align-center mb-2">
                                 <h2> {{ event.subtitle }} </h2>
-                                <button class="btnJoin" @click="subscribe" v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)">
-                                 Join Event
-                                </button>
-                                <button class="btnOut" @click="subscribe" v-else>Out Event</button>
-                                    
+                                <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true" v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
+                                    class="mr-2 ms-auto mt-1 btnJoin" color="green-lighten-1" @click="subscribe">
+                                    Join Event
+                                </v-btn>
+                                <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true" v-else class="mr-2 ms-auto mt-1 btnOut" color="green-darken-4"
+                                    @click="subscribe">
+                                    Out Event
+                                </v-btn>
                             </div>
                             <hr>
-                            <p>
+                            <p class="my-2">
                                 {{ event.description }}
                             </p>
                             <div>
                                 <v-card>
-                                    <v-tabs v-model="tab" bg-color="primary">
+                                    <v-tabs fixed-tabs v-model="tab" bg-color="transparent">
                                         <v-tab value="moreDetails">More details</v-tab>
                                         <v-tab value="comments">Comments</v-tab>
                                         <v-tab value="members">Members</v-tab>
@@ -45,41 +49,63 @@
                                                 <div>MAPS</div>
                                             </v-window-item>
                                             <v-window-item value="comments">
-                                                <input type="text" v-model="newComment" />
-                                                <button @click="addComment">Add Comment</button>
-                                                <div v-for="comment in comments">
-                                                    <div>
-                                                        <button @click="like(comment)"> Like </button>
+                                                <v-textarea label="Comment" rows="1" auto-grow bg-color="grey-lighten-2"
+                                                    color="green" v-model="newComment"></v-textarea>
+                                                <v-btn color="green" @click="addComment">Sent</v-btn>
+                                                <div class="d-flex" v-for="comment in comments">
+                                                    <div class="d-flex flex-column align-center">
+                                                        <v-btn variant="text" icon="mdi-arrow-up-bold" size="x-large"
+                                                            :color="comment.likesDislikes.likes.indexOf(this.user.id) != -1 ? 'green' : 'gray'"
+                                                            @click="like(comment)">
+                                                        </v-btn>
                                                         <span> {{
                                                             comment.likesDislikes.likes.length -
                                                                 comment.likesDislikes.dislikes.length
                                                         }} </span>
-                                                        <button @click="dislike(comment)"> Dislike </button>
+                                                        <v-btn variant="text" icon="mdi-arrow-down-bold" size="x-large"
+                                                            :color="comment.likesDislikes.dislikes.indexOf(this.user.id) != -1 ? 'red' : 'gray'"
+                                                            @click="dislike(comment)">
+                                                        </v-btn>
                                                     </div>
-                                                    <div>
-                                                        <RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserById(comment.userId).id}}">
-                                                            {{ userStore.getUserById(comment.userId).username }}
+                                                    <div class="d-flex flex-column justify-center">
+                                                        <RouterLink style="color: black;"
+                                                            :to="{ name: 'perfil', params: { perfilid: userStore.getUserById(comment.userId).id } }">
+                                                            <h2 class="mb-1">
+                                                                {{ userStore.getUserById(comment.userId).username }}
+                                                            </h2>
                                                         </RouterLink>
-                                                        {{ comment.message }}
+                                                        <p class="mt-1">
+                                                            {{ comment.message }}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </v-window-item>
                                             <v-window-item value="members">
-                                                <div v-for="member in members">
-                                                    <RouterLink RouterLink style="color: black;" :to="{name: 'perfil', params: {perfilid: userStore.getUserId(member.username)}}">
-                                                        <img :src="member.perfilImage" />
-                                                        <div>
-                                                            {{ member.username }}
-                                                            {{ member.title }}
+                                                <div class="d-flex flex-column" v-for="member in members">
+                                                    <RouterLink RouterLink style="color: black;"
+                                                        :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
+                                                        <div class="members d-flex mx-6">
+                                                            <img class="img-members" :src="member.perfilImage" />
+                                                            <div class="ml-6 d-flex flex-column justify-center">
+                                                                <h2 class="mb-1">
+                                                                    {{ member.username }}
+                                                                </h2>
+                                                                <h3 class="mt-1">
+                                                                    {{ member.title }}
+                                                                </h3>
+                                                            </div>
                                                         </div>
                                                     </RouterLink>
+
+                                                    <div v-if="member != members[members.length - 1]"
+                                                        class="spacing my-3 mx-auto"></div>
                                                 </div>
                                             </v-window-item>
                                         </v-window>
                                     </v-card-text>
                                 </v-card>
                             </div>
-                        </div>
+                        </v-container>
                     </v-sheet>
                 </v-col>
                 <v-col cols="3">
@@ -240,10 +266,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '../assets/styles/base.css';
-
-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
+@import '../assets/styles/details.css';
 </style>
