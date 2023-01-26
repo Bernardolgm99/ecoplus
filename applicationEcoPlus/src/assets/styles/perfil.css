@@ -11,6 +11,7 @@
 .editProfile {
     margin-right: 3%;
     margin-top: 1%;
+    color: white;
 }
 
 .contentColumnPerfil {
@@ -63,4 +64,69 @@
 
 .v-tab.filterBtnPerfil {
     height: 30px !important;
+}
+
+/* change perfil */
+.bgPopUp {
+    background-color: rgba(255, 250, 246, 1);
+}
+
+.changeImgPerfil {
+    border-radius: 50%;
+    border: 2px solid white;
+    filter: brightness(50%);
+    width: 150px;
+    height: 150px;
+}
+
+.changeBannerPerfil {
+    width: 550px;
+    /* min-width: 350px; */
+    height: 180px;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 100% auto;
+    border: 2px solid white;
+    filter: brightness(50%);
+}
+
+.v-field__input {
+    background-color: #CCEED6;
+}
+
+.btnLeaf {
+    width: 180px;
+    height: 45px !important;
+    border-top-left-radius: 90px;
+    border-bottom-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 90px;
+}
+
+.containerbtnResetSaveL {
+    padding-top: 6%;
+    padding-left: 20%;
+}
+.containerbtnResetSaveR {
+    padding-top: 6%;
+    padding-right: 20%;
+}
+
+.btnSave {
+    border: 3px solid #BAB653;
+    background-color: #69B580;
+    color: white;
+}
+.btnReset {
+    border: 3px solid #69B580;
+    color: #69B580;
+}
+
+.file {
+    width: inherit;
+    height: inherit;
+}
+
+.mdi:before, .mdi-set {
+    display: none;
 }

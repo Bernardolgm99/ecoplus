@@ -54,7 +54,7 @@ export default {
           </v-sheet>
         </v-col>
         <v-col class="contentColumn">
-          <v-sheet class="pa-2 ma-2" style="background-color: rgba(255, 250, 246, 1); 
+          <v-sheet class="pa-2 ma-2 " style="background-color: rgba(255, 250, 246, 1); 
           border-right: 1px solid rgba(111, 190, 135, 1);
           border-left: 1px solid rgba(111, 190, 135, 1)">
             <!-- content -->
