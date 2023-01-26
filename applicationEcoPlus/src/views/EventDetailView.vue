@@ -1,7 +1,7 @@
 <template>
     <v-app>
-        <v-container>
-            <v-row no-gutters>
+        <v-container class="noContainer height100">
+            <v-row no-gutters class="height100">
                 <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
@@ -9,7 +9,7 @@
                     </v-sheet>
                 </v-col>
                 <v-col>
-                    <v-sheet class="pa-2 ma-2" style="background-color: blue">
+                    <v-sheet class="pa-2 border-page">
 
                         <div>
                             <img :src="event.image" />

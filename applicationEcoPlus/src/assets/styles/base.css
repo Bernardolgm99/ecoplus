@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
 
+
 .border-page {
     border-right: 1px solid #69b580;
     border-left: 1px solid #69b580;
     height: 100%;
+    background-color: rgba(255, 250, 246, 1)
 }
 
 .height100 {

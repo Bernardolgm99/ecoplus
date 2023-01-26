@@ -9,7 +9,7 @@
                     </v-sheet>
                 </v-col>
                 <v-col>
-                    <v-sheet class="pa-2 border-page">
+                    <v-sheet class="pa-2 border-page bgChange" >
                         <!-- content -->
                         <v-container>
                             <div class="d-flex">

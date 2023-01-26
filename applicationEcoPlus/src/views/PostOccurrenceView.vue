@@ -1,7 +1,7 @@
 <template>
 <v-app id="inspire">
-    <v-container>
-      <v-row no-gutters>
+    <v-container class="noContainer height100">
+      <v-row no-gutters class="height100">
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
@@ -10,52 +10,57 @@
         </v-col>
        
         <v-col>
-          <v-sheet class="pa-2 ma-2" style="background-color: green">
+          <v-sheet class="pa-2 border-page">
             <!-- content -->
-            <div id="title">
-<!--                 <div id="backBtn">
-                    {{buttonBack}}
-                </div> -->
-                <div class="textTitle">
-                    Post Occurrence
-                </div>
-            </div>
-            <div id="content">
-
-                <div id="contTitle">
-                    <span class="textMediumLarge">Title: </span>
-                    <v-text-field label="Title" variant="solo" v-model="title"></v-text-field>
-                </div>
-                <div id="contLocation">
-                    <span class="textMediumLarge">Location: </span>
-                    <v-text-field label="Location" variant="solo" v-model="location"></v-text-field>
-                </div>
-                <div id="contLocationDesc">
-                    <span class="textMediumLarge">Location description: </span>
-                    <v-text-field label="Location Description" variant="solo" v-model="locationDesc"></v-text-field>
-                </div>
-                <div id="inputFile">
-                    <span class="textMediumLarge">Image:</span>
-                    <v-file-input label="File input" variant="solo" v-model="image"></v-file-input>
-                </div>
-                <div id="txtAreaInput">
-                    <span class="textMediumLarge">Description:</span>
-                    <v-textarea label="Write here your suggestion..." v-model="desc" variant="solo"></v-textarea>
-                </div>
-                <div id="btnDuo">
-                    <div id="btnBack">
-                        <v-btn variant="tonal">
-                            Back
-                        </v-btn>
-                    </div>
-                    <div id="btnCommit">
-                        <v-btn variant="tonal" @click="postOccurrence()">
-                            Post
-                        </v-btn>
+            <v-container>
+              <div>
+                <div id="title">
+                  <div class="textTitle">
+                      <ButtonGoBack />
+                        Post Occurrence
                     </div>
                 </div>
+                <div id="content">
 
-            </div>
+                    <div id="contTitle">
+                        <span class="textMediumLarge">Title: </span>
+                        <v-text-field label="Title" variant="solo" v-model="title"></v-text-field>
+                    </div>
+                    <div id="contLocation">
+                        <span class="textMediumLarge">Location: </span>
+                        <v-text-field label="Location" variant="solo" v-model="location"></v-text-field>
+                    </div>
+                    <div id="contLocationDesc">
+                        <span class="textMediumLarge">Location description: </span>
+                        <v-text-field label="Location Description" variant="solo" v-model="locationDesc"></v-text-field>
+                    </div>
+                    <div id="inputFile">
+                        <span class="textMediumLarge">Image:</span>
+                        <v-file-input label="File input" variant="solo" v-model="image"></v-file-input>
+                    </div>
+                    <div id="txtAreaInput">
+                        <span class="textMediumLarge">Description:</span>
+                        <v-textarea label="Write here your suggestion..." v-model="desc" variant="solo"></v-textarea>
+                    </div>
+                  <div id="buttons">
+                    <div id="btnOrganizer">
+                      <div id="btnBack">
+                          <v-btn variant="tonal" class="btn" id="backBtn" @click="this.$router.push('/home')">
+                              Back
+                          </v-btn>
+                      </div>
+                      <div id="btnCommit">
+                          <v-btn variant="tonal" class="btn" id="sendBtn" @click="sendSuggestion"> 
+                              Send
+                          </v-btn>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </v-container>
+
           </v-sheet>
         </v-col>
 
@@ -75,11 +80,11 @@
 import SideBar from '../components/SideBar.vue'
 import NavBar from '../components/NavBar.vue'
 import { occurrenceStore } from '../stores/occurrence.js'
-/* import buttonBack from '../components/ButtonGoBack.vue' */
+import ButtonGoBack from "../components/ButtonGoBack.vue";
 
     export default {
         components: {
-            SideBar, NavBar
+            SideBar, NavBar, ButtonGoBack
         },
         data() {
             return {
@@ -110,6 +115,7 @@ import { occurrenceStore } from '../stores/occurrence.js'
 
 <style lang="scss" scoped>
   @import '../assets/styles/base.css';
+  @import '../assets/styles/postOccurrence.css';
   #inspire {
     scroll-behavior: smooth;
   }

@@ -1,8 +1,8 @@
 <template>
   {{createFeed}}
 <v-app id="inspire">
-    <v-container>
-      <v-row no-gutters>
+    <v-container class="noContainer height100">
+      <v-row no-gutters class="height100">
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
@@ -11,11 +11,11 @@
         </v-col>
        
         <v-col>
-          <v-sheet class="pa-2 ma-2" style="background-color: rgba(255, 250, 246, 1); 
+          <v-sheet class="pa-2 border-page" style="background-color: rgba(255, 250, 246, 1); 
                                         border-right: 1px solid rgba(111, 190, 135, 1);
                                         border-left: 1px solid rgba(111, 190, 135, 1)">
             <!-- content -->
-    
+          <v-container>
             <div id="suggestionContent">
                 <div id="title">
                     <div class="textTitle">
@@ -23,7 +23,7 @@
                         <span>Suggestion</span>
                     </div>
                 </div>
-                <div id="description">
+                <div class="my-6" id="description">
                     Firstly, select the type of suggestion you want to make, 
                     in the dropbox below and then write your suggestion.
                 </div>
@@ -40,12 +40,12 @@
                 <div id="buttons">
                   <div id="btnOrganizer">
                     <div id="btnBack">
-                        <v-btn variant="tonal">
+                        <v-btn variant="tonal" class="btn" id="backBtn" @click="this.$router.push('/home')">
                             Back
                         </v-btn>
                     </div>
                     <div id="btnCommit">
-                        <v-btn variant="tonal" @click="sendSuggestion">
+                        <v-btn variant="tonal" class="btn" id="sendBtn" @click="sendSuggestion">
                             Send
                         </v-btn>
                     </div>
@@ -53,7 +53,7 @@
                 </div>
 
             </div>
-
+          </v-container>
           </v-sheet>
         </v-col>
 

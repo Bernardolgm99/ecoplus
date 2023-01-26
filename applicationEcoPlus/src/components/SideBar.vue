@@ -1,10 +1,10 @@
 <template>
     <div class="alignContentSpaceAround" id="bg">
-      <v-btn
+      <v-btn flat="true" icon="mdi-menu-left"
         @click="model = Math.max(model - 1, 0)"
       ></v-btn>
       {{ titles[model] }}
-      <v-btn
+      <v-btn flat="true" icon="mdi-menu-right"
         @click="model = Math.min(model + 1, 3)"
       ></v-btn>
     </div>
@@ -63,7 +63,7 @@
             <!-- items container -->
             <div class="contentBadgesCat" v-if="getBadges('occurrence').length == 0 && getBadges('activity').length == 0 && getBadges('events').length == 0 && getBadges('other').length == 0">
               <h3>Não tens Medalhas!</h3>
-              <p>Não te preocupes, consegues obtelas participando em Atividades e Eventos, publicando Ocorrências que encontres na tua escola e por classificares Atividades/Eventos</p>
+              <p>Não te preocupes, consegues obtê-las participando em Atividades e Eventos, publicando Ocorrências que encontres na tua escola e por classificares Atividades/Eventos</p>
             </div>
 
             <div class="contentBadgesCat" v-if="getBadges('occurrence').length > 0">

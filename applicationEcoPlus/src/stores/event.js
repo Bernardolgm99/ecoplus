@@ -9,7 +9,7 @@ if (!JSON.parse(localStorage.getItem('events'))) {
       userId: 0,
       title: 'Event1 3º date',
       subtitle: 'Event in the woods',
-      image: 'bumblebee-1280a_kck5.jpg',
+      image: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
       dateHour: { compare: 1674515139743, date: '' },
       location: 'Custoias - Portugal',
       description: 'Recolher lixo',

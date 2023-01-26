@@ -5,8 +5,8 @@
 
 #btnOrganizer {
     display: flex;
-    width: 300px;
-    justify-content: space-around;
+    width: 236px;
+    justify-content: space-evenly;
 }
 
 #suggestionContent {
