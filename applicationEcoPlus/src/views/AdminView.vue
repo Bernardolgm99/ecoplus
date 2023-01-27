@@ -562,13 +562,16 @@ export default {
     },
 
     createEvent() {
+      console.log("bom dia");
+      console.log(this.newEvent.image[0]);
+      console.log(this.newEvent.image[0].name);
       for (const prop in this.newEvent) {
         if (!(this.newEvent.hasOwnProperty(prop) && this.newEvent[prop])) {
           alert(`${prop} property is empty or does not exist`);
           return
         }
       }
-      this.eventStore.addEvent(this.user.id, this.newEvent.title, this.newEvent.subtitle, this.newEvent.image, this.newEvent.location, this.newEvent.description)
+      this.eventStore.addEvent(this.user.id, this.newEvent.title, this.newEvent.subtitle, this.newEvent.image[0].name, this.newEvent.location, this.newEvent.description)
       alert("Event created")
       this.resetCreateEvent()
     },

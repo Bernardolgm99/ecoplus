@@ -21,8 +21,8 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       district: 'undefined', 
       school: 'undefined',
       joined: {
-        eventId: [1],
-        activityId: [1, 2, 3, 4]
+        eventId: [0,1],
+        activityId: [0]
       },
       occurrenceId: [0],
       missionsState: [1, 2, 1],
@@ -30,7 +30,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
     },
     {id: 1, 
       username: 'João', 
-      title: 'User',
+      title: 'EcoEscolas',
       blocked: false,
       name: 'admin', 
       perfilImage: '/src/assets/perfil/yoda.jpeg',
@@ -43,21 +43,21 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       district: 'undefined', 
       school: 'undefined',
       joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
+        eventId: [],
+        activityId: []
       },
       occurrenceId: [2, 5, 6, 7, 4],
       missionsState: [1, 0, 1],
       badgesState: [3, 4, 5, 6, 9]
     },
     {id: 2, 
-      username: 'Admin', 
-      title: 'Admin',
+      username: 'be.lage', 
+      title: 'User',
       blocked: false,
-      name: 'admin', 
+      name: 'Bernardo Lage', 
       perfilImage: '/src/assets/perfil/yoda.jpeg',
       email: 'admin', 
-      password: 'Esmad_2223', 
+      password: '123', 
       gender: 'undefined', 
       city: 'undefined', 
       postalcode: 'undefined', 
@@ -65,15 +65,15 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       district: 'undefined', 
       school: 'undefined',
       joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
+        eventId: [],
+        activityId: []
       },
-      occurrenceId: [5],
+      occurrenceId: [],
       missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6]
+      badgesState: []
     },
     {id: 3, 
-      username: 'User', 
+      username: 'gaspar', 
       title: 'User',
       blocked: false,
       name: 'User', 
@@ -87,15 +87,15 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       district: 'undefined', 
       school: 'undefined',
       joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
+        eventId: [],
+        activityId: []
       },
       occurrenceId: [2],
       missionsState: [1, 0, 1],
       badgesState: [3, 4, 5]
     },
     {id: 4, 
-      username: 'joana', 
+      username: 'joana_alves', 
       title: 'User',
       blocked: false,
       name: 'admin', 
@@ -117,7 +117,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       badgesState: [3, 4]
     },
     {id: 5, 
-      username: 'Maria', 
+      username: 'maria_bomdia', 
       title: 'User',
       blocked: false,
       name: 'admin', 
@@ -161,7 +161,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       badgesState: [3, 4, 5, 6, 9]
     },
     {id: 7, 
-      username: 'Bessa', 
+      username: 'bessa', 
       title: 'User',
       blocked: false,
       name: 'admin', 
@@ -183,7 +183,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       badgesState: [3, 4, 5, 6, 9]
     },
     {id: 8, 
-      username: 'julio', 
+      username: 'julio09', 
       title: 'User',
       blocked: false,
       name: 'admin', 
@@ -227,7 +227,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
       badgesState: [3, 4, 5, 6, 9]
     },
     {id: 10, 
-      username: 'catia', 
+      username: 'catia0102', 
       title: 'User',
       blocked: false,
       name: 'admin', 

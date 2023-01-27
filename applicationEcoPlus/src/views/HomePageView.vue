@@ -56,7 +56,7 @@ export default {
         <v-col>
           <v-sheet class="pa-2 border-page" style="background-color: rgba(255, 250, 246, 1);">
             <!-- content -->
-            <v-container >
+            <v-container class="d-flex flex-column align-center contentColumn">
               <div v-for="post in feed" class="content">
 
                 <div v-if="post.stage != 'To Do'">

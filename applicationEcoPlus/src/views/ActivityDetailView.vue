@@ -18,17 +18,19 @@
                                     <ButtonGoBack />
                                     <h1>
                                         {{ activity.title }}
-                                        class="mt-1" </h1>
+                                    </h1>
                                 </div>
                                 <div class="d-flex mb-2">
                                     <h2 class="align-self-start">Diagnosis: </h2>
                                     <span class="pt-1 ml-2"> {{ activity.diagnosis }} </span>
-                                    <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true"
+                                    <v-btn size="large" rounded="pill"
+                                        style="font-family: Quicksand; text-transform: none;" flat="true"
                                         v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
                                         class="mr-2 ms-auto mt-1" color="green-lighten-1" @click="subscribe">
                                         Join Activity
                                     </v-btn>
-                                    <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;" flat="true" v-else
+                                    <v-btn size="large" rounded="pill"
+                                        style="font-family: Quicksand; text-transform: none;" flat="true" v-else
                                         class="mr-2 ms-auto mt-1" color="green-darken-4" @click="subscribe">
                                         Out Activity
                                     </v-btn>
@@ -131,7 +133,8 @@
                                                     </div>
                                                 </v-window-item>
                                                 <v-window-item value="members">
-                                                    <div class="d-flex flex-column align-center" v-for="member in members">
+                                                    <div class="d-flex flex-column align-center"
+                                                        v-for="member in members">
                                                         <RouterLink class="w-100" RouterLink style="color: black;"
                                                             :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
                                                             <div class="members d-flex mx-auto">
