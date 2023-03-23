@@ -15,6 +15,8 @@
             <v-container class="d-flex flex-column align-center contentColumn">
               <div v-for="post in feed" class="content">
 
+                <div v-if="post.stage != 'To Do'">
+
                 <div class="card">
                   <div class="image" :style="`background: url(${post.image});`">
                     <div class="topperIconsOccurrence">
@@ -47,6 +49,8 @@
                 <div>
                   <hr class="line">
                 </div>
+              </div>
+
               </div>
             </v-container>
           </v-sheet>

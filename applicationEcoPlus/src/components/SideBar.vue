@@ -43,6 +43,7 @@
             </div>
             <!-- type == occurrence -->
             <div v-if="post.type == 'occurrence'">
+              <div v-if="post.stage != 'To Do'">
               <RouterLink :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">
                 <div class="postBgImage alignContentBottom" :style="{'background-image': 'url(' + post.image + ')'}">
                   <div class="postTitleContent">
@@ -54,6 +55,7 @@
                   </div>
                 </div>
               </RouterLink>
+            </div>
             </div>
           </div>
         </v-carousel-item>
