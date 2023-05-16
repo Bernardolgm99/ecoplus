@@ -1,5 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
+/* @font-face {
+    font-family: 'Quicksand';
+    src: url('https://fonts.googleapis.com/css?family=Quicksand&display=swap')
+} */
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=fallback');
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=fallback');
 
 .v-container {
     padding-bottom: 0px;
