@@ -1,4 +1,4 @@
-const staticDevCoffee = "eco-plus";
+const staticEco = "eco-plus";
 const offline_url = 'offline.html'
 const assets = [
   "/",
@@ -13,12 +13,17 @@ const assets = [
   '/src/main.js',
   '/offline.hmtl',
   '/index.html',
-  '/vite.config.js'
+  '/vite.config.js',
+  '/manifest.js',
+  '/dist/*',
+  '/dist/favicon.ico',
+  '/dist/index.html',
+  'dist/assets/*'
 ];
 
 self.addEventListener("install", installEvent => {
   installEvent.waitUntil(
-    caches.open(staticDevCoffee).then(cache => {
+    caches.open(staticEco).then(cache => {
       cache.addAll(assets);
       cache.addAll([offline_url]);
     })
