@@ -1,289 +1,317 @@
 <template>
-    <div class="alignContentSpaceAround" id="bg">
-      <v-btn flat="true" icon="mdi-menu-left" class="btnSideBar"
-        @click="model = Math.max(model - 1, 0)"
-      ></v-btn>
-      {{ titles[model] }}
-      <v-btn flat="true" icon="mdi-menu-right" class="btnSideBar"
-        @click="model = Math.min(model + 1, 3)"
-      ></v-btn>
-    </div>
-    <v-carousel hide-delimiters :show-arrows="false" v-model="model" id="carouselItems" class="alignContentCenter">
-      <!-- quests -->
-        <v-carousel-item>
-          <div class="rowMission textSmall tooltip" v-for="mission in this.missionStore.getMissions">
-            <div class="rowStyleMission">
-                <div class="orderRow ">
-                  <img :src="mission.img" class="imgIcon">
-                  <p class="textMission">{{ mission.name }}</p>
-                </div>
+  <div class="alignContentSpaceAround" id="bg">
+    <v-btn flat="true" icon="mdi-menu-left" class="btnSideBar"
+      @click="model = Math.max(model - 1, 0)"
+    ></v-btn>
+    {{ titles[model] }}
+    <v-btn flat="true" icon="mdi-menu-right" class="btnSideBar"
+      @click="model = Math.min(model + 1, 3)"
+    ></v-btn>
+  </div>
+  
+  <v-carousel hide-delimiters :show-arrows="false" v-model="model" id="carouselItems" class="ma-0">
+    <!-- quests -->
+      <v-carousel-item>
+        <div class="d-flex flex-column align-center">
+          <div class="d-flex align-center justify-space-between pa-0 px-2 py-1 ma-0 mb-1 textSmall tooltip rowStyleMission" v-for="mission in this.missionStore.getMissions">
+              <div>
+                <img :src="mission.img" class="imgIcon">
+              </div>  
+              <div>
+                <p class="px-2">{{ mission.name }}</p>
+              </div>  
+              <div>
                 <div :style="{ 'background': 'conic-gradient( #bfbfbf ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg,#ffffff ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg)'}" class="circularProgress"></div>
-                
-            </div>
+              </div>  
               <div id="desc" class="rowDesc tooltiptext">{{ mission.description }}</div>
-          </div>
-        </v-carousel-item>
-      <!-- Recent Posts -->
-        <v-carousel-item>
-          <!-- {{createFeed}} -->
-          <div v-for="post in feed">
-            <!-- type == event -->
-            <div v-if="post.type == 'event'">
-              <RouterLink :to="{name: 'eventDetail', params:{eventid : post.id}}">
-                <div class="postBgImage alignContentBottom" :style="{'background-image': 'url(' + post.image + ')'}">
+            </div>
+        </div>
+      </v-carousel-item>
+    <!-- Recent Posts -->
+      <v-carousel-item>
+          <div class="d-flex flex-column align-center ">
+            <div v-for="post in feed" class="ma-0 pa-0 w-100">
+              <RouterLink v-if="post.type == 'event'" :to="{name: 'eventDetail', params:{eventid : post.id}}">
+                <div class="postBgImage alignContentBottom mx-auto pa-0" :style="{'background-image': 'url(' + post.image + ')'}">
                   <div class="postTitleContent">
                     <div class="postIconBackground">
-                      <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
-                      <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
+                      <img class="postIcon" src="/src/assets/icons/calendar.svg">
                     </div>
-                    <h1 class="textMediumLarge postTitle">{{post.title}}</h1>
+                    <h1 class="textSmall postTitle" v-if="post.title.length < 18">{{post.title}}</h1>
+                    <h1 class="textSmall postTitle" v-else>{{post.title.substring(0, 19)}}...</h1>
+                  </div>
+                </div>  
+              </RouterLink>
+
+              <RouterLink v-if="post.type == 'occurrence' && post.stage != 'To Do'" :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">
+                <div class="w-100 postBgImage alignContentBottom mx-auto pa-0" :style="{'background-image': 'url(' + post.image + ')'}">
+                  <div class="postTitleContent">
+                    <div class="postIconBackground">
+                      <img class="postIcon" src="/src/assets/icons/tool.svg">
+                    </div>
+                    <h1 class="textSmall postTitle" v-if="post.title.length < 18">{{post.title}}</h1>
+                    <h1 class="textSmall postTitle" v-else>{{post.title.substring(0, 19)}}...</h1>
                   </div>
                 </div>
               </RouterLink>
             </div>
-            <!-- type == occurrence -->
-            <div v-if="post.type == 'occurrence'">
-              <div v-if="post.stage != 'To Do'">
-              <RouterLink :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">
-                <div class="postBgImage alignContentBottom" :style="{'background-image': 'url(' + post.image + ')'}">
-                  <div class="postTitleContent">
-                    <div class="postIconBackground">
-                      <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
-                      <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
-                    </div>
-                    <h1 class="textMediumLarge postTitle">{{post.title}}</h1>
-                  </div>
-                </div>
-              </RouterLink>
-            </div>
-            </div>
           </div>
-        </v-carousel-item>
-      <!-- Badges -->
-        <v-carousel-item>
-          <div class="bgGrey">
-            <!-- items container -->
-            <div class="contentBadgesCat" v-if="getBadges('occurrence').length == 0 && getBadges('activity').length == 0 && getBadges('events').length == 0 && getBadges('other').length == 0">
-              <h3>Não tens Medalhas!</h3>
-              <p>Não te preocupes, consegues obtê-las participando em Atividades e Eventos, publicando Ocorrências que encontres na tua escola e por classificares Atividades/Eventos</p>
-            </div>
 
-            <div class="contentBadgesCat" v-if="getBadges('occurrence').length > 0">
-              <h3>Ocorrências</h3>
-              <div class="orderBadges">
-                <!-- container item -->
-                <div class="orderColumnCenter badgeImgContainer tooltipBadges displayWarp"  v-for="badge in getBadges('occurrence')">
-                  <img :src="badge.img" class="badgeImg">
-                  <div class="tooltiptextBadges">
-                      <p><strong>{{ badge.name }}</strong></p>
-                      <p>{{ badge.desc }}</p>
+        <!-- <div class="ola" v-for="post in feed">
+          <div v-if="post.type == 'event'">
+            <RouterLink :to="{name: 'eventDetail', params:{eventid : post.id}}">
+              <div class="postBgImage alignContentBottom mx-auto" :style="{'background-image': 'url(' + post.image + ')'}">
+                <div class="postTitleContent">
+                  <div class="postIconBackground">
+                    <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
+                    <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
                   </div>
+                  <h1 class="textSmall postTitle">{{post.title}}</h1>
                 </div>
               </div>
-            </div>
+            </RouterLink>
+          </div>
 
-          <div class="orderColumnCenter" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0 && getBadges('occurrence').length > 0">
-            <!-- divider -->
+          <div v-if="post.type == 'occurrence'">
+            <div v-if="post.stage != 'To Do'">
+            <RouterLink :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">
+              <div class="postBgImage alignContentBottom mx-auto" :style="{'background-image': 'url(' + post.image + ')'}">
+                <div class="postTitleContent">
+                  <div class="postIconBackground">
+                    <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
+                    <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
+                  </div>
+                  <h1 class="textSmall postTitle">{{post.title}}</h1>
+                </div>
+              </div>
+            </RouterLink>
+          </div>
+          </div>
+        </div> -->
+      </v-carousel-item>
+    <!-- Badges -->
+      <v-carousel-item>
+        <!-- nao tem badges -->
+        <v-col class="bgGrey mx-auto ml-2 mr-2 align-center" v-if="getBadges('occurrence').length == 0 && getBadges('activity').length == 0 && getBadges('events').length == 0 && getBadges('other').length == 0"> 
+          <v-row class="ma-1">
+            <h3>Não tens Medalhas!</h3>
+          </v-row>
+          <v-row class="ma-1">
+            <p>Não te preocupes, consegues obtê-las participando em Atividades e Eventos, publicando Ocorrências que encontres na tua escola e por classificares Atividades/Eventos</p>
+          </v-row>
+        </v-col>
+        
+        <!-- tem badges -->
+        <v-col class="bgGrey mx-auto align-center " v-else>
+          <!-- items container -->
+          <!-- Events/Activities -->
+          <v-row class="ma-1" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
+            <h3>Eventos/Atividades</h3>
+          </v-row>
+          <v-row class="ma-1" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
+            <!-- container item -->
+            <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('events')">
+              <img :src="badge.img" class="badgeImg">
+              <div class="tooltiptextBadges">
+                <p><strong>{{ badge.name }}</strong></p>
+                <p>{{ badge.desc }}</p>
+              </div>
+            </div>
+            <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('activity')">
+              <img :src="badge.img" class="badgeImg">
+              <div class="tooltiptextBadges">
+                <p><strong>{{ badge.name }}</strong></p>
+                <p>{{ badge.desc }}</p>
+              </div>
+            </div>
+          </v-row>
+
+          <!-- between activity/event and occurence -->
+          <v-row class="mb-1 orderColumnCenter" v-if="getBadges('activity').length > 0 && getBadges('occurrence').length > 0 || 
+                                                      getBadges('events').length > 0 && getBadges('occurrence').length > 0 || 
+                                                      getBadges('activity').length > 0 && getBadges('other').length > 0 ||
+                                                      getBadges('events').length > 0 && getBadges('other').length > 0">
             <div class="divider"></div>
-            <!-- divider -->
-          </div>
+          </v-row>
 
-              <div class="contentBadgesCat"  v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
-                <h3>Eventos/Atividades</h3>
-                <div class="orderBadges">
-                  <!-- container item -->
-                  <div class="orderColumnCenter badgeImgContainer tooltipBadges"  v-for="badge in getBadges('events')">
-                    <img :src="badge.img" class="badgeImg">
-                    <div class="tooltiptextBadges">
-                      <p><strong>{{ badge.name }}</strong></p>
-                      <p>{{ badge.desc }}</p>
-                    </div>
-                  </div>
-                  <div class="orderColumnCenter badgeImgContainer tooltipBadges"  v-for="badge in getBadges('activity')">
-                    <img :src="badge.img" class="badgeImg">
-                    <div class="tooltiptextBadges">
-                      <p><strong>{{ badge.name }}</strong></p>
-                      <p>{{ badge.desc }}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            
-          <div class="orderColumnCenter" v-if="getBadges('other').length > 0 && getBadges('activity').length > 0 || getBadges('events').length > 0">
-            <!-- divider -->
-            <div class="divider"></div>
-            <!-- divider -->
-          </div>
-
-              <div class="contentBadgesCat displayColumn" v-if="getBadges('other').length > 0">
-              <h3>Outros</h3>
-              <div class="orderBadges">
-                <!-- container item -->
-                <div class="orderColumnCenter badgeImgContainer tooltipBadges displayWarp"  v-for="badge in getBadges('other')">
-                  <img :src="badge.img" class="badgeImg">
-                  <div class="tooltiptextBadges">
-                      <p><strong>{{ badge.name }}</strong></p>
-                      <p>{{ badge.desc }}</p>
-                  </div>
-                </div>
+          <!-- occurences -->
+          <v-row class="ma-1" v-if="getBadges('occurrence').length > 0">
+            <h3>Ocorrências</h3>
+          </v-row>
+          <v-row class="ma-1" v-if="getBadges('occurrence').length > 0">
+            <!-- container item -->
+            <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('occurrence')">
+              <img :src="badge.img" class="badgeImg">
+              <div class="tooltiptextBadges">
+                  <p><strong>{{ badge.name }}</strong></p>
+                  <p>{{ badge.desc }}</p>
               </div>
             </div>
+          </v-row>
+          
+          <!-- between occurence and other -->
+          <v-row class="orderColumnCenter mb-1" v-if="getBadges('other').length > 0 && getBadges('occurrence').length > 0">
+            <div class="divider"></div>
+          </v-row>
 
+          <!-- others -->
+          <v-row class="ma-1" v-if="getBadges('other').length > 0">
+            <h3>Outros</h3>
+          </v-row>
+          <v-row class="ma-1" v-if="getBadges('other').length > 0">
+            <!-- container item -->
+            <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('other')">
+              <img :src="badge.img" class="badgeImg">
+              <div class="tooltiptextBadges">
+                  <p><strong>{{ badge.name }}</strong></p>
+                  <p>{{ badge.desc }}</p>
+              </div>
+            </div>
+          </v-row>
 
-          </div>
-        </v-carousel-item>
-      <!-- Ranking -->
-        <v-carousel-item> 
-          <v-col class="rankingBgContainer">
-            <v-row class="paddingRanking rowSpaceAround">
-              <button @click="filterRanking('badges')" class="btnFilter" variant="plain">Medalhas</button>
-              <button @click="filterRanking('occurrences')" class="btnFilter" variant="plain">Ocorrências</button>
-              <button @click="filterRanking('events')" class="btnFilter" variant="plain">Eventos</button>
-              <div class="dividerBlack"></div>
+        </v-col>
+      </v-carousel-item>
+    <!-- Ranking -->
+      <v-carousel-item> 
+        <!-- col div, has everything -->
+        <v-col class="rankingBgContainer pa-0 mx-auto">
+          <!--  -->
+          <v-row class="pa-3 pb-0 d-flex justify-space-between"> <!-- paddingRanking rowSpaceAround -->
+            <button @click="filterRanking('badges')" class="btnFilter pa-1 px-2" variant="plain">Medalhas</button> <!-- btnFilter -->
+            <button @click="filterRanking('occurrences')" class="btnFilter pa-1 px-2" variant="plain">Ocorrências</button>
+            <button @click="filterRanking('events')" class="btnFilter pa-1 px-2" variant="plain">Eventos</button>
+            <div class="dividerBlack"></div>
+          </v-row><!-- mt-2 paddingRanking -->
+          <!--  -->
+          <v-row class="mt-2 pa-3 pb-2 pt-0"> <!-- tableHeader -->
+            <v-col cols="3" class="alignContentCenter pt-2 pb-2"> <!--  -->
+              <p>Rank</p>
+            </v-col>
+            <v-col class="alignContentCenter pt-2 pb-2"> <!-- alignContentCenter -->
+              <p>Nome</p>
+            </v-col>
+            <v-col cols="3" class="alignContentCenter pt-2 pb-2"> <!-- alignContentCenter -->
+              <p>Num</p>
+            </v-col>
+          </v-row>
+
+          <v-col class="hiddenScroll">
+            <v-row v-for="user, index in filterRanking(this.rankByFilter)"> <!-- alignContentCenter mt-5 mb-1 heightRanking -->
+              <!-- image/rank number -->
+              <v-col cols="3" class="alignContentCenter" v-if="index < 3" :style="{'background-color': rankingBackground[index]}"><!-- top3 alignContentCenter -->
+                <img class="iconTop" :src="rankingImg[index]">
+              </v-col> 
+              <v-col cols="3" class="alignContentCenter" v-else> <!-- alignContentCenter heightRanking -->
+                <p>{{ index}}</p>
+              </v-col>
+              <!-- username -->
+              <v-col cols="6" class="alignContentCenter" v-if="index < 3" :style="{'background-color': rankingBackground[index]}"><!-- top3 alignContentCenter -->
+                <p>{{ user.username }}</p><!-- textTop3 -->
+              </v-col>
+              <v-col cols="6" class="alignContentCenter" v-else> <!-- alignContentCenter heightRanking -->
+                <p>{{ user.username }}</p>
+              </v-col>
+              <!-- number of -->
+              <v-col cols="3" class="alignContentCenter" v-if="index < 3" :style="{'background-color': rankingBackground[index]}"><!-- top3 alignContentCenter -->
+                <p class="">{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? 
+                user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p> <!-- numTop3 -->
+              </v-col>
+              <v-col cols="3" class="alignContentCenter" v-else> <!-- alignContentCenter heightRanking -->
+                <p>{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? 
+                user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p>
+              </v-col>
+              <!-- dividers -->
+              <div v-if="index == 2" class="dividerDark"></div>
+              <div class="dividerRank" v-if="index > 2"></div>
             </v-row>
-            <div class="mt-2 paddingRanking">
-              <v-row class="tableHeader">
-                <v-col cols="3" class="alignContentCenter">
-                  <p>Rank</p>
-                </v-col>
-                <v-col class="alignContentCenter">
-                  <p>Nome</p>
-                </v-col>
-                <v-col cols="3" class="alignContentCenter">
-                  <p>Num</p>
-                </v-col>
-              </v-row>
-            </div>
-
-            <div class="hiddenScroll">
-              <v-row class=" alignContentCenter mt-5 mb-1 heightRanking" v-for="user, index in filterRanking(this.rankByFilter)">
-                
-                <v-row class="top3Container " v-if="index < 3" :style="{'background-color': rankingBackground[index]}">
-                  <v-col cols="3" class="top3 alignContentCenter">
-                    <img class="iconTop" :src="rankingImg[index]">
-                  </v-col>
-                  <v-col class="alignContentCenter top3">
-                    <p class="textTop3">{{ user.username }}</p>
-                  </v-col>
-                  <v-col cols="3" class="top3 alignContentCenter">
-                    <p class="numTop3">{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p>
-                  </v-col>
-                  <!-- divider -->
-                  <div v-if="index == 2" class="dividerDark"></div>
-                </v-row>
-                
-                <v-row class="heightRanking alignContentCenter" v-else>
-                  <v-col cols="4" class="alignContentCenter heightRanking">
-                    <p>{{ index}}</p>
-                  </v-col>
-                  <v-col class="alignContentCenter heightRanking">
-                    <p>{{ user.username }}</p>
-                  </v-col>
-                  <v-col cols="4" class="alignContentCenter heightRanking">
-                    <p>{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p>
-                  </v-col>
-                  <div class="dividerRank my-2"></div>
-                </v-row>
-                
-              </v-row>
-              
-            </div>
           </v-col>
-        </v-carousel-item>
-    </v-carousel>
+          <!-- <div class=""> --> <!-- hiddenScroll -->
+            
+          <!-- </div> -->
+        </v-col>
+      </v-carousel-item>
+  </v-carousel>
 </template>
 
 <script>
-  import { userStore } from '../stores/user'
-  import { occurrenceStore } from '../stores/occurrence'
-  import { eventStore } from '../stores/event'
-  import { missionStore } from '../stores/mission'
-  import { badgeStore } from '../stores/badge'
-    export default {
-        data () {
-          return {
-            missionStore: missionStore(),
-            userStore: userStore(),
-            titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
-            model: 0,
-            user: {},
+import { userStore } from '../stores/user'
+import { occurrenceStore } from '../stores/occurrence'
+import { eventStore } from '../stores/event'
+import { missionStore } from '../stores/mission'
+import { badgeStore } from '../stores/badge'
+  export default {
+      data () {
+        return {
+          missionStore: missionStore(),
+          userStore: userStore(),
+          titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
+          model: 0,
+          user: {},
 
-            /* recent posts */
-            occurrenceStore: occurrenceStore(),
-            eventStore: eventStore(),
-            feed: [],
+          /* recent posts */
+          occurrenceStore: occurrenceStore(),
+          eventStore: eventStore(),
+          feed: [],
 
-            /* badges */
-            badgeStore: badgeStore(),
+          /* badges */
+          badgeStore: badgeStore(),
 
-            /* ranking */
-            selected: '',
-            rankingImg: ['/src/assets/icons/leafFirstPlace.svg','/src/assets/icons/leafSecondPlace.svg','/src/assets/icons/leafThirdPlace.svg'],
-            rankingBackground: ['rgba(156, 209, 171, 0.9)','rgba(156, 209, 171, 0.5)','rgba(156, 209, 171, 0.3)'],
-            rankByFilter: 'badges'
+          /* ranking */
+          selected: '',
+          rankingImg: ['/src/assets/icons/leafFirstPlace.svg','/src/assets/icons/leafSecondPlace.svg','/src/assets/icons/leafThirdPlace.svg'],
+          rankingBackground: ['rgba(156, 209, 171, 0.9)','rgba(156, 209, 171, 0.5)','rgba(156, 209, 171, 0.3)'],
+          rankByFilter: 'badges'
 
-      }
-    },
-    methods: {
-      getBadges(type) {
-        let userBadges = []
-        let userState = this.userStore.getBadgesState(this.user.id)
-        let allBadges = this.badgeStore.getBadges
-
-        for(let i = 0; i < allBadges.length; i++) {
-          if(allBadges[i].type == type) {
-            if(userState.findIndex(element => element == allBadges[i].id)  != -1) userBadges.push(allBadges[i])
-          } 
-        }
-
-        /* if(type == 'badges') {
-          let countBadges = 0
-          userState.forEach(element => {
-            element.badgesState.forEach(item => {
-              if(item == true) countBadges++
-            });
-            userBadges.sort((b,a) => ())
-            
-          }); 
-        }*/
-
-        return userBadges
-      },
-      filterRanking(type) {
-        this.rankByFilter = type
-        let users = this.userStore.getUsers
-        if(type == 'badges') users.sort((a,b) => b.badgesState.length - a.badgesState.length)
-        if(type == 'occurrences') users.sort((a,b) => b.occurrenceId.length - a.occurrenceId.length)
-        if(type == 'events') users.sort((a,b) => (b.joined.eventId.length + b.joined.activityId.length) - (a.joined.eventId.length + a.joined.activityId.length))
-        return users
-      }
-    },
-    created () {
-      this.user = JSON.parse(localStorage.getItem('currentUser'))
-      /* create most recent */
-      let recentArray = []
-      let occurrenceArray = this.occurrenceStore.getOccurrences
-      let eventArray = this.eventStore.getEvents
-      for(let event of eventArray) {
-        this.feed.push(event)
-      }
-      for(let occurrence of occurrenceArray) {
-        this.feed.push(occurrence)
-      }
-      this.feed.sort((a,b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
-
-      for(let i = 0; i < 3; i++) {
-        if(this.feed[i] != undefined) recentArray.push(this.feed[i])
-      }
-      
-      this.feed = recentArray
-      
-    },
     }
+  },
+  methods: {
+    getBadges(type) {
+      let userBadges = []
+      let userState = this.userStore.getBadgesState(this.user.id)
+      let allBadges = this.badgeStore.getBadges
+
+      for(let i = 0; i < allBadges.length; i++) {
+        if(allBadges[i].type == type) {
+          if(userState.findIndex(element => element == allBadges[i].id)  != -1) userBadges.push(allBadges[i])
+        } 
+      }
+      return userBadges
+    },
+    filterRanking(type) {
+      this.rankByFilter = type
+      let users = this.userStore.getUsers
+      if(type == 'badges') users.sort((a,b) => b.badgesState.length - a.badgesState.length)
+      if(type == 'occurrences') users.sort((a,b) => b.occurrenceId.length - a.occurrenceId.length)
+      if(type == 'events') users.sort((a,b) => (b.joined.eventId.length + b.joined.activityId.length) - (a.joined.eventId.length + a.joined.activityId.length))
+      return users
+    }
+  },
+  created () {
+    this.user = JSON.parse(localStorage.getItem('currentUser'))
+    /* create most recent */
+    let recentArray = []
+    let occurrenceArray = this.occurrenceStore.getOccurrences
+    let eventArray = this.eventStore.getEvents
+    for(let event of eventArray) {
+      this.feed.push(event)
+    }
+    for(let occurrence of occurrenceArray) {
+      this.feed.push(occurrence)
+    }
+    this.feed.sort((a,b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
+
+    for(let i = 0; i < 3; i++) {
+      if(this.feed[i] != undefined) recentArray.push(this.feed[i])
+    }
+    
+    this.feed = recentArray
+    
+  },
+  }
 </script>
 
 <style lang="scss" scoped>
-    @import '../assets/styles/sideBar.css';
-    @import '../assets/styles/base.css';
+  @import '../assets/styles/sideBar.css';
+  @import '../assets/styles/base.css';
+  .v-window__container {width: 100% !important}
 </style>

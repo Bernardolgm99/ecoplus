@@ -1,38 +1,22 @@
 #carouselItems {
     margin-top: 10%;
 }
-/* mission */
-.rowMission {
-    width: 260px;
-    padding-bottom: 5px;
-}
 
+
+/* mission */
 .rowStyleMission {
-    width: inherit;
     max-height: 50px !important;
+    min-width: 275px !important;
     padding: 3%;
     background-color: #69B580;
     border-radius: 5px;
     border: solid 1px black;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
 }
-
-.rowDesc {
-    padding-top: 3%;
-    padding-left: 5%;
-    padding-right: 5%;
-}
-
 .imgIcon {
     width: 30px;
     height: 30px;
     padding-right: 2%;
 }
-
 .circularProgress {
     position: relative;
     height: 25px;
@@ -42,15 +26,9 @@
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
-
-.textMission {
-    padding-top: 2%;
-}
-
 .tooltip {
     position: relative;
 }
-
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 200px;
@@ -66,7 +44,6 @@
     margin-left: -60px;
     font-size: 12px;
 }
-
 .tooltip .tooltiptext::after {
     content: "";
     position: absolute;
@@ -77,37 +54,52 @@
     border-style: solid;
     border-color: transparent transparent black transparent;
   }
-  
-  .tooltip:hover .tooltiptext {
+.tooltip:hover .tooltiptext {
     visibility: visible;
-  }
-
-/* recent posts */
-.recentPost {
-    max-width: 260px;
 }
 
+
+
+/* recent posts */
 .postTitle{
     color: black;
 }
-
 a {
     color: black !important;
 }
 
+.--v-window__container {
+    width: 100%;
+}
 .postBgImage {
-    width: 260px;
-    height: 140px;
+    width: 100%;
+    max-width: 280px;
+    min-height: 140px;
     background-repeat: no-repeat;
     background-position: top center;
-    background-size: 260px 140px;
+    background-size: 100%;
     margin-bottom: 20px;
     border-radius: 5px;
     display: flex;
 }
-
+/* post icon */
+.postIcon {
+    max-width: 15px;
+    max-height: 15px;
+}
+.postIconBackground {
+    min-width: 25px;
+    min-height: 25px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    margin-left: 2%;
+    margin-right: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} 
 .postTitleContent {
-    width: 260px;
+    width: 100%;
     height: 45px;
     background-color: #bfbfbf;
     border-bottom-left-radius: 5px;
@@ -117,61 +109,23 @@ a {
     align-items: center;
 }
 
-.postIcon {
-    width: 15px;
-    height: 15px;
-}
-
-.postIconBackground {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.3);
-    margin-left: 2%;
-    margin-right: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 /* badges */
 .bgGrey {
     background-color: #E4DBD3;
     border-radius: 5px;
-    width: 255px;
+    max-width: 260px;
 }
-
-.orderBadges {
-    display:flex;
-    flex-wrap: wrap;
-}
-
-.contentBadgesCat {
-    padding: 5%;
-    align-self: flex-start;
-    width: inherit;
-}
-
-.badgeImgContainer {
-    margin-right: 10px;
-    margin-bottom: 5px;
-}
-
 .badgeImg {
     width: 46px;
 }
-
 .divider {
     width: 150px;
     height: 3px;
     background-color: #CAC2BC;
-    margin-bottom: 5%;
 }
-
 .tooltipBadges {
     position: relative;
 }
-
 .tooltipBadges .tooltiptextBadges {
     visibility: hidden;
     width: 90px;
@@ -187,7 +141,6 @@ a {
     margin-left: -60px;
     font-size: 10px;
 }
-
 .tooltipBadges .tooltiptextBadges::after {
     content: "";
     position: absolute;
@@ -198,103 +151,59 @@ a {
     border-style: solid;
     border-color: transparent transparent black transparent;
 }
-  
 .tooltipBadges:hover .tooltiptextBadges {
     visibility: visible;
-}
+} 
+
 
 /* raking */
-.tableHeader {
-    padding-bottom: 5px;
-}
-
+/* container */
 .rankingBgContainer {
-    width: 260px;
-    height: 490px;
+    max-width: 270px;
+    height: 100%;
     background-color: #E4DBD3;
     border-radius: 5px;
     border: 1px solid #8F9992;
-    padding: 0px;
-    padding-top: 12px;
+    /* padding: 0px;
+    padding-top: 12px; */
 }
-
-.btnFilter {
-    padding: 2%;
+/* scrollbar */
+.hiddenScroll {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
 }
-
-.btnFilter:focus {
-    color: #E4DBD3;
-    background-color: #504841;
+.hiddenScroll::-webkit-scrollbar {
+  display: none;
 }
-
-.paddingRanking {
-    padding-left: 12px;
-    padding-right: 12px;
-}
-
-.rankingContent {
-    margin-top: 5%;
-    margin-bottom: 5%;
-    margin-right: 2%;
-    margin-left: 2%;
-}
-
-.top3 {
-    height: 40px;
-}
-.top3Container {
-    background-size: 260px !important;
-}
-
-.heightRanking {
-    height: 20px;
-}
-
-.top3Container {
-    max-width: 260px;
-}
-
-.iconTop {
-    width: 28px;
-}
-
+/* dividers */
 .dividerRank{
-    width: 244px;
+    width: 100%;
     height: 1px;
     background-color: #bfbfbf;
     margin-bottom: 2%;
 }
-
 .dividerDark {
-    width: 260px;
+    width: 100%;
     height: 1px;
     background-color: #8F9992;
 }
 .dividerBlack {
-    width: 260px;
+    width: 100%;
     height: 1px;
     background-color: black;
 }
-
-.hiddenScroll {
-    overflow: hidden;
-    overflow-y: scroll;
-    height: 430px;
+/* buttons style */
+.btnFilter:focus {
+    color: #E4DBD3;
+    background-color: #504841;
 }
-
-.hiddenScroll::-webkit-scrollbar {
-  display: none;
-}
-
-div.v-col.alignContentCenter {
-    padding: 5px;
-}
-
+/* btn side bars */
 .btnSideBar {
     color: #69B580;
     width: 40px;
 }
-
 .btnSideBar:hover {
     color: #5A9A6D;
 }
