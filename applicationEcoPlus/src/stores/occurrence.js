@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import axios from "axios"
 
 let occurrences
 
@@ -38,7 +39,7 @@ if (!JSON.parse(localStorage.getItem('occurrences'))) {
 
 export const occurrenceStore = defineStore('occurrence', {
   state: () => ({
-    occurrences: occurrences
+    occurrences: /* occurrences */ []
   }),
   getters: {
     getId: (state) => state.id,
@@ -49,7 +50,7 @@ export const occurrenceStore = defineStore('occurrence', {
     getDescription: (state) => state.description,
     getOccurrenceById: (state) =>
       (occurrenceId) => state.occurrences.find(occurrence => occurrence.id == occurrenceId),
-    getOccurrences: (state) => state.occurrences,
+    getOccurrence: (state) => state.occurrences,
   },
   actions: {
     addOccurrence(userId, title, image, location, locationDescription, description) {
@@ -75,6 +76,22 @@ export const occurrenceStore = defineStore('occurrence', {
     },
     updateOccurrences() {
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
+    },
+    async fetchOccurrences(){ 
+      console.log("start fetch");
+      
+      try {
+        const response = await fetch('http://localhost:3000/occurrences');
+        if (response.ok) { //TRUE if response status code in the range 200-299
+          this.occurrences = await response.json(); // parse the response as JSON
+        }
+        else
+          alert("HTTP error: " + response.status)
+      }
+      catch (e) {
+        throw Error(e)
+      }
+      console.log('end fetch');
     }
   },
 })
