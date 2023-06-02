@@ -24,7 +24,7 @@
                           </div>
                           <div class="infos">
                             <div class="title">
-                              <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
+                              <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                             </div>
                             <div class="location">
                               <span class="textSmall txtLocation">{{ post.location }}</span>
@@ -35,8 +35,8 @@
                   </div>
               </div>
               <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
-                    <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
-                    <p class="comment">{{ post.comments[i].message }}</p>
+                    <p class="userName">@{{ post.comments[i].user.username }}: &nbsp;</p>
+                    <p class="comment">{{ post.comments[i].description }}</p>
                   </div>
                   <div class="routerLink">
                     <p class="viewMore textSmall">
@@ -68,6 +68,7 @@ import NavBar from '../components/NavBar.vue'
 import { eventStore } from '../stores/event'
 import { userStore } from '../stores/user'
 
+
 export default {
 
   components: {
@@ -80,6 +81,11 @@ export default {
       feed: [],
     }
   },
+
+  beforeMount () {
+    this.eventStore.fetchAllEvents();
+  },
+
   created() {
 
     if (!JSON.parse(localStorage.getItem('currentUser'))) {
@@ -95,7 +101,7 @@ export default {
         this.feed.push(event)
       }
 
-      this.feed.sort((a, b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
+      this.feed.sort((a, b) => (b.createdAt.compare + b.createdAt.compare) - (a.createdAt.compare + a.createdAt.compare))
 
     }
   }
