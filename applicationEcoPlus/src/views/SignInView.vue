@@ -62,21 +62,19 @@ export default {
                     this.alert = false
                     this.alertLogIn = false
                     this.sucess = true
+
+                    /* if( == 'admin'){
+                        this.$router.push({ name: 'admin' })
+                    } else {
+                        this.$router.push({ name: 'home' })
+                    } */
                     
                     /* this.userId = this.userStore.getUserId(this.username) */
                     
                     /* localStorage.setItem('currentUser', JSON.stringify(this.userStore.getUserById(this.userId)))
                     if (JSON.parse(localStorage.getItem('currentUser')).title == "Admin") {
-                        this.$router.push({ name: 'admin' })
                     } else {
-                        this.$router.push({ name: 'home' })
                     }  */
-                    /* if( == 'admin'){
-                    } else {
-                    } */
-                    /*
-                    */
-
                 }
                 if (!user) {
                     this.alert = false

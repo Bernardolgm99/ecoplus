@@ -1,286 +1,10 @@
 import { defineStore } from 'pinia'
-
-let users
-
-if (!JSON.parse(localStorage.getItem('users'))) {
-  users = [
-    {
-      id: 0,
-      username: 'admin',
-      title: 'Admin',
-      blocked: false,
-      name: 'admin',
-      perfilImage: '/src/assets/perfil/avatar.jpeg',
-      perfilBgImage: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'admin', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [0,1],
-        activityId: [0]
-      },
-      occurrenceId: [0],
-      missionsState: [1, 2, 1],
-      badgesState: [0, 1, 3, 4, 5, 6, 9]
-    },
-    {id: 1, 
-      username: 'João', 
-      title: 'EcoEscolas',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [],
-        activityId: []
-      },
-      occurrenceId: [2, 5, 6, 7, 4],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    },
-    {id: 2, 
-      username: 'be.lage', 
-      title: 'User',
-      blocked: false,
-      name: 'Bernardo Lage', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: '123', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [],
-        activityId: []
-      },
-      occurrenceId: [],
-      missionsState: [1, 0, 1],
-      badgesState: []
-    },
-    {id: 3, 
-      username: 'gaspar', 
-      title: 'User',
-      blocked: false,
-      name: 'User', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'Esmad_2223', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [],
-        activityId: []
-      },
-      occurrenceId: [2],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5]
-    },
-    {id: 4, 
-      username: 'joana_alves', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5, 6, 7, 4, 1],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4]
-    },
-    {id: 5, 
-      username: 'maria_bomdia', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5, 6, 7],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    },
-    {id: 6, 
-      username: 'frederico', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    },
-    {id: 7, 
-      username: 'bessa', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5, 6, 7],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    },
-    {id: 8, 
-      username: 'julio09', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5, 6, 7, 4, 0],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    },
-    {id: 9, 
-      username: 'catarina', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5, 6, 7, 4],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    },
-    {id: 10, 
-      username: 'catia0102', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5, 6, 7, 4],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    },
-    {id: 11, 
-      username: 'bernardo', 
-      title: 'User',
-      blocked: false,
-      name: 'admin', 
-      perfilImage: '/src/assets/perfil/yoda.jpeg',
-      email: 'admin', 
-      password: 'admin', 
-      gender: 'undefined', 
-      city: 'undefined', 
-      postalcode: 'undefined', 
-      birthDate: 'undefined', 
-      district: 'undefined', 
-      school: 'undefined',
-      joined: {
-        eventId: [1, 3, 5, 6],
-        activityId: [1, 2, 3, 4]
-      },
-      occurrenceId: [2, 5, 6, 7, 4],
-      missionsState: [1, 0, 1],
-      badgesState: [3, 4, 5, 6, 9]
-    }
-  ]
-  localStorage.setItem('users', JSON.stringify(users))
-} else {
-  users = JSON.parse(localStorage.getItem('users'))
-}
-
-
+import cookieFunctions from '../utilities/cookieFuntions'
+import API from '../../config'
 
 export const userStore = defineStore('user', {
   state: () => ({
-    users: users /* [] */
+    users: /* users */ []
   }),
   getters: {
     getUsers: (state) => state.users,
@@ -393,12 +117,25 @@ export const userStore = defineStore('user', {
           return response.json();
         })
         .then(result => {
-          docs.cookie
-          console.log('API response:', result);
+          cookieFunctions.createTokenOnCookie(result.accessToken);
         })
         .catch(error => {
           console.error('Error:', error);
         });
+
+      }
+      catch (e) {
+        throw Error(e)
+      }
+    },
+    async fetchAllUsers(){
+      try {
+        const response = await fetch(API + '/users');
+        if (response.ok) { //TRUE if response status code in the range 200-299
+          this.users = await response.json(); // parse the response as JSON
+        }
+        else
+          alert("HTTP error: " + response.status)
       }
       catch (e) {
         throw Error(e)
