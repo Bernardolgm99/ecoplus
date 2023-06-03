@@ -11,7 +11,7 @@
   
   <v-carousel hide-delimiters :show-arrows="false" v-model="model" id="carouselItems" class="ma-0">
     <!-- quests -->
-      <v-carousel-item>
+      <!-- <v-carousel-item>
         <div class="d-flex flex-column align-center">
           <div class="d-flex align-center justify-space-between pa-0 px-2 py-1 ma-0 mb-1 textSmall tooltip rowStyleMission" v-for="mission in this.missionStore.getMissions">
               <div>
@@ -26,68 +26,36 @@
               <div id="desc" class="rowDesc tooltiptext">{{ mission.description }}</div>
             </div>
         </div>
-      </v-carousel-item>
+      </v-carousel-item> -->
     <!-- Recent Posts -->
       <v-carousel-item>
           <div class="d-flex flex-column align-center ">
             <div v-for="post in feed" class="ma-0 pa-0 w-100">
-              <RouterLink v-if="post.type == 'event'" :to="{name: 'eventDetail', params:{eventid : post.id}}">
+              <RouterLink v-if="post.IdCreator != undefined" :to="{name: 'eventDetail', params:{eventid : post.id}}">
                 <div class="postBgImage alignContentBottom mx-auto pa-0" :style="{'background-image': 'url(' + post.image + ')'}">
                   <div class="postTitleContent">
                     <div class="postIconBackground">
                       <img class="postIcon" src="/src/assets/icons/calendar.svg">
                     </div>
-                    <h1 class="textSmall postTitle" v-if="post.title.length < 18">{{post.title}}</h1>
-                    <h1 class="textSmall postTitle" v-else>{{post.title.substring(0, 19)}}...</h1>
+                    <h1 class="textSmall postTitle" v-if="post.name.length < 18">{{post.name}}</h1>
+                    <h1 class="textSmall postTitle" v-else>{{post.name.substring(0, 19)}}...</h1>
                   </div>
                 </div>  
               </RouterLink>
 
-              <RouterLink v-if="post.type == 'occurrence' && post.stage != 'To Do'" :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">
+              <RouterLink v-else :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">
                 <div class="w-100 postBgImage alignContentBottom mx-auto pa-0" :style="{'background-image': 'url(' + post.image + ')'}">
                   <div class="postTitleContent">
                     <div class="postIconBackground">
                       <img class="postIcon" src="/src/assets/icons/tool.svg">
                     </div>
-                    <h1 class="textSmall postTitle" v-if="post.title.length < 18">{{post.title}}</h1>
-                    <h1 class="textSmall postTitle" v-else>{{post.title.substring(0, 19)}}...</h1>
+                    <h1 class="textSmall postTitle" v-if="post.name.length < 18">{{post.name}}</h1>
+                    <h1 class="textSmall postTitle" v-else>{{post.name.substring(0, 19)}}...</h1>
                   </div>
                 </div>
               </RouterLink>
             </div>
           </div>
-
-        <!-- <div class="ola" v-for="post in feed">
-          <div v-if="post.type == 'event'">
-            <RouterLink :to="{name: 'eventDetail', params:{eventid : post.id}}">
-              <div class="postBgImage alignContentBottom mx-auto" :style="{'background-image': 'url(' + post.image + ')'}">
-                <div class="postTitleContent">
-                  <div class="postIconBackground">
-                    <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
-                    <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
-                  </div>
-                  <h1 class="textSmall postTitle">{{post.title}}</h1>
-                </div>
-              </div>
-            </RouterLink>
-          </div>
-
-          <div v-if="post.type == 'occurrence'">
-            <div v-if="post.stage != 'To Do'">
-            <RouterLink :to="{name: 'occurrenceDetail', params:{occurrenceid : post.id}}">
-              <div class="postBgImage alignContentBottom mx-auto" :style="{'background-image': 'url(' + post.image + ')'}">
-                <div class="postTitleContent">
-                  <div class="postIconBackground">
-                    <img v-if="post.type == 'occurrence'" class="postIcon" src="/src/assets/icons/tool.svg">
-                    <img v-else class="postIcon" src="/src/assets/icons/calendar.svg">
-                  </div>
-                  <h1 class="textSmall postTitle">{{post.title}}</h1>
-                </div>
-              </div>
-            </RouterLink>
-          </div>
-          </div>
-        </div> -->
       </v-carousel-item>
     <!-- Badges -->
       <v-carousel-item>
@@ -239,7 +207,7 @@ import { occurrenceStore } from '../stores/occurrence'
 import { eventStore } from '../stores/event'
 import { missionStore } from '../stores/mission'
 import { badgeStore } from '../stores/badge'
-  export default {
+export default {
       data () {
         return {
           missionStore: missionStore(),
@@ -286,26 +254,26 @@ import { badgeStore } from '../stores/badge'
       return users
     }
   },
-  created () {
+  async created () {
+    await this.occurrenceStore.fetchOccurrences()
+    await this.eventStore.fetchAllEvents()
     this.user = JSON.parse(localStorage.getItem('currentUser'))
     /* create most recent */
     let recentArray = []
-    let occurrenceArray = this.occurrenceStore.getOccurrences
+    let occurrenceArray = this.occurrenceStore.getOccurrence
     let eventArray = this.eventStore.getEvents
+
     for(let event of eventArray) {
       this.feed.push(event)
     }
     for(let occurrence of occurrenceArray) {
       this.feed.push(occurrence)
     }
-    this.feed.sort((a,b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
-
+    
     for(let i = 0; i < 3; i++) {
       if(this.feed[i] != undefined) recentArray.push(this.feed[i])
     }
-    
-    this.feed = recentArray
-    
+    this.feed = recentArray;
   },
   }
 </script>
@@ -313,5 +281,4 @@ import { badgeStore } from '../stores/badge'
 <style lang="scss" scoped>
   @import '../assets/styles/sideBar.css';
   @import '../assets/styles/base.css';
-  .v-window__container {width: 100% !important}
 </style>

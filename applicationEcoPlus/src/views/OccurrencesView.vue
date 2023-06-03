@@ -15,7 +15,7 @@
             <v-container class="d-flex flex-column align-center contentColumn">
               <div v-for="post in feed" class="content">
 
-                <div v-if="post.stage != 'To Do'">
+                <div v-if="post.status == 1">
 
                 <div class="card">
                   <div class="image" :style="`background: url(${post.image});`">
@@ -26,7 +26,7 @@
                         </div>
                         <div class="infos">
                           <div class="title">
-                            <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
+                            <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                           </div>
                           <div class="location">
                             <span class="textSmall txtLocation">{{ post.location }}</span>
@@ -36,6 +36,8 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- change comments -->
                 <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
                   <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
                   <p class="comment">{{ post.comments[i].message }}</p>
@@ -91,8 +93,10 @@ export default {
   },
   computed: {
     createFeed() {
-
-      let occurrenceArray = this.occurrenceStore.getOccurrences
+      console.log("ola1")
+      let occurrenceArray = this.occurrenceStore.getOccurrences()
+      console.log("ola2")
+      console.log(occurrenceArray)
 
       for (let occurrence of occurrenceArray) {
         this.feed.push(occurrence)

@@ -1,44 +1,9 @@
 import { defineStore } from 'pinia'
-
-let occurrences
-
-if (!JSON.parse(localStorage.getItem('occurrences'))) {
-  occurrences = [
-    {
-      id: 0,
-      userId: 0,
-      title: 'Trash in front of the ESMAD',
-      location: 'Vila do Conde, Portugal',
-      image: '/src/assets/images/example3.jpg',
-      dateHour: { compare: 1674515139744, date: '' },
-      locationDescription: 'Neer to the bridge',
-      description: 'Amount of shoes and plastic',
-      comments: [{ messageId: 0, userId: 0, message: 'I gonna call the town hall', likesDislikes: { likes: [0, 2], dislikes: [1] } }],
-      type: 'occurrence',
-      stage: 'Doing',
-    },
-    {
-      id: 1,
-      userId: 1,
-      title: 'occurrence 4º date',
-      location: 'Rio Tinto, Porto, Portugal',
-      image: '/src/assets/images/sink.jpg',
-      dateHour: { compare: 1674515139742, date: '' },
-      locationDescription: 'Second floor of Block B',
-      description: 'It\'s broked like a week a go',
-      comments: [],
-      type: 'occurrence',
-      stage: 'Done',
-    },
-  ]
-  localStorage.setItem('occurrences', JSON.stringify(occurrences))
-} else {
-  occurrences = JSON.parse(localStorage.getItem('occurrences'))
-}
+import API from '../../config'
 
 export const occurrenceStore = defineStore('occurrence', {
   state: () => ({
-    occurrences: occurrences
+    occurrences: []
   }),
   getters: {
     getId: (state) => state.id,
@@ -49,7 +14,7 @@ export const occurrenceStore = defineStore('occurrence', {
     getDescription: (state) => state.description,
     getOccurrenceById: (state) =>
       (occurrenceId) => state.occurrences.find(occurrence => occurrence.id == occurrenceId),
-    getOccurrences: (state) => state.occurrences,
+    getOccurrence: (state) => state.occurrences,
   },
   actions: {
     addOccurrence(userId, title, image, location, locationDescription, description) {
@@ -75,6 +40,19 @@ export const occurrenceStore = defineStore('occurrence', {
     },
     updateOccurrences() {
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
+    },
+    async fetchOccurrences(){ 
+      try {
+        const response = await fetch(API + '/occurrences');
+        if (response.ok) { //TRUE if response status code in the range 200-299
+          this.occurrences = await response.json(); // parse the response as JSON
+        }
+        else
+          alert("HTTP error: " + response.status)
+      }
+      catch (e) {
+        throw Error(e)
+      }
     }
   },
 })
