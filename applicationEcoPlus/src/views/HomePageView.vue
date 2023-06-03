@@ -26,18 +26,21 @@ export default {
   computed: {
     createFeed() {
 
-      /* let occurrenceArray = this.occurrenceStore.getOccurrences
+      let occurrenceArray = this.occurrenceStore.getOccurrence
       let eventArray = this.eventStore.getEvents
-
+      
       for (let event of eventArray) {
         this.feed.push(event)
       }
       for (let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
-
-      this.feed.sort((a, b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare)) */
+      console.log(this.feed)
     }
+  },
+  async created(){
+    await this.occurrenceStore.fetchOccurrences()
+    await this.eventStore.fetchAllEvents()
   }
 }
 </script>

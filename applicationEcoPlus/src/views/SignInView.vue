@@ -54,28 +54,33 @@ export default {
         }
     },
     methods: {
-        checkLogIn() {
+        async checkLogIn() {
             if (this.username != '' && this.password != '') {
-                if (this.userStore.getUserChecked(this.username, this.password)) {
-
+                const user = this.userStore.logIn(this.username, this.password) /* this.userStore.getUserChecked(this.username, this.password) */ 
+                console.log(user)
+                if (user) {
                     this.alert = false
                     this.alertLogIn = false
                     this.sucess = true
-
-                    this.userId = this.userStore.getUserId(this.username)
-                    localStorage.setItem('currentUser', JSON.stringify(this.userStore.getUserById(this.userId)))
+                    
+                    /* this.userId = this.userStore.getUserId(this.username) */
+                    
+                    /* localStorage.setItem('currentUser', JSON.stringify(this.userStore.getUserById(this.userId)))
                     if (JSON.parse(localStorage.getItem('currentUser')).title == "Admin") {
                         this.$router.push({ name: 'admin' })
                     } else {
                         this.$router.push({ name: 'home' })
-                    }
+                    }  */
+                    /* if( == 'admin'){
+                    } else {
+                    } */
+                    /*
+                    */
 
                 }
-                if (!this.userStore.getUserChecked(this.username, this.password)) {
-
+                if (!user) {
                     this.alert = false
                     this.alertLogIn = true
-
                 }
             } else {
                 this.alertLogIn = false

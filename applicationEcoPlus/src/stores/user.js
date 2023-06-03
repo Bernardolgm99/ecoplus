@@ -280,7 +280,7 @@ if (!JSON.parse(localStorage.getItem('users'))) {
 
 export const userStore = defineStore('user', {
   state: () => ({
-    users: users
+    users: users /* [] */
   }),
   getters: {
     getUsers: (state) => state.users,
@@ -293,15 +293,15 @@ export const userStore = defineStore('user', {
     getJoinedEvents: (state) => state.joined.eventId,
     getJoinedActivities: (state) => state.joined.activityId,
     getOccurrenceIds: (state) => state.occurrenceId,
-    getUserChecked: (state) => (userName, userPw) => {
+    /* getUserChecked: (state) => (userName, userPw) => {
       let userNameChecked = state.users.find(user => user.username == userName)
-
+      console.log(userNameChecked)
       if (userNameChecked.password == userPw) {
         return true
       } else {
         return false
       }
-    },
+    }, */
     getExistingAccount: (state) => (userName, userEmail) => {
       if (!state.users.find(user => user.username == userName) && !state.users.find(user => user.email == userEmail)) {
         return true
@@ -371,6 +371,38 @@ export const userStore = defineStore('user', {
     },
     addJoinedEvent(eventId) {
       this.joined.eventId.push(eventId)
+    },
+    async logIn(username, password){
+      try {
+        const request = new Request('http://localhost:3000/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: username,
+            password: password
+          })
+
+        });
+        
+        await fetch(request).then(response => {
+          if (!response.ok) {
+            throw new Error('Request failed');
+          }
+          return response.json();
+        })
+        .then(result => {
+          docs.cookie
+          console.log('API response:', result);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+      catch (e) {
+        throw Error(e)
+      }
     }
   },
 })
