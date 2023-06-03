@@ -6,10 +6,10 @@ export const cookie = {
     },
     
     getCookie(query) {
-        const value = document.cookie.split(';');
+        const value = ';' + document.cookie;
         const parts = value.split(';' + query + '=');
         if (parts.length === 2) {
-            return parts.pop().split(";"), shift();
+            return parts.pop().split(";").shift();
         } else {
             return false;
         };
