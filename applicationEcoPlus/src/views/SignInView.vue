@@ -40,6 +40,7 @@
 <script>
 
 import { userStore } from '../stores/user'
+import { cookie} from '../utilities/cookieFunctions'
 
 export default {
     data() {
@@ -56,18 +57,20 @@ export default {
     methods: {
         async checkLogIn() {
             if (this.username != '' && this.password != '') {
-                const user = this.userStore.logIn(this.username, this.password) /* this.userStore.getUserChecked(this.username, this.password) */ 
-                console.log(user)
-                if (user) {
+                const userIsValid = await this.userStore.logIn(this.username, this.password) /* this.userStore.getUserChecked(this.username, this.password) */ 
+                if (userIsValid) {
                     this.alert = false
                     this.alertLogIn = false
                     this.sucess = true
 
-                    /* if( == 'admin'){
+                    console.log(cookie.getCookie("token"))
+                    let user = await this.userStore.fetchLoggedUser(cookie.getCookie("token"))
+                    
+                    if(user.role == 'admin'){
                         this.$router.push({ name: 'admin' })
                     } else {
                         this.$router.push({ name: 'home' })
-                    } */
+                    }
                     
                     /* this.userId = this.userStore.getUserId(this.username) */
                     
@@ -76,7 +79,7 @@ export default {
                     } else {
                     }  */
                 }
-                if (!user) {
+                if (!userIsValid) {
                     this.alert = false
                     this.alertLogIn = true
                 }

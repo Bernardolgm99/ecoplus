@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import cookieFunctions from '../utilities/cookieFuntions'
+import { cookie } from '../utilities/cookieFunctions'
 import API from '../../config'
 
 export const userStore = defineStore('user', {
@@ -110,19 +110,20 @@ export const userStore = defineStore('user', {
 
         });
         
-        await fetch(request).then(response => {
+        let response = await fetch(request).then(response => {
           if (!response.ok) {
             throw new Error('Request failed');
           }
           return response.json();
         })
         .then(result => {
-          cookieFunctions.createTokenOnCookie(result.accessToken);
+          cookie.createTokenOnCookie(result.accessToken);
+          return true;
         })
         .catch(error => {
           console.error('Error:', error);
         });
-
+        return response;
       }
       catch (e) {
         throw Error(e)
@@ -136,6 +137,29 @@ export const userStore = defineStore('user', {
         }
         else
           alert("HTTP error: " + response.status)
+      }
+      catch (e) {
+        throw Error(e)
+      }
+    },
+    async fetchLoggedUser(token){
+      try {
+        const request = new Request(API + '/users/loggedUser', {
+          method: 'GET',
+          headers: {
+            Authorization: token
+          }
+        });
+        let response = await fetch(request).then((response) => {
+          if (!response.ok) {
+            throw new Error('Request failed');
+          }
+          return response.json();
+        }).then(result => {return result})
+        .catch(error => {
+          console.error('Error:', error);
+        })
+        return response.msg
       }
       catch (e) {
         throw Error(e)

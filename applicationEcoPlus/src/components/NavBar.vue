@@ -68,12 +68,12 @@
                 <div id="perfil" class="textMediumLarge d-flex">
                     <div id="perfilIcon">
                         <v-img @click="this.$router.push({ name: 'perfil', params: { perfilid: user.id } })" id="perfil"
-                            :src="user.perfilImage"></v-img>
+                            :src="user.icon"></v-img>
                     </div>
                     <div id="perfilInfos">
                         <RouterLink :to="{ name: 'perfil', params: { perfilid: user.id } }">{{ user.username }}
                         </RouterLink>
-                        {{ user.title }}
+                        {{ user.role }}
                     </div>
 
                 </div>
@@ -88,9 +88,13 @@
 </template>
 
 <script>
+import { userStore } from '../stores/user'
+import { cookie} from '../utilities/cookieFunctions'
+
 export default {
     data() {
         return {
+            userStore: userStore(),
             ecoIcon: '/src/assets/icons/logo.svg',
             homeIcon: '/src/assets/icons/home.svg',
             occurrenceIcon: '/src/assets/icons/tool.svg',
@@ -101,8 +105,8 @@ export default {
             user: {}
         }
     },
-    created() {
-        this.user = JSON.parse(localStorage.getItem('currentUser'))
+    async created() {
+        this.user = await this.userStore.fetchLoggedUser(cookie.getCookie("token"))
     },
     methods: {
         funcLogOut() {

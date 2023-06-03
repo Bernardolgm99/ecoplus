@@ -23,10 +23,11 @@ export default {
       this.$router.push({ name: 'signin' })
     }
   },
-  computed: {
-    createFeed() {
+  async created(){
+    await this.occurrenceStore.fetchOccurrences()
+    await this.eventStore.fetchAllEvents()
 
-      let occurrenceArray = this.occurrenceStore.getOccurrence
+    let occurrenceArray = this.occurrenceStore.getOccurrence
       let eventArray = this.eventStore.getEvents
       
       for (let event of eventArray) {
@@ -35,12 +36,6 @@ export default {
       for (let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
-      console.log(this.feed)
-    }
-  },
-  async created(){
-    await this.occurrenceStore.fetchOccurrences()
-    await this.eventStore.fetchAllEvents()
   }
 }
 </script>
