@@ -65,14 +65,13 @@
         </div>
         <div class="d-flex justify-space-between align-center">
             <div id="bot">
-                <div id="perfil" class="textMediumLarge d-flex">
+                <div id="perfil" class="textMediumLarge d-flex" @click="navigateToPerfil()">
                     <div id="perfilIcon">
-                        <v-img @click="this.$router.push({ name: 'perfil', params: { perfilid: user.id } })" id="perfil"
-                            :src="user.icon"></v-img>
+                        <v-img id="perfil" :src="user.icon"></v-img>
                     </div>
                     <div id="perfilInfos">
-                        <RouterLink :to="{ name: 'perfil', params: { perfilid: user.id } }">{{ user.username }}
-                        </RouterLink>
+                        <div>{{ user.username }}
+                        </div>
                         {{ user.role }}
                     </div>
 
@@ -112,6 +111,9 @@ export default {
         funcLogOut() {
             localStorage.removeItem('currentUser')
             this.$router.push('/signin')
+        },
+        navigateToPerfil() {
+            this.$router.push({ name: 'perfil', params: { perfilid: this.user.id } });
         }
     }
 }
