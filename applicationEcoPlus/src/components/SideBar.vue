@@ -23,7 +23,7 @@
               <div>
                 <div :style="{ 'background': 'conic-gradient( #bfbfbf ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg,#ffffff ' + Math.round((this.userStore.getUserMissionState(this.user.id)[mission.id]/mission.quantity) * 360) + 'deg)'}" class="circularProgress"></div>
               </div>  
-              <div id="desc" class="rowDesc tooltiptext">{{ mission.description }}</div>
+              <div id="desc" class="rowDesc tooltiptext">{{ mission.descriptionription }}</div>
             </div>
         </div>
       </v-carousel-item> -->
@@ -60,7 +60,7 @@
     <!-- Badges -->
       <v-carousel-item>
         <!-- nao tem badges -->
-        <v-col class="bgGrey mx-auto ml-2 mr-2 align-center" v-if="getBadges('occurrence').length == 0 && getBadges('activity').length == 0 && getBadges('events').length == 0 && getBadges('other').length == 0"> 
+        <v-col class="bgGrey mx-auto ml-2 mr-2 align-center" v-if="getBadges('occurrence').length == 0 && getBadges('activity').length == 0 && getBadges('event').length == 0 && getBadges('other').length == 0"> 
           <v-row class="ma-1">
             <h3>Não tens Medalhas!</h3>
           </v-row>
@@ -73,32 +73,34 @@
         <v-col class="bgGrey mx-auto align-center " v-else>
           <!-- items container -->
           <!-- Events/Activities -->
-          <v-row class="ma-1" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
+          <v-row class="ma-1" v-if="getBadges('activity').length > 0 || getBadges('event').length > 0">
             <h3>Eventos/Atividades</h3>
           </v-row>
-          <v-row class="ma-1" v-if="getBadges('activity').length > 0 || getBadges('events').length > 0">
+          <v-row class="ma-1" v-if="getBadges('activity').length > 0 || getBadges('event').length > 0">
             <!-- container item -->
-            <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('events')">
+            <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('event')">
               <img :src="badge.img" class="badgeImg">
+              <div>{{ badge.name }}</div>
               <div class="tooltiptextBadges">
                 <p><strong>{{ badge.name }}</strong></p>
-                <p>{{ badge.desc }}</p>
+                <p>{{ badge.description }}</p>
               </div>
             </div>
             <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('activity')">
               <img :src="badge.img" class="badgeImg">
+              <div>{{ badge.name }}</div>
               <div class="tooltiptextBadges">
                 <p><strong>{{ badge.name }}</strong></p>
-                <p>{{ badge.desc }}</p>
+                <p>{{ badge.description }}</p>
               </div>
             </div>
           </v-row>
 
           <!-- between activity/event and occurence -->
           <v-row class="mb-1 orderColumnCenter" v-if="getBadges('activity').length > 0 && getBadges('occurrence').length > 0 || 
-                                                      getBadges('events').length > 0 && getBadges('occurrence').length > 0 || 
+                                                      getBadges('event').length > 0 && getBadges('occurrence').length > 0 || 
                                                       getBadges('activity').length > 0 && getBadges('other').length > 0 ||
-                                                      getBadges('events').length > 0 && getBadges('other').length > 0">
+                                                      getBadges('event').length > 0 && getBadges('other').length > 0">
             <div class="divider"></div>
           </v-row>
 
@@ -110,9 +112,10 @@
             <!-- container item -->
             <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('occurrence')">
               <img :src="badge.img" class="badgeImg">
+              <div>{{ badge.name }}</div>
               <div class="tooltiptextBadges">
                   <p><strong>{{ badge.name }}</strong></p>
-                  <p>{{ badge.desc }}</p>
+                  <p>{{ badge.description }}</p>
               </div>
             </div>
           </v-row>
@@ -130,9 +133,10 @@
             <!-- container item -->
             <div class="orderColumnCenter tooltipBadges mr-1"  v-for="badge in getBadges('other')">
               <img :src="badge.img" class="badgeImg">
+              <div>{{ badge.name }}</div>
               <div class="tooltiptextBadges">
                   <p><strong>{{ badge.name }}</strong></p>
-                  <p>{{ badge.desc }}</p>
+                  <p>{{ badge.description }}</p>
               </div>
             </div>
           </v-row>
@@ -147,7 +151,7 @@
           <v-row class="pa-3 pb-0 d-flex justify-space-between"> <!-- paddingRanking rowSpaceAround -->
             <button @click="filterRanking('badges')" class="btnFilter pa-1 px-2" variant="plain">Medalhas</button> <!-- btnFilter -->
             <button @click="filterRanking('occurrences')" class="btnFilter pa-1 px-2" variant="plain">Ocorrências</button>
-            <button @click="filterRanking('events')" class="btnFilter pa-1 px-2" variant="plain">Eventos</button>
+            <button @click="filterRanking('event')" class="btnFilter pa-1 px-2" variant="plain">Eventos</button>
             <div class="dividerBlack"></div>
           </v-row><!-- mt-2 paddingRanking -->
           <!--  -->
@@ -193,9 +197,7 @@
               <div class="dividerRank" v-if="index > 2"></div>
             </v-row>
           </v-col>
-          <!-- <div class=""> --> <!-- hiddenScroll -->
-            
-          <!-- </div> -->
+
         </v-col>
       </v-carousel-item>
   </v-carousel>
@@ -207,6 +209,8 @@ import { occurrenceStore } from '../stores/occurrence'
 import { eventStore } from '../stores/event'
 import { missionStore } from '../stores/mission'
 import { badgeStore } from '../stores/badge'
+import { cookie } from '../utilities/cookieFunctions'
+
 export default {
       data () {
         return {
@@ -234,13 +238,12 @@ export default {
   },
   methods: {
     getBadges(type) {
+      let userBadgesList = this.userStore.getBadgesState(this.user.id)
       let userBadges = []
-      let userState = this.userStore.getBadgesState(this.user.id)
-      let allBadges = this.badgeStore.getBadges
 
-      for(let i = 0; i < allBadges.length; i++) {
-        if(allBadges[i].type == type) {
-          if(userState.findIndex(element => element == allBadges[i].id)  != -1) userBadges.push(allBadges[i])
+      for(let i = 0; i < userBadgesList.length; i++) {
+        if(userBadgesList[i].conditionType == type) {
+          userBadges.push(userBadgesList[i])
         } 
       }
       return userBadges
@@ -248,28 +251,28 @@ export default {
     filterRanking(type) {
       this.rankByFilter = type
       let users = this.userStore.getUsers
-      if(type == 'badges') users.sort((a,b) => b.badgesState.length - a.badgesState.length)
+      if(type == 'badges') users.sort((a,b) => b.badges.length - a.badges.length)
       if(type == 'occurrences') users.sort((a,b) => b.occurrenceId.length - a.occurrenceId.length)
-      if(type == 'events') users.sort((a,b) => (b.joined.eventId.length + b.joined.activityId.length) - (a.joined.eventId.length + a.joined.activityId.length))
+      if(type == 'event') users.sort((a,b) => (b.joined.eventId.length + b.joined.activityId.length) - (a.joined.eventId.length + a.joined.activityId.length))
       return users
     }
   },
   async created () {
-    await this.occurrenceStore.fetchOccurrences()
+    /* fetch all necessarie information */
+    await this.userStore.fetchAllUsers()
+    await this.badgeStore.fetchBadges()
+    await this.occurrenceStore.fetchOccurrences(cookie.getCookie("token"))
     await this.eventStore.fetchAllEvents()
-    this.user = JSON.parse(localStorage.getItem('currentUser'))
+    
+    this.user = await this.userStore.fetchLoggedUser(cookie.getCookie("token"))
     /* create most recent */
     let recentArray = []
     let occurrenceArray = this.occurrenceStore.getOccurrence
     let eventArray = this.eventStore.getEvents
 
-    for(let event of eventArray) {
-      this.feed.push(event)
-    }
-    for(let occurrence of occurrenceArray) {
-      this.feed.push(occurrence)
-    }
-    
+    if(eventArray != undefined) for(let event of eventArray) this.feed.push(event)
+    if(occurrenceArray != undefined) for (let occurrence of occurrenceArray) this.feed.push(occurrence)
+
     for(let i = 0; i < 3; i++) {
       if(this.feed[i] != undefined) recentArray.push(this.feed[i])
     }

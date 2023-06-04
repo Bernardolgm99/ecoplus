@@ -4,7 +4,7 @@ import API from '../../config'
 
 export const userStore = defineStore('user', {
   state: () => ({
-    users: /* users */ []
+    users: []
   }),
   getters: {
     getUsers: (state) => state.users,
@@ -17,15 +17,6 @@ export const userStore = defineStore('user', {
     getJoinedEvents: (state) => state.joined.eventId,
     getJoinedActivities: (state) => state.joined.activityId,
     getOccurrenceIds: (state) => state.occurrenceId,
-    /* getUserChecked: (state) => (userName, userPw) => {
-      let userNameChecked = state.users.find(user => user.username == userName)
-      console.log(userNameChecked)
-      if (userNameChecked.password == userPw) {
-        return true
-      } else {
-        return false
-      }
-    }, */
     getExistingAccount: (state) => (userName, userEmail) => {
       if (!state.users.find(user => user.username == userName) && !state.users.find(user => user.email == userEmail)) {
         return true
@@ -34,18 +25,17 @@ export const userStore = defineStore('user', {
     getEmailExistence: (state) => (userEmail) => state.users.find(user => user.email == userEmail),
     getUserId: (state) => (userName) => {
       let userNameChecked = state.users.find(user => user.username == userName)
-
       return userNameChecked.id
     },
-    getUserById: (state) =>
-      (userId) => state.users.find(user => user.id == userId),
+    getUserById: (state) => (userId) => state.users.find(user => user.id == userId),
     getUserMissionState: (state) => (userId) => {
       let user = state.users.find(user => user.id == userId)
       return user.missionsState
     },
     getBadgesState: (state) => (userId) => {
       let userBadge = state.users.find(user => user.id == userId)
-      return userBadge.badgesState
+      console.log(userBadge)
+      return userBadge.badges
     }
   },
   actions: {
@@ -133,7 +123,8 @@ export const userStore = defineStore('user', {
       try {
         const response = await fetch(API + '/users');
         if (response.ok) { //TRUE if response status code in the range 200-299
-          this.users = await response.json(); // parse the response as JSON
+          let result = await response.json(); // parse the response as JSON
+          this.users = result.message
         }
         else
           alert("HTTP error: " + response.status)

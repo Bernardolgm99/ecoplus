@@ -41,14 +41,21 @@ export const occurrenceStore = defineStore('occurrence', {
     updateOccurrences() {
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
     },
-    async fetchOccurrences(){ 
+    async fetchOccurrences(token){ 
       try {
-        const response = await fetch(API + '/occurrences');
-        if (response.ok) { //TRUE if response status code in the range 200-299
-          this.occurrences = await response.json(); // parse the response as JSON
-        }
-        else
-          alert("HTTP error: " + response.status)
+        const request = new Request(API + '/occurrences', {
+          method: 'GET',
+          headers: {
+            Authorization: token
+          }
+        });
+        let response = await fetch(request)
+        .then((response) => {return response.json()})
+        .then(result => {return result})
+        .catch(error => {
+          console.error('Error:', error);
+        })
+        this.occurrences = response;
       }
       catch (e) {
         throw Error(e)
