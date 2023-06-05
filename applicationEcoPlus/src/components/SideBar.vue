@@ -185,12 +185,12 @@
               </v-col>
               <!-- number of -->
               <v-col cols="3" class="alignContentCenter" v-if="index < 3" :style="{'background-color': rankingBackground[index]}"><!-- top3 alignContentCenter -->
-                <p class="">{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? 
-                user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p> <!-- numTop3 -->
+                <p class="">{{ rankByFilter == "badges" ? user.badges.length : rankByFilter == "occurrences" ? 
+                user.occurrences.length : user.events.length + user.activities.length }}</p> <!-- numTop3 -->
               </v-col>
               <v-col cols="3" class="alignContentCenter" v-else> <!-- alignContentCenter heightRanking -->
-                <p>{{ rankByFilter == "badges" ? user.badgesState.length : rankByFilter == "occurrences" ? 
-                user.occurrenceId.length : user.joined.eventId.length + user.joined.activityId.length }}</p>
+                <p>{{ rankByFilter == "badges" ? user.badges.length : rankByFilter == "occurrences" ? 
+                user.occurrences.length : user.events.length + user.activities.length }}</p>
               </v-col>
               <!-- dividers -->
               <div v-if="index == 2" class="dividerDark"></div>
@@ -252,8 +252,8 @@ export default {
       this.rankByFilter = type
       let users = this.userStore.getUsers
       if(type == 'badges') users.sort((a,b) => b.badges.length - a.badges.length)
-      if(type == 'occurrences') users.sort((a,b) => b.occurrenceId.length - a.occurrenceId.length)
-      if(type == 'event') users.sort((a,b) => (b.joined.eventId.length + b.joined.activityId.length) - (a.joined.eventId.length + a.joined.activityId.length))
+      if(type == 'occurrences') users.sort((a,b) => b.occurrences.length - a.occurrences.length)
+      if(type == 'event') users.sort((a,b) => (b.events.length + b.activities.length) - (a.events.length + a.activities.length))
       return users
     }
   },
@@ -267,7 +267,7 @@ export default {
     this.user = await this.userStore.fetchLoggedUser(cookie.getCookie("token"))
     /* create most recent */
     let recentArray = []
-    let occurrenceArray = this.occurrenceStore.getOccurrence
+    let occurrenceArray = this.occurrenceStore.getOccurrences
     let eventArray = this.eventStore.getEvents
 
     if(eventArray != undefined) for(let event of eventArray) this.feed.push(event)

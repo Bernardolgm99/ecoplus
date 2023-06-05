@@ -73,6 +73,7 @@ import SideBar from '../components/SideBar.vue'
 import NavBar from '../components/NavBar.vue'
 import { occurrenceStore } from '../stores/occurrence'
 import { userStore } from '../stores/user'
+import { cookie } from '../utilities/cookieFunctions'
 
 export default {
 
@@ -86,24 +87,19 @@ export default {
       feed: [],
     }
   },
-  created() {
-    if (!JSON.parse(localStorage.getItem('currentUser'))) {
+  async created() {
+    await this.occurrenceStore.fetchOccurrences()
+    if (!cookie.getCookie("token")) {
       this.$router.push({ name: 'signin' })
     }
   },
   computed: {
     createFeed() {
-      console.log("ola1")
-      let occurrenceArray = this.occurrenceStore.getOccurrences()
-      console.log("ola2")
+      let occurrenceArray = this.occurrenceStore.getOccurrences
       console.log(occurrenceArray)
-
       for (let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
-
-      this.feed.sort((a, b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
-
     }
   }
 }

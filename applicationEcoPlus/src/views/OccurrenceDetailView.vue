@@ -25,13 +25,13 @@
               </div>
               <p>" {{ occurrence.description }} "</p>
               <v-container class="d-flex flex-column align-end mt-6">
-                <p style="font-size: 10px">Submited by <RouterLink style="color: black;"
-                    :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(user.username) } }">{{ user.username }}
-                  </RouterLink>
+                <p style="font-size: 10px">Submited by <div style="color: black;"
+                    @click="sendUserPage()">{{ user.username }}
+                </div>
                 </p>
                 <p>
                   {{ turnDateHour }}
-                  Posted {{ this.date[2] }}/{{ this.date[1] }}/{{ this.date[3] }} at {{ this.date[4] }}
+                  Posted {{ this.date[2] }}/{{ this.date[1] }}/{{ this.date[0] }} at {{ this.date[3] }}
                 </p>
                 <img :src=occurrence.image class="mt-6 align-self-center img-occurrence">
               </v-container>
@@ -88,6 +88,7 @@ import NavBar from '../components/NavBar.vue'
 import ButtonGoBack from '../components/ButtonGoBack.vue'
 import { occurrenceStore } from "../stores/occurrence";
 import { userStore } from "../stores/user"
+import { cookie } from '../utilities/cookieFunctions'
 
 export default {
   components: {
@@ -105,18 +106,22 @@ export default {
       hour: ''
     }
   },
-  created() {
-    if (!JSON.parse(localStorage.getItem('currentUser'))) {
+  async created() {
+    if (!cookie.getCookie("token")) {
       this.$router.push({ name: 'signin' })
     }
+    await this.occurrenceStore.fetchOccurrences(cookie.getCookie("token"))
+    await this.userStore.fetchAllUsers()
     this.occurrence = this.occurrenceStore.getOccurrenceById(this.$route.params.occurrenceid)
     this.user = this.userStore.getUserById(this.occurrence.userId)
     this.comments = this.occurrence.comments
     console.log(this.comments);
+    console.log(this.user)
   },
   computed: {
     turnDateHour() {
-      this.date = this.occurrence.dateHour.date
+      let fullDate = this.occurrence.updatedAt
+      this.date = [fullDate.substring(0,4), fullDate.substring(5,7), fullDate.substring(8,10), fullDate.substring(11,16)]
     }
   },
   methods: {
@@ -172,6 +177,9 @@ export default {
     update() {
       this.occurrence.comments = this.comments;
       this.occurrenceStore.updateOccurrences();
+    },
+    sendUserPage(){
+      this.$router.push({ name: 'perfil', params: { perfilid: this.userStore.getUserId(this.user.username) } })
     }
   }
 }

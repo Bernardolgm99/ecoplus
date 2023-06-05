@@ -14,7 +14,7 @@ export const occurrenceStore = defineStore('occurrence', {
     getDescription: (state) => state.description,
     getOccurrenceById: (state) =>
       (occurrenceId) => state.occurrences.find(occurrence => occurrence.id == occurrenceId),
-    getOccurrence: (state) => state.occurrences,
+    getOccurrences: (state) => state.occurrences,
   },
   actions: {
     addOccurrence(userId, title, image, location, locationDescription, description) {

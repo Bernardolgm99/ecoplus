@@ -28,7 +28,7 @@ export default {
     await this.occurrenceStore.fetchOccurrences(cookie.getCookie("token"))
     await this.eventStore.fetchAllEvents()
 
-    let occurrenceArray = this.occurrenceStore.getOccurrence
+    let occurrenceArray = this.occurrenceStore.getOccurrences
     let eventArray = this.eventStore.getEvents
     
     if(eventArray != undefined) for (let event of eventArray) this.feed.push(event)
