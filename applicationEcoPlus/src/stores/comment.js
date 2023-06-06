@@ -26,6 +26,7 @@ export const commentStore = defineStore('comment', {
                 }).then((response) => { this.comments = this.comments.concat(response.data); });
             } else {
                 this.page += evaluation;
+                if(this.page < 0) this.page = 0;
                 await axios.get(`${API}/${type}/${typeId}/comments?page=0&limit=${this.page + this.limit}`, {
                     headers: {
                         Authorization: cookie.getCookie("token")
