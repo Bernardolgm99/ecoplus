@@ -8,16 +8,17 @@ export const eventStore = defineStore('event', {
   state: () => ({
     events: [],
     event: {},
-    page: 0
+    page: 0,
+    limit: 2
   }),
   getters: {
     getEvents: (state) => state.events,
     getEvent: (state) => state.event
   },
   actions: {
-    async fetchAllEvents() {
-      await axios.get(`${API}/events?limit=2&page=${this.page}`).then((response) => { this.events = response.data; });
-      this.page += 1;
+    async fetchAllEvents(pagination = false) {
+      await axios.get(`${API}/events?limit=${this.limit}&page=${this.page}`).then((response) => { this.events = this.events.concat(response.data); });
+      this.page += this.limit;
     },
     
     async fetchEventId(id) {

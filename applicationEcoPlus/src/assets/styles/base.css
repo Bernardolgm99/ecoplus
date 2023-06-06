@@ -181,3 +181,16 @@ a:hover {
 .alertPostOccurrence {
     padding-bottom: 0px;
 }
+
+.clickable {
+    cursor: pointer;
+}
+
+span.clickable {
+    font-size: 20px;
+    padding: 20px;
+}
+
+span.clickable:hover {
+    color:rgba(90, 154, 109, 1)
+}

@@ -1,5 +1,4 @@
 <template>
-  {{ createFeed }}
   <v-app id="inspire">
     <v-container class="noContainer height100">
       <v-row no-gutters class="height100">
@@ -88,19 +87,16 @@ export default {
     }
   },
   async created() {
-    await this.occurrenceStore.fetchOccurrences()
+    if (this.occurrenceStore.getOccurrences.length == 0)
+      await this.occurrenceStore.fetchOccurrences()
     if (!cookie.getCookie("token")) {
       this.$router.push({ name: 'signin' })
     }
-  },
-  computed: {
-    createFeed() {
-      let occurrenceArray = this.occurrenceStore.getOccurrences
+    let occurrenceArray = this.occurrenceStore.getOccurrences
       console.log(occurrenceArray)
       for (let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
-    }
   }
 }
 </script>

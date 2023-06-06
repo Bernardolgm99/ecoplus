@@ -1,17 +1,15 @@
 import { defineStore } from 'pinia'
 import API from '../../config'
+import { cookie } from '../utilities/cookieFunctions'
 
 export const occurrenceStore = defineStore('occurrence', {
   state: () => ({
-    occurrences: []
+    occurrences: [],
+    occurrence: {},
+    page: 0,
+    limit: 2
   }),
   getters: {
-    getId: (state) => state.id,
-    getTitle: (state) => state.title,
-    getLocation: (state) => state.location,
-    getDateHour: (state) => state.dateHour,
-    getLocationDescription: (state) => state.locationDescription,
-    getDescription: (state) => state.description,
     getOccurrenceById: (state) =>
       (occurrenceId) => state.occurrences.find(occurrence => occurrence.id == occurrenceId),
     getOccurrences: (state) => state.occurrences,
@@ -41,9 +39,10 @@ export const occurrenceStore = defineStore('occurrence', {
     updateOccurrences() {
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
     },
-    async fetchOccurrences(token){ 
+    async fetchOccurrences(){ 
+      let token = cookie.getCookie('token')
       try {
-        const request = new Request(API + '/occurrences', {
+        const request = new Request(`${API}/occurrences?limit=${this.limit}&page=${this.page}`, {
           method: 'GET',
           headers: {
             Authorization: token
@@ -55,7 +54,8 @@ export const occurrenceStore = defineStore('occurrence', {
         .catch(error => {
           console.error('Error:', error);
         })
-        this.occurrences = response;
+        this.occurrences = this.occurrences.concat(response);
+        this.page += this.limit;
       }
       catch (e) {
         throw Error(e)

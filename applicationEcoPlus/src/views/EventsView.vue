@@ -1,5 +1,4 @@
 <template>
-  {{ createFeed }}
   <v-app id="inspire">
     <v-container class="noContainer height100">
       <v-row no-gutters class="height100">
@@ -82,29 +81,16 @@ export default {
     }
   },
 
-  beforeMount () {
-    this.eventStore.fetchAllEvents();
-  },
+  async created () {
+    if(this.eventStore.getEvents.length == 0){
+      await this.eventStore.fetchAllEvents();
+    };
 
-  created() {
-
-    if (!JSON.parse(localStorage.getItem('currentUser'))) {
-      this.$router.push({ name: 'signin' })
+    let eventArray = await this.eventStore.getEvents
+    for (let event of eventArray) {
+      this.feed.push(event)
     }
   },
-  computed: {
-    createFeed() {
-
-      let eventArray = this.eventStore.getEvents
-
-      for (let event of eventArray) {
-        this.feed.push(event)
-      }
-
-      this.feed.sort((a, b) => (b.createdAt.compare + b.createdAt.compare) - (a.createdAt.compare + a.createdAt.compare))
-
-    }
-  }
 }
 </script>
 
