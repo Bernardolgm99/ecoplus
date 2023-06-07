@@ -109,8 +109,8 @@ export default {
     },
     methods: {
         funcLogOut() {
-            localStorage.removeItem('currentUser')
-            this.$router.push('/signin')
+            cookie.deleteCookie("token");
+            this.$router.push({ name: 'signin'});
         },
         navigateToPerfil() {
             this.$router.push({ name: 'perfil', params: { perfilid: this.user.id } });
