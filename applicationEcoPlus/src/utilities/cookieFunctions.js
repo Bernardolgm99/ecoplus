@@ -3,7 +3,7 @@ export const cookie = {
     createTokenOnCookie(token) {
         document.cookie = `token=${token};expires=${new Date(new Date().getTime() + 86400000)};path=/`;
     },
-    
+
     getCookie(query) {
         const value = ';' + document.cookie;
         const parts = value.split(';' + query + '=');
@@ -12,5 +12,10 @@ export const cookie = {
         } else {
             return false;
         };
+    },
+
+    deleteCookie(query) {
+        document.cookie = `${query}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }
+
 }
