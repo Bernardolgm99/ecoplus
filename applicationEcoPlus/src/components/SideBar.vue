@@ -261,10 +261,10 @@ export default {
     /* fetch all necessarie information */
     await this.userStore.fetchAllUsers()
     await this.badgeStore.fetchBadges()
-    await this.occurrenceStore.fetchOccurrences(cookie.getCookie("token"))
+    await this.occurrenceStore.fetchOccurrences()
     await this.eventStore.fetchAllEvents()
     
-    this.user = await this.userStore.fetchLoggedUser(cookie.getCookie("token"))
+    this.user = await this.userStore.fetchLoggedUser()
     /* create most recent */
     let recentArray = []
     let occurrenceArray = this.occurrenceStore.getOccurrences

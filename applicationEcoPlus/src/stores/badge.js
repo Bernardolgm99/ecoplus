@@ -25,9 +25,8 @@ export const badgeStore = defineStore('badge', {
         async fetchBadges(){
             try {
                 const response = await fetch(API + '/badges');
-                if (response.ok) { //TRUE if response status code in the range 200-299
+                if (response.ok) //TRUE if response status code in the range 200-299
                     this.badges = await response.json(); // parse the response as JSON
-                }
                 else
                     alert("HTTP error: " + response.status)
             }

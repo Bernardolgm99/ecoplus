@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { cookie } from '../utilities/cookieFunctions'
 import API from '../../config'
 
+
 export const userStore = defineStore('user', {
   state: () => ({
     users: [],
@@ -90,7 +91,7 @@ export const userStore = defineStore('user', {
     },
     async logIn(username, password){
       try {
-        const request = new Request('http://localhost:3000/users/login', {
+        const request = new Request(API + '/users/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

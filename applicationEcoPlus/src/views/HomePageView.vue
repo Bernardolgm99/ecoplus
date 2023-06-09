@@ -26,7 +26,7 @@ export default {
     }
   },
   async created(){
-    await this.occurrenceStore.fetchOccurrences(cookie.getCookie("token"))
+    await this.occurrenceStore.fetchOccurrences()
     await this.eventStore.fetchAllEvents()
 
     await this.userStore.fetchLoggedUser();

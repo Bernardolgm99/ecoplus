@@ -63,8 +63,7 @@ export default {
                     this.alertLogIn = false
                     this.sucess = true
 
-                    console.log(cookie.getCookie("token"))
-                    let user = await this.userStore.fetchLoggedUser(cookie.getCookie("token"))
+                    let user = await this.userStore.fetchLoggedUser()
                     
                     if(user.role == 'admin'){
                         this.$router.push({ name: 'admin' })

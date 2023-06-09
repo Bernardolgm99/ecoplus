@@ -110,7 +110,7 @@ export default {
     if (!cookie.getCookie("token")) {
       this.$router.push({ name: 'signin' })
     }
-    await this.occurrenceStore.fetchOccurrences(cookie.getCookie("token"))
+    await this.occurrenceStore.fetchOccurrences()
     await this.userStore.fetchAllUsers()
     this.occurrence = this.occurrenceStore.getOccurrenceById(this.$route.params.occurrenceid)
     this.user = this.userStore.getUserById(this.occurrence.userId)
@@ -120,6 +120,7 @@ export default {
   },
   computed: {
     turnDateHour() {
+      console.log(this.occurrence.updatedAt)
       let fullDate = this.occurrence.updatedAt
       this.date = [fullDate.substring(0,4), fullDate.substring(5,7), fullDate.substring(8,10), fullDate.substring(11,16)]
     }
