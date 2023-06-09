@@ -6,8 +6,7 @@ export const badgeStore = defineStore('badge', {
       badges: []
     }),
     getters: {
-        getBadgeById: (state) =>
-        (badgeId) => state.badges.find(badge => badge.id == badgeId),
+        getBadgeById: (state) => (badgeId) => state.badges.find(badge => badge.id == badgeId),
         getBadges: (state) => state.badges
     },
     actions: {

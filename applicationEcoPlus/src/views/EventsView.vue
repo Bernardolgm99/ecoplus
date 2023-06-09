@@ -5,7 +5,7 @@
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
-            <NavBar />
+            <NavBar :user="user"/>
           </v-sheet>
         </v-col>
         <v-col>
@@ -78,6 +78,7 @@ export default {
       userStore: userStore(),
       eventStore: eventStore(),
       feed: [],
+      user: {}
     }
   },
 
@@ -85,6 +86,8 @@ export default {
     if(this.eventStore.getEvents.length == 0){
       await this.eventStore.fetchAllEvents();
     };
+    await this.userStore.fetchLoggedUser();
+    this.user = await this.userStore.getUser;
 
     let eventArray = await this.eventStore.getEvents
     for (let event of eventArray) {

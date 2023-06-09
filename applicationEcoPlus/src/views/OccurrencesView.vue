@@ -5,7 +5,7 @@
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
-            <NavBar />
+            <NavBar :user="user"/>
           </v-sheet>
         </v-col>
         <v-col>
@@ -84,14 +84,17 @@ export default {
       userStore: userStore(),
       occurrenceStore: occurrenceStore(),
       feed: [],
+      user: {}
     }
   },
   async created() {
-    if (this.occurrenceStore.getOccurrences.length == 0)
-      await this.occurrenceStore.fetchOccurrences()
     if (!cookie.getCookie("token")) {
       this.$router.push({ name: 'signin' })
     }
+    await this.userStore.fetchLoggedUser();
+    this.user = this.userStore.getUser;
+    if (this.occurrenceStore.getOccurrences.length == 0)
+      await this.occurrenceStore.fetchOccurrences()
     let occurrenceArray = this.occurrenceStore.getOccurrences
       console.log(occurrenceArray)
       for (let occurrence of occurrenceArray) {

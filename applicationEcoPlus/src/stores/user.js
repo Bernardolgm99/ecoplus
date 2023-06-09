@@ -35,11 +35,9 @@ export const userStore = defineStore('user', {
       let user = state.users.find(user => user.id == userId)
       return user.missionsState
     },
-    getBadgesState: (state) => (userId) => {
-      let userBadge = state.users.find(user => user.id == userId)
-      console.log(userBadge)
+    /* getBadgesState: (state) => {
       return userBadge.badges
-    }
+    } */
   },
   actions: {
     addUser(username, name, email, birthday, gender, city, district, postalcode, school, password) {
