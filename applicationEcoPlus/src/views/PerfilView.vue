@@ -5,7 +5,7 @@
         <!-- navbar -->
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
-            <NavBar :user="user"/>
+            <NavBar :user="currentUser" />
           </v-sheet>
         </v-col>
 
@@ -29,10 +29,8 @@
                         <!-- change image -->
                         <v-col cols="12" md="4" class="alignContentCenter">
                           <div>
-                            <div class="changeImgPerfil"
-                              :style="{ 'background-image': 'url(' + this.user.image + ')' }">
-                              <v-file-input v-model="this.image" prepend-icon="undefined"
-                                class="file"></v-file-input>
+                            <div class="changeImgPerfil" :style="{ 'background-image': 'url(' + this.user.image + ')' }">
+                              <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                             </div>
                           </div>
 
@@ -41,8 +39,7 @@
                         <v-col cols="12" md="8" class="alignContentCenter">
                           <div class="changeBannerPerfil"
                             :style="{ 'background-image': 'url(' + this.changeUser.image + ')' }">
-                            <v-file-input v-model="this.image" prepend-icon="undefined"
-                              class="file"></v-file-input>
+                            <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                           </div>
                         </v-col>
                         <v-col cols="12" md="4">
@@ -112,7 +109,8 @@
               <img :src="user.image" class="imgPerfil">
               <div class="perfilTextElements">
                 <p class="perfilName">{{ user.username }}</p>
-                <p class="perfilDesc">{{ user.schoolDesc }}, <!-- {{ user.city }}, --> Portugal</p>
+                <p class="perfilDesc">{{ school.school }}</p>
+                <p class="perfilDesc">{{ school.municipality }}, {{ school.district }}, Portugal</p>
               </div>
             </div>
           </div>
@@ -327,6 +325,7 @@ import NavBar from '../components/NavBar.vue'
 import { userStore } from '../stores/user'
 import { occurrenceStore } from '../stores/occurrence'
 import { eventStore } from '../stores/event'
+import { schoolStore } from '../stores/school'
 import { cookie } from '../utilities/cookieFunctions'
 
 export default {
@@ -338,7 +337,9 @@ export default {
       userStore: userStore(),
       occurrenceStore: occurrenceStore(),
       eventStore: eventStore(),
+      schoolStore: schoolStore(),
       user: {},
+      school: {},
       currentUser: {},
       changeUser: {},
       password: '',
@@ -404,7 +405,6 @@ export default {
       for (let event of eventArray) {
         if (this.user.id == event.userId) this.userFeed.push(event)
       }
-      this.userFeed.sort((a, b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
       return this.userFeed
     },
     feedOccurrences() {
@@ -414,27 +414,24 @@ export default {
       for (let occurrence of occurrenceArray) {
         if (this.user.id == occurrence.userId) this.userFeed.push(occurrence)
       }
-      this.userFeed.sort((a, b) => (b.dateHour.compare + b.dateHour.compare) - (a.dateHour.compare + a.dateHour.compare))
       return this.userFeed
     }
   },
   async created() {
-    await this.userStore.fetchAllUsers();
-    await this.userStore.fetchLoggedUser();
-
     if (!cookie.getCookie("token")) {
       this.$router.push({ name: 'signin' })
     }
-    console.log(this.userStore.getUsers)
-    this.userStore.getUsers.findIndex(user => {
-      if (user.id == this.$route.params.perfilid) this.user = user
-    })
+    await this.userStore.fetchAllUsers();
+    await this.userStore.fetchLoggedUser();
+
+    this.user = await this.userStore.fetchUserById(this.$route.params.perfilid)
+
+    console.log(this.user)
+    this.school = await this.schoolStore.fetchSchool(this.user.schoolId);
+    console.log(this.school)
 
     this.currentUser = this.userStore.getUser;
     this.changeUser = this.userStore.getUser;
-    this.password = this.changeUser.password
-    this.confirmPassword = this.changeUser.password
-    console.log(this.currentUser)
   }
 }
 </script>

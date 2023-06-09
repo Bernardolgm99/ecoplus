@@ -1,12 +1,13 @@
 import { defineStore } from 'pinia'
 import { cookie } from '../utilities/cookieFunctions'
+import axios from 'axios';
 import API from '../../config'
 
 
 export const userStore = defineStore('user', {
   state: () => ({
     users: [],
-    user:{},
+    user: {},
   }),
   getters: {
     getUsers: (state) => state.users,
@@ -87,7 +88,7 @@ export const userStore = defineStore('user', {
     addJoinedEvent(eventId) {
       this.joined.eventId.push(eventId)
     },
-    async logIn(username, password){
+    async logIn(username, password) {
       try {
         const request = new Request(API + '/users/login', {
           method: 'POST',
@@ -100,27 +101,27 @@ export const userStore = defineStore('user', {
           })
 
         });
-        
+
         let response = await fetch(request).then(response => {
           if (!response.ok) {
             throw new Error('Request failed');
           }
           return response.json();
         })
-        .then(result => {
-          cookie.createTokenOnCookie(result.accessToken);
-          return true;
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+          .then(result => {
+            cookie.createTokenOnCookie(result.accessToken);
+            return true;
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
         return response;
       }
       catch (e) {
         throw Error(e)
       }
     },
-    async fetchAllUsers(){
+    async fetchAllUsers() {
       try {
         const response = await fetch(API + '/users');
         if (response.ok) { //TRUE if response status code in the range 200-299
@@ -134,7 +135,7 @@ export const userStore = defineStore('user', {
         throw Error(e)
       }
     },
-    async fetchLoggedUser(){
+    async fetchLoggedUser() {
       try {
         let token = cookie.getCookie('token');
         if (token) {
@@ -149,10 +150,10 @@ export const userStore = defineStore('user', {
               throw new Error('Request failed');
             }
             return response.json();
-          }).then(result => {return result})
-          .catch(error => {
-            console.error('Error:', error);
-          })
+          }).then(result => { return result })
+            .catch(error => {
+              console.error('Error:', error);
+            })
           this.user = response.msg;
           return response.msg
         } else {
@@ -162,6 +163,14 @@ export const userStore = defineStore('user', {
       }
       catch (e) {
         throw Error(e)
+      }
+    },
+    async fetchUserById(userId) {
+      try {
+        let user = await axios.get(`${API}/users/${userId}`).then((response) => { return response.data; });
+        return user.msg
+      } catch (err) {
+        throw Error(err)
       }
     }
   },
