@@ -5,7 +5,7 @@
                 <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
-                        <NavBar />
+                        <NavBar :user="user" />
                     </v-sheet>
                 </v-col>
                 <v-col>
@@ -50,7 +50,7 @@
                                                 <div>FILES</div>
                                                 <div>MAPS</div>
                                             </v-window-item> -->
-                                            <Comments :id="path.id" :type="path.type" />
+                                            <Comments :id="path.id" :type="path.type" :user="user" />
                                             <v-window-item value="members">
                                                 <div class="d-flex flex-column align-center" v-for="member in members">
                                                     <RouterLink class="w-100" RouterLink style="color: black;"
@@ -121,8 +121,10 @@ export default {
             id: this.$router.currentRoute._value.params.eventid,
             type: this.$router.currentRoute._value.fullPath.split('/')[1]
         }
-        await this.eventStore.fetchEventId(this.$router.currentRoute._value.params.eventid)
-        this.event = this.eventStore.getEvent;
+        await this.eventStore.fetchEventId(this.path.id);
+        this.event = await this.eventStore.getEvent;
+        await this.userStore.fetchLoggedUser();
+        this.user = await this.userStore.getUser;
     },
 
     methods: {

@@ -16,6 +16,7 @@ export default {
       userStore: userStore(),
       occurrenceStore: occurrenceStore(),
       eventStore: eventStore(),
+      user: {},
       feed: [],
     }
   },
@@ -27,6 +28,10 @@ export default {
   async created(){
     await this.occurrenceStore.fetchOccurrences(cookie.getCookie("token"))
     await this.eventStore.fetchAllEvents()
+
+    await this.userStore.fetchLoggedUser();
+    this.user = await this.userStore.getUser;
+    await this.eventStore.fetchAllEvents();
 
     let occurrenceArray = this.occurrenceStore.getOccurrences
     let eventArray = this.eventStore.getEvents
@@ -45,7 +50,7 @@ export default {
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
-            <NavBar />
+            <NavBar :user="user"/>
           </v-sheet>
         </v-col>
         <v-col>

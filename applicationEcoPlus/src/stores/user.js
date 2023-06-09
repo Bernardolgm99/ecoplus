@@ -4,10 +4,12 @@ import API from '../../config'
 
 export const userStore = defineStore('user', {
   state: () => ({
-    users: []
+    users: [],
+    user:{},
   }),
   getters: {
     getUsers: (state) => state.users,
+    getUser: (state) => state.user,
     getId: (state) => state.id,
     getUsername: (state) => state.username,
     getName: (state) => state.username,
@@ -133,24 +135,31 @@ export const userStore = defineStore('user', {
         throw Error(e)
       }
     },
-    async fetchLoggedUser(token){
+    async fetchLoggedUser(){
       try {
-        const request = new Request(API + '/users/loggedUser', {
-          method: 'GET',
-          headers: {
-            Authorization: token
-          }
-        });
-        let response = await fetch(request).then((response) => {
-          if (!response.ok) {
-            throw new Error('Request failed');
-          }
-          return response.json();
-        }).then(result => {return result})
-        .catch(error => {
-          console.error('Error:', error);
-        })
-        return response.msg
+        let token = cookie.getCookie('token');
+        if (token) {
+          const request = new Request(API + '/users/loggedUser', {
+            method: 'GET',
+            headers: {
+              Authorization: token
+            }
+          });
+          let response = await fetch(request).then((response) => {
+            if (!response.ok) {
+              throw new Error('Request failed');
+            }
+            return response.json();
+          }).then(result => {return result})
+          .catch(error => {
+            console.error('Error:', error);
+          })
+          this.user = response.msg;
+          return response.msg
+        } else {
+          console.log("not logged in")
+          return false;
+        }
       }
       catch (e) {
         throw Error(e)

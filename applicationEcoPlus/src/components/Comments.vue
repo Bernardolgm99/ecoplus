@@ -1,7 +1,7 @@
 <template>
     <v-window-item value="comments">
         <div class="d-flex flex-column align-center">
-            <div class="d-flex align-center w-100 px-5">
+            <div v-if="!Object.keys(user).length == 0" class="d-flex align-center w-100 px-5">
                 <v-textarea label="Comment" rows="1" auto-grow bg-color="grey-lighten-2" color="green"
                     v-model="newComment"></v-textarea>
                 <div class="d-flex h-100">
@@ -62,7 +62,6 @@
 
 <script>
 import { commentStore } from "../stores/comment.js";
-import { cookie } from "../utilities/cookieFunctions.js";
 
 export default {
     props: {
@@ -71,6 +70,9 @@ export default {
         },
         type: {
             type: String,
+        },
+        user: {
+            type: Object,
         }
     },
     data() {

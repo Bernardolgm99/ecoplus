@@ -74,7 +74,6 @@
                         </div>
                         {{ user.role }}
                     </div>
-
                 </div>
             </div>
             <div class="ml-6">
@@ -87,13 +86,17 @@
 </template>
 
 <script>
-import { userStore } from '../stores/user'
-import { cookie} from '../utilities/cookieFunctions'
+import { cookie } from '../utilities/cookieFunctions'
 
 export default {
+    props: {
+        user: {
+            type: Object,
+        },
+    },
+    
     data() {
         return {
-            userStore: userStore(),
             ecoIcon: '/src/assets/icons/logo.svg',
             homeIcon: '/src/assets/icons/home.svg',
             occurrenceIcon: '/src/assets/icons/tool.svg',
@@ -101,12 +104,9 @@ export default {
             activityIcon: '/src/assets/icons/pin.svg',
             suggestionIcon: '/src/assets/icons/file.svg',
             postIcon: '/src/assets/icons/cam.svg',
-            user: {}
         }
     },
-    async created() {
-        this.user = await this.userStore.fetchLoggedUser(cookie.getCookie("token"))
-    },
+
     methods: {
         funcLogOut() {
             cookie.deleteCookie("token");
