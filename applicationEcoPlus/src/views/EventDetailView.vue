@@ -22,16 +22,20 @@
                             </div>
                             <div class="d-flex justify-space-between align-center mb-2">
                                 <h2> {{ event.subtitle }} </h2>
-                                <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;"
-                                    flat="true" v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
-                                    class="mr-2 ms-auto mt-1 btnJoin" color="green-lighten-1" @click="subscribe">
-                                    Join Event
-                                </v-btn>
-                                <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;"
-                                    flat="true" v-else class="mr-2 ms-auto mt-1 btnOut" color="green-darken-4"
-                                    @click="subscribe">
-                                    Out Event
-                                </v-btn>
+                                <div v-if="!Object.keys(user).length == 0">
+                                    <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;"
+                                        flat="true"
+                                        v-if="(this.members.findIndex(sub => sub.username == user.username) == -1)"
+                                        class="mr-2 ms-auto mt-1 btnJoin" color="green-lighten-1" @click="subscribe(false)">
+                                        Join Event
+                                    </v-btn>
+
+                                    <v-btn size="large" rounded="pill" style="font-family: Quicksand; text-transform: none;"
+                                        flat="true" v-else class="mr-2 ms-auto mt-1 btnOut" color="green-darken-4"
+                                        @click="subscribe(true)">
+                                        Out Event
+                                    </v-btn>
+                                </div>
                             </div>
                             <hr>
                             <p class="my-2">
@@ -123,12 +127,21 @@ export default {
         }
         await this.eventStore.fetchEventId(this.path.id);
         this.event = await this.eventStore.getEvent;
+        console.log(this.members)
+        this.members = this.event.users;
+        console.log(this.members)
         await this.userStore.fetchLoggedUser();
         this.user = await this.userStore.getUser;
     },
 
     methods: {
-        subscribe() {
+        async subscribe(areadySubscribed) {
+            console.log(this.members);
+            console.log(this.members.findIndex(sub => sub.username == this.user.username));
+            await this.eventStore.subscribe(this.path.id, areadySubscribed);
+            if (areadySubscribed) this.members.splice(this.members.findIndex(sub => sub.username == this.user.username), 1);
+            else this.members.push(this.user);
+            console.log(this.members, 1);
         },
     }
 }

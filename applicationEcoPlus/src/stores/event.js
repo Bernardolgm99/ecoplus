@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import axios from 'axios';
 import API from '../../config'
+import { cookie } from '../utilities/cookieFunctions';
 
 
 
@@ -20,13 +21,35 @@ export const eventStore = defineStore('event', {
       await axios.get(`${API}/events?limit=${this.limit}&page=${this.page}`).then((response) => { this.events = this.events.concat(response.data); });
       this.page += this.limit;
     },
-    
+
     async fetchEventId(id) {
       await axios.get(`${API}/events/${id}`).then((response) => { this.event = response.data; });
     },
 
     addEvent(userId, title, subtitle, image, location, description) {
     },
+
+    async subscribe(eventId, areadySubscribed) {
+      if (!areadySubscribed) {
+        await axios.post(`${API}/events/${eventId}/users`, {}, {
+          headers: {
+            Authorization: cookie.getCookie("token")
+          }
+        }).then((response) => {
+          this.event = response.data
+        })
+      }
+      else {
+        await axios.delete(`${API}/events/${eventId}/users`, {
+          headers: {
+            Authorization: cookie.getCookie("token")
+          }
+        }).then((response) => {
+          this.event = response.data
+        })
+      }
+    },
+
     updateEvent(event) {
     },
     updateEvents() {
