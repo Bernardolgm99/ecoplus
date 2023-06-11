@@ -103,14 +103,14 @@
     border-bottom-right-radius: 90px;
 }
 
-.containerbtnResetSaveL {
+/* .containerbtnResetSaveL {
     padding-top: 6%;
     padding-left: 20%;
 }
 .containerbtnResetSaveR {
     padding-top: 6%;
     padding-right: 20%;
-}
+} */
 
 .btnSave {
     border: 3px solid #BAB653;
@@ -120,6 +120,7 @@
 .btnReset {
     border: 3px solid #69B580;
     color: #69B580;
+    width: 150px;
 }
 
 .file {

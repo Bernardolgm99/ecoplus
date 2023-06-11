@@ -19,84 +19,91 @@
                 <v-btn class="editProfile" v-if="this.user.id == this.currentUser.id" v-bind="props" flat="true"> Edit
                   Profile </v-btn>
               </template>
-              <!-- card -->
+              <!-- card pop up -->
               <v-card class="bgPopUp">
                 <v-card-text>
                   <!-- actual form -->
                   <v-form @submit.prevent="saveSettings()" ref="form">
                     <v-container>
+                      <!-- change images -->
                       <v-row>
-                        <!-- change image -->
-                        <v-col cols="12" md="4" class="alignContentCenter">
-                          <div>
-                            <div class="changeImgPerfil" :style="{ 'background-image': 'url(' + this.user.image + ')' }">
-                              <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
-                            </div>
-                          </div>
-
-                        </v-col>
-                        <!-- banner -->
-                        <v-col cols="12" md="8" class="alignContentCenter">
-                          <div class="changeBannerPerfil"
-                            :style="{ 'background-image': 'url(' + this.changeUser.image + ')' }">
+                        <!-- change icon -->
+                        <v-col cols="12" md="4">
+                          <div class="changeImgPerfil mx-auto my-1" :style="{ 'background-image': 'url(' + this.user.image + ')' }">
                             <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                           </div>
                         </v-col>
+                        <!-- change banner -->
+                        <v-col cols="12" md="8" class="changeBannerPerfil mb-5" :style="{ 'background-image': 'url(' + this.changeUser.image + ')' }">
+                            <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
+                        </v-col>
+                      </v-row>
+                      <!-- inputs -->
+                      <v-row> 
+                        <!-- username, changepassword -->
                         <v-col cols="12" md="4">
-                          <!-- district -->
-                          <v-text-field bg-color="#CCEED6" v-model="this.changeUser.schoolDesc"
-                            :placeholder="this.user.schoolDesc" label="District"></v-text-field>
-                          <!-- city -->
-                          <!-- <v-text-field bg-color="#CCEED6" v-model="this.changeUser.city" :placeholder="this.user.city"
-                            label="City"></v-text-field> -->
-                          <!-- postal code -->
-                          <!-- <v-text-field bg-color="#CCEED6" v-model="this.changeUser.postalcode"
-                            :placeholder="this.user.postalcode" label="Postal Code"></v-text-field> -->
-                          <!-- school -->
-                          <v-text-field bg-color="#CCEED6" v-model="this.changeUser.school"
-                            :placeholder="this.user.school" label="School"></v-text-field>
+                          <!-- username -->
+                          <v-text-field bg-color="#CCEED6" label="Username" disabled v-model="this.changeUser.username"
+                              :placeholder="this.user.username"></v-text-field>
+                          <!-- change passwword -->
+                          <v-text-field bg-color="#CCEED6" v-model="this.password" :placeholder="this.user.password"
+                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                            :rules="[rules.min, checkMatchingPasswords]" :type="show1 ? 'text' : 'password'"
+                            label="Password" hint="At least 5 characters" counter
+                            @click:append="show1 = !show1"></v-text-field>
+                          <!-- confirm password -->
+                          <v-text-field bg-color="#CCEED6" v-model="this.confirmPassword"
+                            :placeholder="this.user.password" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                            :rules="[rules.min, checkMatchingPasswords]" :type="show2 ? 'text' : 'password'"
+                            label="Confirm Password" hint="At least 5 characters" counter
+                            @click:append="show2 = !show2"></v-text-field>
                         </v-col>
                         <!-- change name -->
-                        <v-col cols="12" md="8">
+                        <v-col cols="12" md="8" class="pr-0">
                           <v-row>
-                            <v-col cols="12" md="6">
-                              <v-text-field bg-color="#CCEED6" label="Complete Name" v-model="this.changeUser.name"
-                                :placeholder="this.user.name"></v-text-field>
-                              <!-- change passwword -->
-                              <v-text-field bg-color="#CCEED6" v-model="this.password" :placeholder="this.user.password"
-                                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :rules="[rules.min, checkMatchingPasswords]" :type="show1 ? 'text' : 'password'"
-                                label="Password" hint="At least 5 characters" counter
-                                @click:append="show1 = !show1"></v-text-field>
-                            </v-col>
-                            <v-col cols="12" md="6">
+                            <!-- email, name && district -->
+                            <v-col cols="12" md="5" class="px-0">
                               <!-- change email -->
                               <v-text-field bg-color="#CCEED6" v-model="this.changeUser.email"
                                 :placeholder="this.user.email" label="Email" :rules="rulesEmail"></v-text-field>
-
-                              <!-- confirm password -->
-                              <v-text-field bg-color="#CCEED6" v-model="this.confirmPassword"
-                                :placeholder="this.user.password" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                                :rules="[rules.min, checkMatchingPasswords]" :type="show2 ? 'text' : 'password'"
-                                label="Confirm Password" hint="At least 5 characters" counter
-                                @click:append="show2 = !show2"></v-text-field>
+                              <!-- change name -->
+                              <v-text-field bg-color="#CCEED6" label="Complete Name" v-model="this.changeUser.name"
+                              :placeholder="this.user.name"></v-text-field>
+                              <!-- district -->
+                              <v-autocomplete
+                              bg-color="#CCEED6"  
+                              v-model="changeDistrict"
+                              :items="districtsList"
+                              label="District"
+                              :placeholder="this.school.district"
+                              ></v-autocomplete>
                             </v-col>
-                          </v-row>
-                          <!-- save btns -->
-                          <v-row>
-                            <v-col cols="12" md="6" class="containerbtnResetSaveL alignContentCenter">
-                              <v-btn class="btnReset btnLeaf " variant="text" @click="resetSettings()">
-                                Reset
-                              </v-btn>
-                            </v-col>
-                            <v-col cols="12" md="6" class="containerbtnResetSaveR alignContentCenter">
-                              <v-btn class="btnSave btnLeaf" variant="text" type="submit">
-                                Save Changes
-                              </v-btn>
+                            <!-- municipality, school and btns -->
+                            <v-col cols="12" md="7">
+                              <!-- municipality -->
+                              <v-autocomplete
+                              bg-color="#CCEED6"
+                              v-model="changeMunicipality"
+                              :items="municipalitiesList"
+                              label="Municipality"
+                              :placeholder="this.school.municipalities"
+                              ></v-autocomplete>
+                              <!-- school -->
+                              <v-autocomplete
+                                bg-color="#CCEED6"
+                                v-model="changeSchool"
+                                :items="schoolsList"
+                                label="School"
+                                :placeholder="this.school.school"
+                              ></v-autocomplete>
+                                <!-- reset btn -->
+                                <div class="d-flex justify-end">
+                                  <v-btn class="btnSave btnLeaf my-2" variant="text" type="submit">Save Changes</v-btn>
+                                  <v-btn class="btnReset btnLeaf my-2" variant="text" @click="resetSettings()">Cancel</v-btn>
+                                </div>
                             </v-col>
                           </v-row>
                         </v-col>
-
                       </v-row>
                     </v-container>
                   </v-form>
@@ -126,180 +133,95 @@
             <v-window v-model="tab">
               <v-window-item value="all">
                 <div v-for="post in feedAll()" class="content">
-                  <div>
-                    <div class="card">
-                      <div class="image" :style="`background: url(${post.image});`">
-                        <div v-if="post.type == 'event'" class="topperIconsEvent">
-                          <div class="infoCardContent">
-                            <div class="postIconBackground">
-                              <img class="postIcon" src="/src/assets/icons/calendar.svg">
-                            </div>
-                            <div class="infos">
-                              <div class="title">
-                                <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                              </div>
-                              <div class="location">
-                                <span class="textSmall txtLocation">{{ post.location }}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                  <div class="card">
+                    <div class="image" :style="`background: url(${post.image});`">
 
-                        <div v-else class="topperIconsOccurrence">
-                          <div class="infoCardContent">
-                            <div class="postIconBackground">
-                              <img class="postIcon" src="/src/assets/icons/tool.svg">
+                      <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
+                        <div class="infoCardContent">
+                          <div class="postIconBackground">
+                            <img class="postIcon" :src="'src/assets/icons/calendar.svg'">
+                          </div>
+                          <div class="infos">
+                            <div class="title">
+                              <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                             </div>
-                            <div class="infos">
-                              <div class="title">
-                                <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                              </div>
-                              <div class="location">
-                                <span class="textSmall txtLocation">{{ post.location }}</span>
-                              </div>
+                            <div class="location">
+                              <span class="textSmall txtLocation">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="comments"
-                      v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
-                      <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
-                      <p class="comment">{{ post.comments[i].message }}</p>
-                    </div>
-                    <div class="routerLink" v-if="post.type == 'event'">
-                      <p class="viewMore textSmall">
-                        <RouterLink :to="{ name: 'eventDetail', params: { eventid: post.id } }">- View More -</RouterLink>
-                      </p>
-                    </div>
-                    <div class="routerLink" v-else>
-                      <p class="viewMore textSmall">
-                        <RouterLink :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">- View More -
-                        </RouterLink>
-                      </p>
-                    </div>
-                    <div>
-                      <hr class="line">
+
+                      <div v-else class="topperIconsOccurrence">
+                        <div class="infoCardContent">
+                          <div class="postIconBackground">
+                            <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                          </div>
+                          <div class="infos">
+                            <div class="title">
+                              <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
+                              <span v-if="post.status == 0">Not Approved</span>
+                              <span v-if="post.status == 1">To Do</span>
+                              <span v-if="post.status == 2">Done</span>
+                            </div>
+                            <div class="location">
+                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
               </v-window-item>
               <v-window-item value="events">
                 <div v-for="post in feedEvents()" class="content">
-                  <div>
-                    <div class="card">
-                      <div class="image" :style="`background: url(${post.image});`">
-                        <div v-if="post.type == 'event'" class="topperIconsEvent">
-                          <div class="infoCardContent">
-                            <div class="postIconBackground">
-                              <img class="postIcon" src="/src/assets/icons/calendar.svg">
-                            </div>
-                            <div class="infos">
-                              <div class="title">
-                                <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                              </div>
-                              <div class="location">
-                                <span class="textSmall txtLocation">{{ post.location }}</span>
-                              </div>
-                            </div>
+                  <div class="card">
+                    <div class="image" :style="`background: url(${post.image});`">
+                      <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
+                        <div class="infoCardContent">
+                          <div class="postIconBackground">
+                            <img class="postIcon" :src="'src/assets/icons/calendar.svg'">
                           </div>
-                        </div>
-
-                        <div v-else class="topperIconsOccurrence">
-                          <div class="infoCardContent">
-                            <div class="postIconBackground">
-                              <img class="postIcon" src="/src/assets/icons/tool.svg">
+                          <div class="infos">
+                            <div class="title">
+                              <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                             </div>
-                            <div class="infos">
-                              <div class="title">
-                                <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                              </div>
-                              <div class="location">
-                                <span class="textSmall txtLocation">{{ post.location }}</span>
-                              </div>
+                            <div class="location">
+                              <span class="textSmall txtLocation">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="comments"
-                      v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
-                      <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
-                      <p class="comment">{{ post.comments[i].message }}</p>
-                    </div>
-                    <div class="routerLink" v-if="post.type == 'event'">
-                      <p class="viewMore textSmall">
-                        <RouterLink :to="{ name: 'eventDetail', params: { eventid: post.id } }">- View More -</RouterLink>
-                      </p>
-                    </div>
-                    <div class="routerLink" v-else>
-                      <p class="viewMore textSmall">
-                        <RouterLink :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">- View More -
-                        </RouterLink>
-                      </p>
-                    </div>
-                    <div>
-                      <hr class="line">
                     </div>
                   </div>
                 </div>
               </v-window-item>
               <v-window-item value="occurrences">
                 <div v-for="post in feedOccurrences()" class="content">
-                  <div>
-                    <div class="card">
-                      <div class="image" :style="`background: url(${post.image});`">
-                        <div v-if="post.type == 'event'" class="topperIconsEvent">
-                          <div class="infoCardContent">
-                            <div class="postIconBackground">
-                              <img class="postIcon" src="/src/assets/icons/calendar.svg">
-                            </div>
-                            <div class="infos">
-                              <div class="title">
-                                <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                              </div>
-                              <div class="location">
-                                <span class="textSmall txtLocation">{{ post.location }}</span>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
-                        <div v-else class="topperIconsOccurrence">
-                          <div class="infoCardContent">
-                            <div class="postIconBackground">
-                              <img class="postIcon" src="/src/assets/icons/tool.svg">
+                  <div class="card">
+                    <div class="image" :style="`background: url(${post.image});`">
+                      <div class="topperIconsOccurrence">
+                        <div class="infoCardContent">
+                          <div class="postIconBackground">
+                            <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                          </div>
+                          <div class="infos">
+                            <div class="title">
+                              <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
+                              <span v-if="post.status == 0">Not Approved</span>
+                              <span v-if="post.status == 1">To Do</span>
+                              <span v-if="post.status == 2">Done</span>
                             </div>
-                            <div class="infos">
-                              <div class="title">
-                                <span class="textMediumLarge">{{ post.title }}</span> &nbsp;
-                              </div>
-                              <div class="location">
-                                <span class="textSmall txtLocation">{{ post.location }}</span>
-                              </div>
+                            <div class="location">
+                              <span class="textSmall txtLocation">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="comments"
-                      v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
-                      <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
-                      <p class="comment">{{ post.comments[i].message }}</p>
-                    </div>
-                    <div class="routerLink" v-if="post.type == 'event'">
-                      <p class="viewMore textSmall">
-                        <RouterLink :to="{ name: 'eventDetail', params: { eventid: post.id } }">- View More -</RouterLink>
-                      </p>
-                    </div>
-                    <div class="routerLink" v-else>
-                      <p class="viewMore textSmall">
-                        <RouterLink :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">- View More -
-                        </RouterLink>
-                      </p>
-                    </div>
-                    <div>
-                      <hr class="line">
+
                     </div>
                   </div>
                 </div>
@@ -341,7 +263,14 @@ export default {
       user: {},
       school: {},
       currentUser: {},
-      changeUser: {},
+      /* changeUser: {}, */
+      changeDistrict: '',
+      changeMunicipality: '',
+      changeSchool: '',
+      districts: {},
+      districtsList: [],
+      municipalitiesList: [],
+      schoolsList: [],
       password: '',
       confirmPassword: '',
       perfilImage: '',
@@ -387,34 +316,15 @@ export default {
     },
     feedAll() {
       /* create feed user all */
-      this.userFeed = []
-      let occurrenceArray = this.occurrenceStore.getOccurrences
-      let eventArray = this.eventStore.getEvents
-      for (let event of eventArray) {
-        if (this.user.id == event.userId) this.userFeed.push(event)
-      }
-      for (let occurrence of occurrenceArray) {
-        if (this.user.id == occurrence.userId) this.userFeed.push(occurrence)
-      }
-      return this.userFeed
+      return this.userStore.getUserEventsOccurrences
     },
     feedEvents() {
       /* create feed user events */
-      this.userFeed = []
-      let eventArray = this.eventStore.getEvents
-      for (let event of eventArray) {
-        if (this.user.id == event.userId) this.userFeed.push(event)
-      }
-      return this.userFeed
+      return this.userStore.getUserEvents
     },
     feedOccurrences() {
       /* create feed user occurence */
-      this.userFeed = []
-      let occurrenceArray = this.occurrenceStore.getOccurrences
-      for (let occurrence of occurrenceArray) {
-        if (this.user.id == occurrence.userId) this.userFeed.push(occurrence)
-      }
-      return this.userFeed
+      return this.userStore.getUserOccurrences
     }
   },
   async created() {
@@ -423,14 +333,47 @@ export default {
     }
     await this.userStore.fetchAllUsers();
     await this.userStore.fetchLoggedUser();
+    await this.schoolStore.fetchAllSchools()
+    this.currentUser = this.userStore.getUser;
+
+    await this.userStore.fetchUserEventOccurrence(this.$route.params.perfilid)
+    await this.userStore.fetchUserEvent(this.$route.params.perfilid)
+    await this.userStore.fetchUserOccurrence(this.$route.params.perfilid)
 
     this.user = await this.userStore.fetchUserById(this.$route.params.perfilid)
-
-    console.log(this.user)
     this.school = await this.schoolStore.fetchSchool(this.user.schoolId);
-    console.log(this.school)
 
-    this.currentUser = this.userStore.getUser;
+    this.changeDistrict=this.school.district
+    this.changeMunicipality=this.school.municipality
+    this.changeSchool=this.school.school
+    
+    this.schoolStore.getSchools.forEach(obj => {
+      const districtName = obj.district;
+      const municipalityName = obj.municipality;
+      const schoolName = obj.school;
+      // Check if the district exists in the main object
+      if (!(districtName in this.districts)) {
+        this.districts[districtName] = {}; // Create an empty object for the district
+      }
+      // Check if the municipality exists in the district
+      if (!(municipalityName in this.districts[districtName])) {
+        this.districts[districtName][municipalityName] = []; // Create an empty array for the municipality
+      }
+      // Add the school to the municipality's array
+      if(!this.districtsList.find(element => element == districtName)) this.districtsList.push(districtName);
+      if(!this.municipalitiesList.find(element => element == municipalityName))this.municipalitiesList.push(municipalityName);
+      if(!this.schoolsList.find(element => element == schoolName)) this.schoolsList.push(schoolName);
+      this.districts[districtName][municipalityName].push(schoolName);
+  });
+    /* for(let school of ) {
+      if(!this.districts.find(element=> element == school.district)) this.districts.push(school.district)
+      if(!this.districts.municipalities.find(element=> element == school.municipality)) this.districts.municipalities.push(school.municipality)
+      this.schools.push(school.school)
+    } */
+    console.log(this.districts)
+    console.log(this.districtsList)
+    console.log(this.municipalitiesList)
+    console.log(this.schoolsList)
     this.changeUser = this.userStore.getUser;
   }
 }
