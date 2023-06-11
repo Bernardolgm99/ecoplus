@@ -8,6 +8,9 @@ export const userStore = defineStore('user', {
   state: () => ({
     users: [],
     user: {},
+    userEventsOccurrences: [],
+    userEvents: [],
+    userOccurrences: [],
   }),
   getters: {
     getUsers: (state) => state.users,
@@ -36,9 +39,9 @@ export const userStore = defineStore('user', {
       let user = state.users.find(user => user.id == userId)
       return user.missionsState
     },
-    /* getBadgesState: (state) => {
-      return userBadge.badges
-    } */
+    getUserEventsOccurrences: state => state.userEventsOccurrences,
+    getUserEvents: state => state.userEvents,
+    getUserOccurrences: state => state.userOccurrences,
   },
   actions: {
     addUser(username, name, email, birthday, gender, city, district, postalcode, school, password) {
@@ -172,6 +175,33 @@ export const userStore = defineStore('user', {
       } catch (err) {
         throw Error(err)
       }
-    }
+    },
+    async fetchUserEvent(userId) {
+      try {
+        let page = 0, limit = 5, createdAt = "2023-07-01";
+        let userEvent = await axios.get(`${API}/users/${userId}/events?page=${page}&limit=${limit}&createdAt=${createdAt}`).then((response) => { return response.data; });
+        this.userEvents = userEvent
+      } catch (err) {
+        throw Error(err)
+      }
+    },
+    async fetchUserOccurrence(userId) {
+      try {
+        let page = 0, limit = 5, createdAt = "2023-07-01";
+        let userOccurrence = await axios.get(`${API}/users/${userId}/occurrences?page=${page}&limit=${limit}&createdAt=${createdAt}`).then((response) => { return response.data; });
+        this.userOccurrences = userOccurrence
+      } catch (err) {
+        throw Error(err)
+      }
+    },
+    async fetchUserEventOccurrence(userId) {
+      try {
+        let page = 0, limit = 5, createdAt = "2023-07-01";
+        let userAll = await axios.get(`${API}/users/${userId}/eventsOccurrences?page=${page}&limit=${limit}&createdAt=${createdAt}`).then((response) => { return response.data; });
+        this.userEventsOccurrences = userAll
+      } catch (err) {
+        throw Error(err)
+      }
+    },
   },
 })
