@@ -29,27 +29,28 @@
                       <v-row>
                         <!-- change icon -->
                         <v-col cols="12" md="4">
-                          <div class="changeImgPerfil mx-auto my-1" :style="{ 'background-image': 'url(' + this.user.image + ')' }">
+                          <div class="changeImgPerfil mx-auto my-1"
+                            :style="{ 'background-image': 'url(' + this.user.image + ')' }">
                             <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                           </div>
                         </v-col>
                         <!-- change banner -->
-                        <v-col cols="12" md="8" class="changeBannerPerfil mb-5" :style="{ 'background-image': 'url(' + this.changeUser.image + ')' }">
-                            <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
+                        <v-col cols="12" md="8" class="changeBannerPerfil mb-5"
+                          :style="{ 'background-image': 'url(' + this.changeUser.image + ')' }">
+                          <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                         </v-col>
                       </v-row>
                       <!-- inputs -->
-                      <v-row> 
+                      <v-row>
                         <!-- username, changepassword -->
                         <v-col cols="12" md="4">
                           <!-- username -->
-                          <v-text-field bg-color="#CCEED6" label="Username" disabled v-model="this.changeUser.username"
-                              :placeholder="this.user.username"></v-text-field>
+                          <v-text-field bg-color="#CCEED6" label="Username" readonly v-model="this.changeUser.username"
+                            :placeholder="this.user.username"></v-text-field>
                           <!-- change passwword -->
                           <v-text-field bg-color="#CCEED6" v-model="this.password" :placeholder="this.user.password"
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :rules="[rules.min, checkMatchingPasswords]" :type="show1 ? 'text' : 'password'"
-                            label="Password" hint="At least 5 characters" counter
+                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.min, checkMatchingPasswords]"
+                            :type="show1 ? 'text' : 'password'" label="Password" hint="At least 5 characters" counter
                             @click:append="show1 = !show1"></v-text-field>
                           <!-- confirm password -->
                           <v-text-field bg-color="#CCEED6" v-model="this.confirmPassword"
@@ -68,39 +69,28 @@
                                 :placeholder="this.user.email" label="Email" :rules="rulesEmail"></v-text-field>
                               <!-- change name -->
                               <v-text-field bg-color="#CCEED6" label="Complete Name" v-model="this.changeUser.name"
-                              :placeholder="this.user.name"></v-text-field>
+                                :placeholder="this.user.name"></v-text-field>
                               <!-- district -->
-                              <v-autocomplete
-                              bg-color="#CCEED6"  
-                              v-model="changeDistrict"
-                              :items="districtsList"
-                              label="District"
-                              :placeholder="this.school.district"
-                              ></v-autocomplete>
+                              <v-autocomplete bg-color="#CCEED6" v-model="selectedDistrict"
+                                :items="Object.keys(this.districts)" label="District" :placeholder="this.school.district"
+                                @input="updateFilters"></v-autocomplete>
                             </v-col>
                             <!-- municipality, school and btns -->
                             <v-col cols="12" md="7">
                               <!-- municipality -->
-                              <v-autocomplete
-                              bg-color="#CCEED6"
-                              v-model="changeMunicipality"
-                              :items="municipalitiesList"
-                              label="Municipality"
-                              :placeholder="this.school.municipalities"
-                              ></v-autocomplete>
+                              <v-autocomplete bg-color="#CCEED6" v-model="selectedMunicipality"
+                                :items="Object.keys(this.districts[selectedDistrict])" label="Municipality"
+                                :placeholder="this.school.municipalities" @input="updateFilters"></v-autocomplete>
                               <!-- school -->
-                              <v-autocomplete
-                                bg-color="#CCEED6"
-                                v-model="changeSchool"
-                                :items="schoolsList"
-                                label="School"
-                                :placeholder="this.school.school"
-                              ></v-autocomplete>
-                                <!-- reset btn -->
-                                <div class="d-flex justify-end">
-                                  <v-btn class="btnSave btnLeaf my-2" variant="text" type="submit">Save Changes</v-btn>
-                                  <v-btn class="btnReset btnLeaf my-2" variant="text" @click="resetSettings()">Cancel</v-btn>
-                                </div>
+                              <v-autocomplete bg-color="#CCEED6" v-model="selectedSchool"
+                                :items="this.districts[selectedDistrict][selectedMunicipality]" label="School"
+                                :placeholder="this.school.school" @input="updateFilters"></v-autocomplete>
+                              <!-- reset btn -->
+                              <div class="d-flex justify-end">
+                                <v-btn class="btnSave btnLeaf my-2" variant="text" type="submit">Save Changes</v-btn>
+                                <v-btn class="btnReset btnLeaf my-2" variant="text"
+                                  @click="resetSettings()">Cancel</v-btn>
+                              </div>
                             </v-col>
                           </v-row>
                         </v-col>
@@ -264,13 +254,10 @@ export default {
       school: {},
       currentUser: {},
       /* changeUser: {}, */
-      changeDistrict: '',
-      changeMunicipality: '',
-      changeSchool: '',
       districts: {},
-      districtsList: [],
-      municipalitiesList: [],
-      schoolsList: [],
+      selectedDistrict: '',
+      selectedMunicipality: '',
+      selectedSchool: '',
       password: '',
       confirmPassword: '',
       perfilImage: '',
@@ -343,38 +330,36 @@ export default {
     this.user = await this.userStore.fetchUserById(this.$route.params.perfilid)
     this.school = await this.schoolStore.fetchSchool(this.user.schoolId);
 
-    this.changeDistrict=this.school.district
-    this.changeMunicipality=this.school.municipality
-    this.changeSchool=this.school.school
-    
+    this.changeDistrict = this.school.district
+    this.changeMunicipality = this.school.municipality
+    this.changeSchool = this.school.school
+
     this.schoolStore.getSchools.forEach(obj => {
-      const districtName = obj.district;
-      const municipalityName = obj.municipality;
-      const schoolName = obj.school;
-      // Check if the district exists in the main object
-      if (!(districtName in this.districts)) {
-        this.districts[districtName] = {}; // Create an empty object for the district
-      }
-      // Check if the municipality exists in the district
-      if (!(municipalityName in this.districts[districtName])) {
-        this.districts[districtName][municipalityName] = []; // Create an empty array for the municipality
-      }
-      // Add the school to the municipality's array
-      if(!this.districtsList.find(element => element == districtName)) this.districtsList.push(districtName);
-      if(!this.municipalitiesList.find(element => element == municipalityName))this.municipalitiesList.push(municipalityName);
-      if(!this.schoolsList.find(element => element == schoolName)) this.schoolsList.push(schoolName);
-      this.districts[districtName][municipalityName].push(schoolName);
-  });
-    /* for(let school of ) {
-      if(!this.districts.find(element=> element == school.district)) this.districts.push(school.district)
-      if(!this.districts.municipalities.find(element=> element == school.municipality)) this.districts.municipalities.push(school.municipality)
-      this.schools.push(school.school)
-    } */
+      if (!(obj.district in this.districts)) this.districts[obj.district] = {};
+      if (!(obj.municipality in this.districts[obj.district])) this.districts[obj.district][obj.municipality] = []; // Create an empty array for the municipality
+      this.districts[obj.district][obj.municipality].push(obj.school);
+    });
+    this.selectedDistrict = this.school.district
+    this.selectedMunicipality = this.school.municipality
+    this.selectedSchool = this.school.school
+
+    if (this.userStore.getUser.id == this.$route.params.perfilid) this.changeUser = this.userStore.getUser;
     console.log(this.districts)
-    console.log(this.districtsList)
-    console.log(this.municipalitiesList)
-    console.log(this.schoolsList)
-    this.changeUser = this.userStore.getUser;
+  },
+  watch: {
+    selectedDistrict: {
+      handler(newValue) {
+        if (newValue != this.school.district) this.selectedMunicipality = '', this.selectedSchool = '';
+      }
+    },
+    selectedMunicipality: {
+      handler(newValue) {
+        if (newValue != this.school.municipality && this.selectedMunicipality != '') {
+          if (this.districts[this.selectedDistrict][this.selectedMunicipality].length == 1) this.selectedSchool = this.districts[this.selectedDistrict][this.selectedMunicipality][0]
+          else this.selectedSchool = '';
+        }
+      }
+    }
   }
 }
 </script>
