@@ -8,6 +8,7 @@ export const schoolStore = defineStore('schools', {
   }),
   getters: {
     getSchools: (state) => state.schools,
+    getSchoolByName: (state) => (schoolName) => state.schools.find(element => element.school == schoolName).id
   },
   actions: {
     async fetchAllSchools() {

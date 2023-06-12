@@ -73,12 +73,6 @@ export const userStore = defineStore('user', {
 
       localStorage.setItem('users', JSON.stringify(this.users))
     },
-    updateUser(currentUser) {
-      let indexCurrentUser = this.users.findIndex(user => user.id == currentUser.id);
-      this.users[indexCurrentUser] = currentUser;
-      localStorage.setItem('users', JSON.stringify(this.users))
-      localStorage.setItem('currentUser', JSON.stringify(currentUser))
-    },
     updateUsers() {
       localStorage.setItem('users', JSON.stringify(this.users))
     },
@@ -102,22 +96,22 @@ export const userStore = defineStore('user', {
             username: username,
             password: password
           })
-
+          
         });
-
+        
         let response = await fetch(request).then(response => {
           if (!response.ok) {
             throw new Error('Request failed');
           }
           return response.json();
         })
-          .then(result => {
-            cookie.createTokenOnCookie(result.accessToken);
-            return true;
-          })
-          .catch(error => {
-            console.error('Error:', error);
-          });
+        .then(result => {
+          cookie.createTokenOnCookie(result.accessToken);
+          return true;
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
         return response;
       }
       catch (e) {
@@ -127,12 +121,12 @@ export const userStore = defineStore('user', {
     async fetchAllUsers() {
       try {
         const response = await fetch(API + '/users');
-        if (response.ok) { //TRUE if response status code in the range 200-299
+        if (response.ok) { 
           let result = await response.json(); // parse the response as JSON
           this.users = result.message
         }
         else
-          alert("HTTP error: " + response.status)
+        alert("HTTP error: " + response.status)
       }
       catch (e) {
         throw Error(e)
@@ -154,15 +148,39 @@ export const userStore = defineStore('user', {
             }
             return response.json();
           }).then(result => { return result })
-            .catch(error => {
-              console.error('Error:', error);
-            })
+          .catch(error => {
+            console.error('Error:', error);
+          })
           this.user = response.msg;
           return response.msg
         } else {
           console.log("not logged in")
           return false;
         }
+      }
+      catch (e) {
+        throw Error(e)
+      }
+    },
+    async updateUser(body, userId) {
+      //update request
+      try {
+        let token = cookie.getCookie('token');
+        const response = await fetch(API + '/users/' + userId, {
+          method: 'PUT',
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(body)
+        });
+        if (response.ok) { 
+          let result = await response.json(); 
+          this.user = await this.fetchUserById(userId);
+          return result.message;
+        }
+        else
+        alert("HTTP error: " + response.status)
       }
       catch (e) {
         throw Error(e)

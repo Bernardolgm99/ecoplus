@@ -8,7 +8,6 @@
             <NavBar :user="currentUser" />
           </v-sheet>
         </v-col>
-
         <v-col>
           <!-- perfil content -->
           <div class="perfilHeader bannerPerfil" :style="{ 'background-image': 'url(' + user.perfilBgImage + ')' }">
@@ -30,13 +29,13 @@
                         <!-- change icon -->
                         <v-col cols="12" md="4">
                           <div class="changeImgPerfil mx-auto my-1"
-                            :style="{ 'background-image': 'url(' + this.user.image + ')' }">
-                            <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
+                            :style="{ 'background-image': 'url(' + this.user.icon + ')' }">
+                            <v-file-input v-model="this.icon" prepend-icon="undefined" class="file"></v-file-input>
                           </div>
                         </v-col>
                         <!-- change banner -->
                         <v-col cols="12" md="8" class="changeBannerPerfil mb-5"
-                          :style="{ 'background-image': 'url(' + this.changeUser.image + ')' }">
+                          :style="{ 'background-image': 'url(' + this.user.image + ')' }">
                           <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                         </v-col>
                       </v-row>
@@ -44,47 +43,56 @@
                       <v-row>
                         <!-- username, changepassword -->
                         <v-col cols="12" md="4">
-                          <!-- username -->
-                          <v-text-field bg-color="#CCEED6" label="Username" readonly v-model="this.changeUser.username"
-                            :placeholder="this.user.username"></v-text-field>
+                          <!-- change name -->
+                          <v-text-field bg-color="#CCEED6" label="  Name" v-model="this.user.name" readonly
+                            :placeholder="this.changeUser.name"></v-text-field>
+                          <!-- change email -->
+                          <v-text-field bg-color="#CCEED6" v-model="this.user.email" :placeholder="this.changeUser.email"
+                            label="Email" :rules="rules.email"></v-text-field>
                           <!-- change passwword -->
-                          <v-text-field bg-color="#CCEED6" v-model="this.password" :placeholder="this.user.password"
-                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="[rules.min, checkMatchingPasswords]"
-                            :type="show1 ? 'text' : 'password'" label="Password" hint="At least 5 characters" counter
+                          <v-text-field bg-color="#CCEED6" v-model="this.password"
+                            :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :rules="rules.password"
+                            :type="show1 ? 'text' : 'password'" label="Password" counter
                             @click:append="show1 = !show1"></v-text-field>
                           <!-- confirm password -->
                           <v-text-field bg-color="#CCEED6" v-model="this.confirmPassword"
-                            :placeholder="this.user.password" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                            :rules="[rules.min, checkMatchingPasswords]" :type="show2 ? 'text' : 'password'"
-                            label="Confirm Password" hint="At least 5 characters" counter
+                            :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'" :rules="rules.matchPasswords"
+                            :type="show2 ? 'text' : 'password'" label="Confirm Password" counter
                             @click:append="show2 = !show2"></v-text-field>
                         </v-col>
                         <!-- change name -->
                         <v-col cols="12" md="8" class="pr-0">
                           <v-row>
-                            <!-- email, name && district -->
+                            <!-- email, name -->
                             <v-col cols="12" md="5" class="px-0">
-                              <!-- change email -->
-                              <v-text-field bg-color="#CCEED6" v-model="this.changeUser.email"
-                                :placeholder="this.user.email" label="Email" :rules="rulesEmail"></v-text-field>
-                              <!-- change name -->
-                              <v-text-field bg-color="#CCEED6" label="Complete Name" v-model="this.changeUser.name"
-                                :placeholder="this.user.name"></v-text-field>
-                              <!-- district -->
-                              <v-autocomplete bg-color="#CCEED6" v-model="selectedDistrict"
-                                :items="Object.keys(this.districts)" label="District" :placeholder="this.school.district"
-                                @input="updateFilters"></v-autocomplete>
+                              <!-- username -->
+                              <v-text-field bg-color="#CCEED6" label="Username" v-model="this.user.username"
+                                :placeholder="this.user.username"></v-text-field>
+                              <!-- Contact -->
+                              <v-text-field bg-color="#CCEED6" v-model="this.user.contact" :rules="rules.contact"
+                                label="Contact Info"></v-text-field>
+                              <!-- change BirthDay -->
+                              <v-text-field type="date" bg-color="#CCEED6" v-model="selectedDate"
+                                label="Birthday"></v-text-field>
+                              <!-- change gender -->
+                              <v-autocomplete bg-color="#CCEED6" v-model="this.user.genreDesc"
+                                :items="['Male', 'Female', 'Other']" label="Gender"
+                                :placeholder="this.changeUser.genreDesc"></v-autocomplete>
                             </v-col>
                             <!-- municipality, school and btns -->
                             <v-col cols="12" md="7">
+                              <!-- district -->
+                              <v-autocomplete bg-color="#CCEED6" v-model="selectedDistrict"
+                                :items="Object.keys(this.districts)" label="District"
+                                :placeholder="this.school.district"></v-autocomplete>
                               <!-- municipality -->
                               <v-autocomplete bg-color="#CCEED6" v-model="selectedMunicipality"
                                 :items="Object.keys(this.districts[selectedDistrict])" label="Municipality"
-                                :placeholder="this.school.municipalities" @input="updateFilters"></v-autocomplete>
+                                :placeholder="this.school.municipalities"></v-autocomplete>
                               <!-- school -->
                               <v-autocomplete bg-color="#CCEED6" v-model="selectedSchool"
                                 :items="this.districts[selectedDistrict][selectedMunicipality]" label="School"
-                                :placeholder="this.school.school" @input="updateFilters"></v-autocomplete>
+                                :placeholder="this.school.school"></v-autocomplete>
                               <!-- reset btn -->
                               <div class="d-flex justify-end">
                                 <v-btn class="btnSave btnLeaf my-2" variant="text" type="submit">Save Changes</v-btn>
@@ -219,7 +227,6 @@
             </v-window>
           </v-sheet>
         </v-col>
-
         <!-- sidebar -->
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
@@ -253,7 +260,6 @@ export default {
       user: {},
       school: {},
       currentUser: {},
-      /* changeUser: {}, */
       districts: {},
       selectedDistrict: '',
       selectedMunicipality: '',
@@ -267,38 +273,78 @@ export default {
       dialog: false,
       show1: false,
       show2: false,
+      selectedDate: '',
       rules: {
-        min: v => v.length >= 5 || 'Min 5 caracteres'
-      },
-      rulesEmail: [
-        value => (value || '').length <= 100 || 'Max 100 characters',
-
-        value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-          return pattern.test(value) || 'Invalid e-mail.'
-        }]
-    }
-  },
-  computed: {
-    checkMatchingPasswords() {
-      return () => (this.confirmPassword == this.password) || 'Passwords Must Match'
+        password: [
+          (v) => !v || (!!v && v.length >= 5) || 'Password must be at least 5 characters',
+          (v) => !v || (!!v && /\d/.test(v)) || 'Password must contain at least 1 number',
+          (v) => !v || (!!v && /[a-zA-Z]/.test(v)) || 'Password must contain at least 1 letter',
+          (v) => !v || (!!v && /^[a-zA-Z0-9]+$/.test(v)) || 'Password can only contain letters and numbers',
+        ],
+        matchPasswords: [
+          (v) => !this.password || (!!v && v.length > 0) || 'Confirm password is required',
+          (v) => !v || v === this.password || 'Passwords do not match'
+        ],
+        email: [
+          value => (value || '').length <= 100 || 'Max 100 characters',
+          value => {
+            const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            return pattern.test(value) || 'Invalid e-mail.'
+          }],
+        contact: [
+          (v) => !v || (!!v && /^\d{9}$/.test(v)) || 'Input must be 9 digits',
+        ]
+      }
     }
   },
   methods: {
     async saveSettings() {
       let isValid = await this.$refs['form'].validate()
       if (isValid.valid) {
-        this.changeUser.perfilBgImage = this.perfilBgImage
-        this.changeUser.perfilImage = this.perfilImage
-        this.user = this.changeUser
-        this.changeUser.password = this.confirmPassword
-        this.userStore.updateUser(this.changeUser)
+        let updateUser = {}
+        /* check if values are different */
+        if (this.changeUser.username != this.user.username) updateUser['username'] = this.user.username   //working
+        if (this.changeUser.email != this.user.email) updateUser['email'] = this.user.email               //working
+        if (this.password != '') updateUser['password'] = this.password                                   //working
+        if (this.selectedSchool != this.school.school) {                                                  //working
+          let schoolId = this.schoolStore.getSchoolByName(this.selectedSchool)
+          updateUser['schoolId'] = schoolId
+        }
+        if (this.changeUser.contact != this.user.contact) updateUser['contact'] = this.user.contact       //working
+        if (this.changeUser.genreDesc != this.user.genreDesc) {                                           //working
+          if (this.user.genreDesc == 'Female') updateUser['genreDesc'] = "F"
+          else if (this.user.genreDesc == 'Male') updateUser['genreDesc'] = "M"
+          else updateUser['genreDesc'] = "OTHER"
+        }
+        if (this.changeUser.birthDate != this.user.birthDate) updateUser['birthDate'] = this.selectedDate //
+        if (this.changeUser.image != this.user.image) updateUser['image'] = this.user.image               //work in progress
+        if (this.changeUser.icon != this.user.icon) updateUser['icon'] = this.user.icon                   //work in progress
+        /* update */
+        if (Object.keys(updateUser).length != 0) {
+          await this.userStore.updateUser(updateUser, this.user.id)
+        }
+
+        /* get user updated */
+        /* await this.userStore.fetchLoggedUser();
+        */
+        await this.userStore.fetchAllUsers();
+        /* await this.userStore.fetchUserById(this.user.id); */
+        this.user = this.userStore.getUser
+        if (this.user.genreDesc == 'M') this.user.genreDesc = 'Male'
+        else if(this.user.genreDesc == 'F') this.user.genreDesc = 'Female'
+        else this.user.genreDesc = 'Other'
+        /* close dialog box */
         this.dialog = false
       }
     },
     resetSettings() {
-      this.user = this.currentUser
-      this.changeUser = this.currentUser
+      this.selectedDistrict = this.school.district
+      this.selectedMunicipality = this.school.municipality
+      this.selectedSchool = this.school.school
+      this.password = ''
+      this.confirmPassword = ''
+      this.selectedDate = this.user.birthDate.substr(0, 10)
+      this.user = this.userStore.getUser
       this.dialog = false
     },
     feedAll() {
@@ -342,9 +388,17 @@ export default {
     this.selectedDistrict = this.school.district
     this.selectedMunicipality = this.school.municipality
     this.selectedSchool = this.school.school
+    this.selectedDate = this.user.birthDate.substr(0, 10)
 
-    if (this.userStore.getUser.id == this.$route.params.perfilid) this.changeUser = this.userStore.getUser;
-    console.log(this.districts)
+    if (this.user.genreDesc == 'M') this.user.genreDesc = 'Male'
+    else if (this.user.genreDesc == 'F') this.user.genreDesc = 'Female'
+    else this.user.genreDesc = 'Other'
+
+    if (this.user.id == this.$route.params.perfilid) this.changeUser = this.userStore.getUser;
+
+    if (this.currentUser.genreDesc == 'M') this.currentUser.genreDesc = 'Male'
+    else if (this.currentUser.genreDesc == 'F') this.currentUser.genreDesc = 'Female'
+    else this.currentUser.genreDesc = 'Other'
   },
   watch: {
     selectedDistrict: {
