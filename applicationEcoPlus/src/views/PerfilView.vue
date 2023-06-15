@@ -67,7 +67,7 @@
                             <v-col cols="12" md="5" class="px-0">
                               <!-- username -->
                               <v-text-field bg-color="#CCEED6" label="Username" v-model="this.user.username"
-                                :placeholder="this.user.username"></v-text-field>
+                                :placeholder="this.user.username" :rules="username"></v-text-field>
                               <!-- Contact -->
                               <v-text-field bg-color="#CCEED6" v-model="this.user.contact" :rules="rules.contact"
                                 label="Contact Info"></v-text-field>
@@ -280,19 +280,25 @@ export default {
           (v) => !v || (!!v && /\d/.test(v)) || 'Password must contain at least 1 number',
           (v) => !v || (!!v && /[a-zA-Z]/.test(v)) || 'Password must contain at least 1 letter',
           (v) => !v || (!!v && /^[a-zA-Z0-9]+$/.test(v)) || 'Password can only contain letters and numbers',
+          (v) => v && !/\s/.test(v) || 'Password cannot contain spaces',
         ],
         matchPasswords: [
           (v) => !this.password || (!!v && v.length > 0) || 'Confirm password is required',
           (v) => !v || v === this.password || 'Passwords do not match'
         ],
         email: [
-          value => (value || '').length <= 100 || 'Max 100 characters',
-          value => {
+          (v) => v && !/\s/.test(v) || 'Password cannot contain spaces',
+          (v) => (v || '').length <= 100 || 'Max 100 characters',
+          (v) => {
             const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-            return pattern.test(value) || 'Invalid e-mail.'
+            return pattern.test(v) || 'Invalid e-mail.'
           }],
         contact: [
+          (v) => v && !/\s/.test(v) || 'Password cannot contain spaces',
           (v) => !v || (!!v && /^\d{9}$/.test(v)) || 'Input must be 9 digits',
+        ],
+        username: [
+          (v) => v && !/\s/.test(v) || 'Password cannot contain spaces',
         ]
       }
     }
@@ -324,11 +330,7 @@ export default {
           await this.userStore.updateUser(updateUser, this.user.id)
         }
 
-        /* get user updated */
-        /* await this.userStore.fetchLoggedUser();
-        */
         await this.userStore.fetchAllUsers();
-        /* await this.userStore.fetchUserById(this.user.id); */
         this.user = this.userStore.getUser
         if (this.user.genreDesc == 'M') this.user.genreDesc = 'Male'
         else if(this.user.genreDesc == 'F') this.user.genreDesc = 'Female'

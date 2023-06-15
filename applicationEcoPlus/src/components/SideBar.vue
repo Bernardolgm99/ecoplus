@@ -218,11 +218,14 @@ import { cookie } from '../utilities/cookieFunctions'
 export default {
   data() {
     return {
-      missionStore: missionStore(),
       userStore: userStore(),
       titles: ['Missões', 'Publicações Recentes', 'Medalhas', 'Classificação'],
       model: 0,
       user: {},
+      
+      /* missions */
+      missionStore: missionStore(),  
+      missions: [],
 
       /* recent posts */
       eventOccurrenceStore: eventOccurrenceStore(),
@@ -244,7 +247,7 @@ export default {
       let userBadgesList = this.user.badges
       let userBadges = []
       let response = []
-      
+
       for (let i = 0; i < userBadgesList.length; i++) userBadges.push(this.badgeStore.getBadgeById(userBadgesList[i].id))
       for (let i = 0; i < userBadges.length; i++) if (userBadges[i].conditionType == type) response.push(userBadges[i])
       return response
@@ -262,6 +265,7 @@ export default {
     /* fetch all necessarie information */
     await this.userStore.fetchAllUsers()
     await this.badgeStore.fetchBadges()
+    await this.missionStore.fetchMissions()
 
     
     /* create feed recent */
@@ -273,6 +277,7 @@ export default {
 
     this.feed = this.feed.slice(0,3)
     this.user = await this.userStore.fetchLoggedUser()
+    this.missions = await this.missionStore.getMissions
   },
 }
 </script>
