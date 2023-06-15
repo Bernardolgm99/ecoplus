@@ -87,7 +87,7 @@ export const userStore = defineStore('user', {
     },
     async logIn(username, password) {
       try {
-        const request = new Request(API + '/users/login', {
+        let response = await fetch(API + '/users/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -96,22 +96,20 @@ export const userStore = defineStore('user', {
             username: username,
             password: password
           })
-          
-        });
-        
-        let response = await fetch(request).then(response => {
+
+        }).then(response => {
           if (!response.ok) {
             throw new Error('Request failed');
           }
           return response.json();
         })
-        .then(result => {
-          cookie.createTokenOnCookie(result.accessToken);
-          return true;
-        })
-        .catch(error => {
-          console.error('Error:', error);
-        });
+          .then(result => {
+            cookie.createTokenOnCookie(result.accessToken);
+            return true;
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
         return response;
       }
       catch (e) {
@@ -121,12 +119,12 @@ export const userStore = defineStore('user', {
     async fetchAllUsers() {
       try {
         const response = await fetch(API + '/users');
-        if (response.ok) { 
+        if (response.ok) {
           let result = await response.json(); // parse the response as JSON
           this.users = result.message
         }
         else
-        alert("HTTP error: " + response.status)
+          alert("HTTP error: " + response.status)
       }
       catch (e) {
         throw Error(e)
@@ -136,21 +134,20 @@ export const userStore = defineStore('user', {
       try {
         let token = cookie.getCookie('token');
         if (token) {
-          const request = new Request(API + '/users/loggedUser', {
+          let response = await fetch(API + '/users/loggedUser', {
             method: 'GET',
             headers: {
               Authorization: token
             }
-          });
-          let response = await fetch(request).then((response) => {
+          }).then((response) => {
             if (!response.ok) {
               throw new Error('Request failed');
             }
             return response.json();
           }).then(result => { return result })
-          .catch(error => {
-            console.error('Error:', error);
-          })
+            .catch(error => {
+              console.error('Error:', error);
+            })
           this.user = response.msg;
           return response.msg
         } else {
@@ -174,13 +171,13 @@ export const userStore = defineStore('user', {
           },
           body: JSON.stringify(body)
         });
-        if (response.ok) { 
-          let result = await response.json(); 
+        if (response.ok) {
+          let result = await response.json();
           this.user = await this.fetchUserById(userId);
           return result.message;
         }
         else
-        alert("HTTP error: " + response.status)
+          alert("HTTP error: " + response.status)
       }
       catch (e) {
         throw Error(e)

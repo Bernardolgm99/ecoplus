@@ -225,6 +225,8 @@ export default {
       model: 0,
       user: {},
 
+      /* missions */
+
       /* recent posts */
       occurrenceStore: occurrenceStore(),
       eventStore: eventStore(),
@@ -246,7 +248,7 @@ export default {
       let userBadgesList = this.user.badges
       let userBadges = []
       let response = []
-      
+
       for (let i = 0; i < userBadgesList.length; i++) userBadges.push(this.badgeStore.getBadgeById(userBadgesList[i].id))
       for (let i = 0; i < userBadges.length; i++) if (userBadges[i].conditionType == type) response.push(userBadges[i])
       return response
