@@ -2,14 +2,14 @@ import { defineStore } from 'pinia'
 
 export const missionStore = defineStore('mission', {
   state: () => ({
-    mission: []
+    missions: []
   }),
   getters: {
     getIcon: (state) => {
       let random = Math.floor(Math.random() * state.mission.icons.length);
       state.mission.imgNum = state.mission.icons[random]
     },
-    getMissions: (state) => state.mission.missions,
+    getMissions: (state) => state.missions,
     getMissionById: (state) =>
     (missionId) => state.mission.missions.find(mission => mission.id == missionId)
   },
