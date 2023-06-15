@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import axios from 'axios';
 import API from '../../config'
 import { cookie } from '../utilities/cookieFunctions'
 
@@ -7,14 +8,17 @@ export const occurrenceStore = defineStore('occurrence', {
     occurrences: [],
     occurrence: {},
     page: 0,
-    limit: 2
+    limit: 3
   }),
   getters: {
-    getOccurrenceById: (state) =>
-      (occurrenceId) => state.occurrences.find(occurrence => occurrence.id == occurrenceId),
     getOccurrences: (state) => state.occurrences,
+    getOccurrence: (state) => state.occurrence
   },
   actions: {
+    async fetchOccurrenceId(id) {
+      await axios.get(`${API}/occurrences/${id}`).then((response) => { this.occurrence = response.data; });
+    },
+
     addOccurrence(userId, title, image, location, locationDescription, description) {
       let today = new Date()
       this.occurrences.push({
@@ -40,26 +44,16 @@ export const occurrenceStore = defineStore('occurrence', {
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
     },
     async fetchOccurrences(){ 
-      let token = cookie.getCookie('token')
       try {
-        const request = new Request(`${API}/occurrences?limit=${this.limit}&page=${this.page}`, {
-          method: 'GET',
-          headers: {
-            Authorization: token
-          }
+        await axios.get(`${API}/occurrences?limit=${this.limit}&page=${this.page}`)
+        .then((response) => { 
+          this.occurrences = this.occurrences.concat(response.data); 
+          this.page += response.data.length;
         });
-        let response = await fetch(request)
-        .then((response) => {return response.json()})
-        .then(result => {return result})
-        .catch(error => {
-          console.error('Error:', error);
-        })
-        this.occurrences = this.occurrences.concat(response);
-        this.page += this.limit;
       }
       catch (e) {
         throw Error(e)
       }
-    }
+    },
   },
 })

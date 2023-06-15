@@ -16,6 +16,7 @@ export default {
       eventOccurrenceStore: eventOccurrenceStore(),
       user: {},
       feed: [],
+      canPaginate: true,
     }
   },
 
@@ -34,9 +35,11 @@ export default {
 
   methods: {
     async scrollEnd(e) {
-      if (e.target.offsetHeight + e.target.scrollTop >= e.target.scrollHeight) {
+      if (e.target.offsetHeight + e.target.scrollTop + 1 >= e.target.scrollHeight && this.canPaginate) {
+        this.canPaginate = false;
         await this.eventOccurrenceStore.fetchAllEventsOccurrences();
         this.feed = await this.eventOccurrenceStore.getEventsOccurrences;
+        this.canPaginate = true;
       }
     }
   },

@@ -10,16 +10,19 @@ export const eventStore = defineStore('event', {
     events: [],
     event: {},
     page: 0,
-    limit: 2
+    limit: 3
   }),
   getters: {
     getEvents: (state) => state.events,
     getEvent: (state) => state.event
   },
   actions: {
-    async fetchAllEvents(pagination = false) {
-      await axios.get(`${API}/events?limit=${this.limit}&page=${this.page}`).then((response) => { this.events = this.events.concat(response.data); });
-      this.page += this.limit;
+    async fetchAllEvents() {
+      await axios.get(`${API}/events?limit=${this.limit}&page=${this.page}`)
+      .then((response) => { 
+        this.events = this.events.concat(response.data); 
+        this.page += response.data.length;
+      });
     },
 
     async fetchEventId(id) {

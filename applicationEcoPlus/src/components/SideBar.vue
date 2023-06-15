@@ -29,7 +29,7 @@
         <div v-for="post in feed" class="ma-0 pa-0 w-100">
           <RouterLink v-if="post.IdCreator != undefined" :to="{ name: 'eventDetail', params: { eventid: post.id } }">
             <div class="postBgImage alignContentBottom mx-auto pa-0"
-              :style="{ 'background-image': 'url(' + post.image + ')' }">
+              :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${post.image})`">
               <div class="postTitleContent">
                 <div class="postIconBackground">
                   <img class="postIcon" src="/src/assets/icons/calendar.svg">
@@ -42,7 +42,7 @@
 
           <RouterLink v-else :to="{ name: 'occurrenceDetail', params: { occurrenceid: post.id } }">
             <div class="w-100 postBgImage alignContentBottom mx-auto pa-0"
-              :style="{ 'background-image': 'url(' + post.image + ')' }">
+              :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${post.image})`">
               <div class="postTitleContent">
                 <div class="postIconBackground">
                   <img class="postIcon" src="/src/assets/icons/tool.svg">
@@ -210,8 +210,7 @@
 
 <script>
 import { userStore } from '../stores/user'
-import { occurrenceStore } from '../stores/occurrence'
-import { eventStore } from '../stores/event'
+import { eventOccurrenceStore } from '../stores/eventOccurrence'
 import { missionStore } from '../stores/mission'
 import { badgeStore } from '../stores/badge'
 import { cookie } from '../utilities/cookieFunctions'
@@ -226,8 +225,7 @@ export default {
       user: {},
 
       /* recent posts */
-      occurrenceStore: occurrenceStore(),
-      eventStore: eventStore(),
+      eventOccurrenceStore: eventOccurrenceStore(),
       feed: [],
 
       /* badges */
@@ -260,26 +258,21 @@ export default {
       return users
     }
   },
-  async created() {
+  async mounted() {
     /* fetch all necessarie information */
     await this.userStore.fetchAllUsers()
     await this.badgeStore.fetchBadges()
-    await this.occurrenceStore.fetchOccurrences()
-    await this.eventStore.fetchAllEvents()
 
-    this.user = await this.userStore.fetchLoggedUser()
-    /* create most recent */
-    let recentArray = []
-    let occurrenceArray = this.occurrenceStore.getOccurrences
-    let eventArray = this.eventStore.getEvents
-
-    if (eventArray != undefined) for (let event of eventArray) this.feed.push(event)
-    if (occurrenceArray != undefined) for (let occurrence of occurrenceArray) this.feed.push(occurrence)
-
-    for (let i = 0; i < 3; i++) {
-      if (this.feed[i] != undefined) recentArray.push(this.feed[i])
+    
+    /* create feed recent */
+    this.feed = await this.eventOccurrenceStore.getEventsOccurrences;
+    if (this.feed.length == 0) {
+      await this.eventOccurrenceStore.fetchAllEventsOccurrences()
+      this.feed = this.eventOccurrenceStore.getEventsOccurrences;
     }
-    this.feed = recentArray;
+
+    this.feed = this.feed.slice(0,3)
+    this.user = await this.userStore.fetchLoggedUser()
   },
 }
 </script>

@@ -11,13 +11,12 @@
         <v-col>
           <v-sheet class="pa-2 border-page" style="background-color: rgba(255, 250, 246, 1);">
             <!-- content -->
-            <v-container class="d-flex flex-column align-center contentColumn">
+            <v-container class="d-flex flex-column align-center contentColumn" @scroll="scrollEnd">
               <div v-for="post in feed" class="content">
 
                 <div v-if="post.status == 1">
-
                 <div class="card">
-                  <div class="image" :style="`background: url(${post.image});`">
+                  <div class="image" :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${post.image})`">
                     <div class="topperIconsOccurrence">
                       <div class="infoCardContent">
                         <div class="postIconBackground">
@@ -28,7 +27,7 @@
                             <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                           </div>
                           <div class="location">
-                            <span class="textSmall txtLocation">{{ post.location }}</span>
+                            <span class="textSmall text txtLocation">{{ post.location }}</span>
                           </div>
                         </div>
                       </div>
@@ -39,7 +38,7 @@
                 <!-- change comments -->
                 <div class="comments" v-for=",i in post.comments.length > 1 ? 2 : (post.comments.length == 1 ? 1 : 0)">
                   <p class="userName">@{{ userStore.getUserById(post.comments[i].userId).username }}: &nbsp;</p>
-                  <p class="comment">{{ post.comments[i].message }}</p>
+                  <p class="comment">{{ post.comments[i].description }}</p>
                 </div>
                 <div class="routerLink">
                   <p class="viewMore textSmall">
@@ -84,7 +83,8 @@ export default {
       userStore: userStore(),
       occurrenceStore: occurrenceStore(),
       feed: [],
-      user: {}
+      user: {},
+      canPaginate: true,
     }
   },
   async created() {
@@ -96,11 +96,21 @@ export default {
     if (this.occurrenceStore.getOccurrences.length == 0)
       await this.occurrenceStore.fetchOccurrences()
     let occurrenceArray = this.occurrenceStore.getOccurrences
-      console.log(occurrenceArray)
       for (let occurrence of occurrenceArray) {
         this.feed.push(occurrence)
       }
-  }
+  },
+
+  methods: {
+    async scrollEnd(e) {
+      if (e.target.offsetHeight + e.target.scrollTop + 1 >= e.target.scrollHeight && this.canPaginate) {
+        this.canPaginate = false;
+        await this.occurrenceStore.fetchOccurrences();
+        this.feed = await this.occurrenceStore.getOccurrences;
+        this.canPaginate = true;
+      }
+    }
+  },
 }
 </script>
 
