@@ -5,18 +5,18 @@
                 <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
-                        <NavBar />
+                        <NavBar :user="user" />
                     </v-sheet>
                 </v-col>
                 <v-col>
-                    <v-sheet class="pa-2 border-page bgChange" >
+                    <v-sheet class="pa-2 border-page bgChange">
                         <!-- content -->
                         <v-container>
                             <div class="d-flex">
                                 <ButtonGoBack />
-                                <h1>20XX - Plan</h1>
+                                <h1>2023 - Plan</h1>
                             </div>
-                            <h3> Here is the list of proposed activities for 20XX. We hope you all enroll your selves in
+                            <h3> Here is the list of proposed activities for 2023. We hope you all enroll your selves in
                                 every
                                 last one.</h3>
                             <v-table class="mt-6">
@@ -31,11 +31,12 @@
                                     <tr v-for="activity, index in activities" :class="index % 2 == 0 ? 'even' : 'odd'"
                                         :key="activity.id">
                                         <td>
-                                            <input type="checkbox" id="id{{ activity.title }}" :value="activity.id"
-                                                v-model="checkedActivities" />
+                                            <!-- <input type="checkbox" id="id{{ activity.nome }}" :value="activity.id"
+                                                v-model="checkedActivities" /> -->
+                                            {{ activity.id }}
                                         </td>
                                         <td>
-                                            {{ activity.title }}
+                                            {{ activity.name }}
                                         </td>
                                         <td class="text-right">
                                             <RouterLink
@@ -46,10 +47,12 @@
                                     </tr>
                                 </tbody>
                             </v-table>
-                            <div class="d-flex justify-space-around mt-4">
-                                <v-btn rounded="pill" size="large" style="font-family: Quicksand; text-transform: none;" flat="true" color="green-darken-4" variant="outlined" @click="reset"> Reset </v-btn>
-                                <v-btn rounded="pill" size="large" style="font-family: Quicksand; text-transform: none;" flat="true" color="green-lighten-1" @click="subscribe"> Subscribe </v-btn>
-                            </div>
+                            <!-- <div class="d-flex justify-space-around mt-4">
+                                <v-btn rounded="pill" size="large" style="font-family: Quicksand; text-transform: none;"
+                                    flat="true" color="green-darken-4" variant="outlined" @click="reset"> Reset </v-btn>
+                                <v-btn rounded="pill" size="large" style="font-family: Quicksand; text-transform: none;"
+                                    flat="true" color="green-lighten-1" @click="subscribe"> Subscribe </v-btn>
+                            </div> -->
                         </v-container>
                     </v-sheet>
                 </v-col>
@@ -69,7 +72,6 @@ import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
 import ButtonGoBack from "../components/ButtonGoBack.vue";
 import { activityStore } from "../stores/activity.js";
-import { eventStore } from "../stores/event.js";
 import { userStore } from "../stores/user.js"
 
 export default {
@@ -82,68 +84,29 @@ export default {
     data() {
         return {
             userStore: userStore(),
-            eventStore: eventStore(),
             activityStore: activityStore(),
-            user: {},
             activities: [],
+            user: {},
             checkedActivities: [],
         }
     },
-    created(){
-        if (!JSON.parse(localStorage.getItem('currentUser'))) {
-        this.$router.push({ name: 'signin' })
-        }
+    async created() {
+        this.activities = this.activityStore.getActivities;
+        if (this.activities.length == 0) {
+            await this.activityStore.fetchAllActivities();
+            this.activities = this.activityStore.getActivities;
+        };
+        console.log(this.activities.length)
+        await this.userStore.fetchLoggedUser();
+        this.user = await this.userStore.getUser;
     },
 
     methods: {
         reset() {
-            this.checkedActivities = this.user.joined.activityId
         },
 
         subscribe() {
-            this.checkedActivities.sort();
-            this.user.joined.activityId = this.checkedActivities;
-            this.userStore.updateUser(this.user);
-            for (const activity of this.activities) {
-                if (!(activity.membersId.indexOf(this.user.id) != -1) && this.user.joined.activityId.indexOf(activity.id) != -1) {
-                    activity.membersId.push(this.user.id);
-                };
-                if (activity.membersId.indexOf(this.user.id) != -1 && !(this.user.joined.activityId.indexOf(activity.id) != -1)) {
-                    activity.membersId.splice(this.user.joined.activityId.indexOf(activity.id), 1);
-                };
-            }
-            this.activityStore.updateActivities(this.activities)
-            this.verifyBadge();
         },
-
-        verifyBadge() {
-            let count = 0
-            this.eventStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
-            this.activityStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
-            if (count > 0) {
-                if (this.user.badgesState.indexOf(3) == -1) {
-                    this.user.badgesState.push(3);
-                    this.userStore.updateUser(this.user);
-                } else if (count > 2) {
-                    if (this.user.badgesState.indexOf(4) == -1) {
-                        this.user.badgesState.push(4);
-                        this.userStore.updateUser(this.user);
-                    } else if (count > 9) {
-                        if (this.user.badgesState.indexOf(5) == -1) {
-                            this.user.badgesState.push(5);
-                            this.userStore.updateUser(this.user);
-                        }
-                    }
-                }
-            }
-            console.log(count);
-        }
-    },
-
-    created() {
-        this.user = JSON.parse(localStorage.getItem('currentUser'));
-        this.activities = this.activityStore.getActivities;
-        this.checkedActivities = this.user.joined.activityId;
     },
 }
 </script>

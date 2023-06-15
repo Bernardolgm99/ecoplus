@@ -137,14 +137,14 @@
                       <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'src/assets/icons/calendar.svg'">
+                            <img class="postIcon" :src="'../src/assets/icons/calendar.svg'">
                           </div>
                           <div class="infos">
                             <div class="title">
                               <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                             </div>
                             <div class="location">
-                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                              <span class="textSmall txtLocation text">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>
@@ -153,7 +153,7 @@
                       <div v-else class="topperIconsOccurrence">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                            <img class="postIcon" :src="'../src/assets/icons/tool.svg'">
                           </div>
                           <div class="infos">
                             <div class="title">
@@ -163,7 +163,7 @@
                               <span v-if="post.status == 2">Done</span>
                             </div>
                             <div class="location">
-                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                              <span class="textSmall txtLocation text">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>
@@ -180,14 +180,14 @@
                       <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'src/assets/icons/calendar.svg'">
+                            <img class="postIcon" :src="'../src/assets/icons/calendar.svg'">
                           </div>
                           <div class="infos">
                             <div class="title">
                               <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                             </div>
                             <div class="location">
-                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                              <span class="textSmall txtLocation text">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>
@@ -204,7 +204,7 @@
                       <div class="topperIconsOccurrence">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                            <img class="postIcon" :src="'../src/assets/icons/tool.svg'">
                           </div>
                           <div class="infos">
                             <div class="title">
@@ -214,7 +214,7 @@
                               <span v-if="post.status == 2">Done</span>
                             </div>
                             <div class="location">
-                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                              <span class="textSmall text txtLocation">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>

@@ -5,7 +5,7 @@
                 <v-col cols="3">
                     <v-sheet class="pa-2 ma-2">
                         <!-- navbar -->
-                        <NavBar />
+                        <NavBar :user="user" />
                     </v-sheet>
                 </v-col>
                 <v-col>
@@ -17,28 +17,34 @@
                                 <div class="d-flex mt-2 mb-12">
                                     <ButtonGoBack />
                                     <h1>
-                                        {{ activity.title }}
+                                        {{ activity.name }}
                                     </h1>
                                 </div>
-                                <div class="d-flex mb-2">
+                                <div class="d-flex justify-space-between align-center mb-2">
                                     <h2 class="align-self-start">Diagnosis: </h2>
                                     <span class="pt-1 ml-2"> {{ activity.diagnosis }} </span>
-                                    <v-btn size="large" rounded="pill"
-                                        style="font-family: Quicksand; text-transform: none;" flat="true"
-                                        v-if="(this.members.findIndex(member => member.id == this.user.id) == -1)"
-                                        class="mr-2 ms-auto mt-1" color="green-lighten-1" @click="subscribe">
-                                        Join Activity
-                                    </v-btn>
-                                    <v-btn size="large" rounded="pill"
-                                        style="font-family: Quicksand; text-transform: none;" flat="true" v-else
-                                        class="mr-2 ms-auto mt-1" color="green-darken-4" @click="subscribe">
-                                        Out Activity
-                                    </v-btn>
+                                    <div v-if="!Object.keys(user).length == 0">
+                                        <v-btn size="large" rounded="pill"
+                                            style="font-family: Quicksand; text-transform: none;" flat="true"
+                                            v-if="(this.members.findIndex(sub => sub.username == this.user.username) == -1)"
+                                            class="mr-2 ms-auto mt-1 btnJoin" color="green-lighten-1"
+                                            @click="subscribe(false)">
+                                            Join Activity
+                                        </v-btn>
+
+                                        <v-btn size="large" rounded="pill"
+                                            style="font-family: Quicksand; text-transform: none;" flat="true" v-else
+                                            class="mr-2 ms-auto mt-1 btnOut" color="green-darken-4"
+                                            @click="subscribe(true)">
+                                            Out Activity
+                                        </v-btn>
+                                    </div>
                                 </div>
                                 <hr class="mb-2">
                                 <div class="d-flex mb-4">
                                     <h2>Schedule: </h2>
-                                    <span class="pt-1 ml-2"> {{ activity.schedule }}</span>
+                                    <span class="pt-1 ml-2"> {{ date.start.toLocaleDateString('en-GB') }} to {{
+                                        date.end.toLocaleDateString('en-GB') }}</span>
                                 </div>
                                 <p class="mb-4">
                                     {{ activity.description }}
@@ -71,10 +77,10 @@
                                                     </v-container>
                                                     <div class="d-flex mb-6">
                                                         <h2>
-                                                            Participants:
+                                                            Location:
                                                         </h2>
                                                         <p class="pl-2">
-                                                            {{ activity.participants }}
+                                                            {{ activity.location }}
                                                         </p>
                                                     </div>
                                                     <div class="d-flex mb-6">
@@ -82,7 +88,7 @@
                                                             Evalution(Indicators):
                                                         </h2>
                                                         <p class="pl-2">
-                                                            {{ activity.evalutionInd }}
+                                                            {{ activity.evalution_ind }}
                                                         </p>
                                                     </div>
                                                     <div class="d-flex mb-6">
@@ -90,7 +96,7 @@
                                                             Evalution(Instruments):
                                                         </h2>
                                                         <p class="pl-2">
-                                                            {{ activity.evalutionInst }}
+                                                            {{ activity.evalution_inst }}
                                                         </p>
                                                     </div>
                                                     <!-- WORK IN PROGRESS-->
@@ -98,43 +104,10 @@
                                                     <!-- <div>MAPS</div> -->
                                                 </v-window-item>
                                                 <v-window-item value="comments">
-                                                    <v-textarea label="Comment" rows="1" auto-grow
-                                                        bg-color="grey-lighten-2" color="green"
-                                                        v-model="newComment"></v-textarea>
-                                                    <v-btn color="green" @click="addComment">Sent</v-btn>
-                                                    <div class="d-flex" v-for="comment in comments">
-                                                        <div class="d-flex flex-column align-center">
-                                                            <v-btn variant="text" icon="mdi-arrow-up-bold"
-                                                                size="x-large"
-                                                                :color="comment.likesDislikes.likes.indexOf(this.user.id) != -1 ? 'green' : 'gray'"
-                                                                @click="like(comment)">
-                                                            </v-btn>
-                                                            <span> {{
-                                                                comment.likesDislikes.likes.length -
-                                                                    comment.likesDislikes.dislikes.length
-                                                            }} </span>
-                                                            <v-btn variant="text" icon="mdi-arrow-down-bold"
-                                                                size="x-large"
-                                                                :color="comment.likesDislikes.dislikes.indexOf(this.user.id) != -1 ? 'red' : 'gray'"
-                                                                @click="dislike(comment)">
-                                                            </v-btn>
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-center">
-                                                            <RouterLink style="color: black;"
-                                                                :to="{ name: 'perfil', params: { perfilid: userStore.getUserById(comment.userId).id } }">
-                                                                <h2 class="mb-1">
-                                                                    {{ userStore.getUserById(comment.userId).username }}
-                                                                </h2>
-                                                            </RouterLink>
-                                                            <p class="mt-1">
-                                                                {{ comment.message }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                    <Comments :id="path.id" :type="path.type" :user="user" />
                                                 </v-window-item>
                                                 <v-window-item value="members">
-                                                    <div class="d-flex flex-column align-center"
-                                                        v-for="member in members">
+                                                    <div class="d-flex flex-column align-center" v-for="member in members">
                                                         <RouterLink class="w-100" RouterLink style="color: black;"
                                                             :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
                                                             <div class="members d-flex mx-auto">
@@ -176,7 +149,7 @@
 import NavBar from "../components/NavBar.vue";
 import SideBar from "../components/SideBar.vue";
 import ButtonGoBack from "../components/ButtonGoBack.vue";
-import { eventStore } from "../stores/event.js";
+import Comments from "../components/Comments.vue";
 import { activityStore } from "../stores/activity.js";
 import { userStore } from "../stores/user"
 
@@ -185,132 +158,51 @@ export default {
         NavBar,
         SideBar,
         ButtonGoBack,
+        Comments,
     },
 
     data: () => ({
         tab: null,
-        eventStore: eventStore(),
         activityStore: activityStore(),
         userStore: userStore(),
-        users: [],
         user: {},
         activity: {},
-        comments: [],
-        newComment: "",
         members: [],
+        path: {},
+        date: {
+            start: new Date(),
+            end: new Date()
+        },
     }),
 
-    created() {
-        if (!JSON.parse(localStorage.getItem('currentUser'))) {
-            this.$router.push({ name: 'signin' })
+    async created() {
+        this.path = {
+            id: this.$router.currentRoute._value.params.activityId,
+            type: this.$router.currentRoute._value.fullPath.split('/')[1]
         }
-        this.user = JSON.parse(localStorage.getItem('currentUser'));
-        this.activity = this.activityStore.getActivityById(this.$route.params.activityId);
-        this.users = this.userStore.getUsers;
-        this.comments = this.activity.comments;
-        for (const memberId of this.activity.membersId) {
-            console.log(memberId);
-            this.members.push(this.users.find(user => user.id == memberId));
+        this.user = await this.userStore.getUser;
+        if (this.user) {
+            await this.userStore.fetchLoggedUser();
+            this.user = await this.userStore.getUser;
         }
+        await this.activityStore.fetchActivityId(this.path.id);
+        this.activity = await this.activityStore.getActivity
+        this.members = this.activity.users;
+        console.log(this.activity.users[0].username);
+
+        this.date.start = new Date(this.activity.start)
+        this.date.end = new Date(this.activity.end)
     },
 
     methods: {
-        like(comment) {
-            if (!(comment.likesDislikes.likes.indexOf(this.user.id) != -1)) {
-                comment.likesDislikes.likes.push(this.user.id);
-                if ((comment.likesDislikes.dislikes.indexOf(this.user.id) != -1)) {
-                    comment.likesDislikes.dislikes.splice(comment.likesDislikes.dislikes.indexOf(this.user.id), 1)
-                }
-            } else {
-                comment.likesDislikes.likes.splice(comment.likesDislikes.likes.indexOf(this.user.id), 1)
-            }
-            const index = this.comments.findIndex(commentIndex => commentIndex.messageId == comment.messageId)
-            this.comments[index] = comment
-            this.update()
+        async subscribe(areadySubscribed) {
+            await this.activityStore.subscribe(this.path.id, areadySubscribed);
+            if (areadySubscribed) this.members.splice(this.members.findIndex(sub => sub.username == this.user.username), 1);
+            else this.members.push(this.user);
         },
-
-        dislike(comment) {
-            if (!(comment.likesDislikes.dislikes.indexOf(this.user.id) != -1)) {
-                comment.likesDislikes.dislikes.push(this.user.id);
-                if ((comment.likesDislikes.likes.indexOf(this.user.id) != -1)) {
-                    comment.likesDislikes.likes.splice(comment.likesDislikes.likes.indexOf(this.user.id), 1)
-                }
-            } else {
-                comment.likesDislikes.dislikes.splice(comment.likesDislikes.dislikes.indexOf(this.user.id), 1)
-            }
-            const index = this.comments.findIndex(commentIndex => commentIndex.messageId == comment.messageId)
-            this.comments[index] = comment
-            this.update()
-        },
-
-        addComment() {
-            if (this.comments.length > 0) {
-                this.comments.splice(0, 0, {
-                    messageId: this.comments[0].messageId + 1,
-                    userId: this.user.id,
-                    message: this.newComment,
-                    likesDislikes: { likes: [], dislikes: [] },
-                });
-            }
-            else {
-                this.comments.push({
-                    messageId: 0,
-                    userId: this.user.id,
-                    message: this.newComment,
-                    likesDislikes: { likes: [], dislikes: [] },
-                });
-            }
-            this.newComment = "";
-            this.update();
-        },
-
-        subscribe() {
-            if (this.members.findIndex(member => member.id == this.user.id) == -1) {
-                this.user.joined.activityId.push(this.activity.id)
-                this.userStore.updateUser(this.user)
-                this.members.push(this.user);
-            } else {
-                this.user.joined.activityId.splice(this.user.joined.activityId.indexOf(this.activity.id), 1)
-                this.userStore.updateUser(this.user)
-                this.members.splice(this.members.findIndex(member => member.id == this.user.id), 1);
-            }
-            this.update();
-        },
-
-        update() {
-            this.activity.membersId = this.members.map(member => member.id)
-            this.activity.comments = this.comments;
-            this.activityStore.updateActivity(this.activity);
-            this.verifyBadge();
-        },
-
-        verifyBadge() {
-            let count = 0
-            this.eventStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
-            this.activityStore.getMembers.forEach(user => { user.forEach(id => { if (id == this.user.id) count++ }) })
-            if (count > 0) {
-                if (this.user.badgesState.indexOf(3) == -1) {
-                    this.user.badgesState.push(3);
-                    this.userStore.updateUser(this.user);
-                } else if (count > 2) {
-                    if (this.user.badgesState.indexOf(4) == -1) {
-                        this.user.badgesState.push(4);
-                        this.userStore.updateUser(this.user);
-                    } else if (count > 9) {
-                        if (this.user.badgesState.indexOf(5) == -1) {
-                            this.user.badgesState.push(5);
-                            this.userStore.updateUser(this.user);
-                        }
-                    }
-                }
-            }
-            console.log(count);
-        }
     }
 }
 </script>
 
-<style lang="scss" scoped>
-@import '../assets/styles/base.css';
-@import '../assets/styles/details.css';
-</style>
+<style lang="scss" scoped>@import '../assets/styles/base.css';
+@import '../assets/styles/details.css';</style>
