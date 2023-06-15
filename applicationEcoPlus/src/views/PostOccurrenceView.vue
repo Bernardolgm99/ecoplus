@@ -5,7 +5,7 @@
         <v-col cols="3">
           <v-sheet class="pa-2 ma-2">
             <!-- navbar -->
-            <NavBar/>
+            <NavBar :user="user"/>
           </v-sheet>
         </v-col>
        
@@ -36,7 +36,8 @@
                     </div>
                     <div id="inputFile">
                         <span class="textMediumLarge">Image:</span>
-                        <v-file-input label="File input" variant="solo" v-model="image"></v-file-input>
+                        <v-file-input @change="getImage" label="File input" variant="solo" id="image" type="file" accept="image/*" v-model="image">
+                        </v-file-input>
                     </div>
                     <div id="txtAreaInput">
                         <span class="textMediumLarge">Description:</span>
@@ -88,6 +89,7 @@
 import SideBar from '../components/SideBar.vue'
 import NavBar from '../components/NavBar.vue'
 import { occurrenceStore } from '../stores/occurrence.js'
+import { userStore } from '../stores/user'
 import ButtonGoBack from "../components/ButtonGoBack.vue";
 
     export default {
@@ -97,32 +99,54 @@ import ButtonGoBack from "../components/ButtonGoBack.vue";
         data() {
             return {
                 occurrenceStore: occurrenceStore(),
+                userStore: userStore(),
+                user: '',
                 title: '',
                 location: '',
                 locationDesc: '',
                 image: '',
+                image64: '',
                 desc: '',
                 user: {},
                 alert: false
             }
         },
         methods: {
-            postOccurrence() {
+          resultReaderAtributtion(image) {
+            
+            this.image64 = image;
+
+          },
+          getImage(e){
+            const file = e.target.files[0]
+            console.log(e.target.files[0])
+            const reader = new FileReader()
+
+            reader.onload = () => {
+                const image = reader.result
+
+                this.resultReaderAtributtion(image)
+            }
+
+            reader.readAsArrayBuffer(file)
+
+
+          },
+            async postOccurrence() {
+                
                 if(this.title != "" && this.image[0].name != undefined && this.location != "" && this.locationDesc != "" && this.desc != ""){
                   this.alert = false
-                  this.occurrenceStore.addOccurrence(this.user.id, this.title, '/src/assets/images/'+this.image[0].name, this.location, this.locationDesc, this.desc)
-                  this.$router.push('/home')  
+                  await this.occurrenceStore.fetchCreateOccurrence(this.title, this.desc, this.locationDesc, this.location, this.image64)
+                  console.log('yau')
+                  // this.$router.push('/home')  
                 } else {
                   this.alert = true
                 }
             }
         },
-        created() {
-            if(!JSON.parse(localStorage.getItem('currentUser'))){
-              this.$router.push({name: 'signin'})
-            } else {
-              this.user = JSON.parse(localStorage.getItem('currentUser'))
-            }
+        async created() {
+          await this.userStore.fetchLoggedUser()
+          this.user = this.userStore.getUser
         }
     }
 </script>
