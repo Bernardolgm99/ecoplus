@@ -90,13 +90,13 @@ export default {
     },
     created() {
 
-        if (JSON.parse(localStorage.getItem('currentUser'))) {
-            if (JSON.parse(localStorage.getItem('currentUser')).title == "Admin") {
-                this.$router.push({ name: 'admin' })
-            } else {
-                this.$router.push({ name: 'home' })
-            }
-        }
+        // if (JSON.parse(localStorage.getItem('currentUser'))) {
+        //     if (JSON.parse(localStorage.getItem('currentUser')).title == "Admin") {
+        //         this.$router.push({ name: 'admin' })
+        //     } else {
+        //         this.$router.push({ name: 'home' })
+        //     }
+        // }
     }
 }
 </script>

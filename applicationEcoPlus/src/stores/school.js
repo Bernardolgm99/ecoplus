@@ -12,7 +12,8 @@ export const schoolStore = defineStore('schools', {
   },
   actions: {
     async fetchAllSchools() {
-        await axios.get(`${API}/schools`).then((response) => { this.schools = response.data; });
+        this.schools = await axios.get(`${API}/schools`).then((response) => { return response.data; });
+        return this.schools;
     },
     async fetchSchool(id) {
         try {

@@ -21,27 +21,29 @@
                         <v-text-field class="mr-2" prepend-inner-icon="mdi-calendar-account" label="Birthday"
                             placeholder="dd/mm/yyyy" bg-color="lime-lighten-2" v-model="birthday"></v-text-field>
                         <v-select class="ml-2" prepend-inner-icon="mdi-gender-male-female" id="gender" name="gender"
-                            v-model="gender" :items="['male', 'famale']" bg-color="lime-lighten-2"
+                            v-model="gender" :items="['male', 'famale', 'other']" bg-color="lime-lighten-2"
                             label="Gender"></v-select>
                     </div>
                     <div class="d-flex">
-                        <v-select class="mr-2" name="city" id="city" :items="['Cascais', 'Rio Tinto']"
-                            bg-color="lime-lighten-2" label="City" v-model="city"></v-select>
-                        <v-select class="ml-2" name="district" id="district" :items="['Lisbon', 'Porto']"
+                        <v-autocomplete class="mr-2" name="city" id="city" :items="this.allCities"
+                            bg-color="lime-lighten-2" label="City" v-model="city">
+                        </v-autocomplete>
+                        <v-autocomplete class="ml-2" name="district" id="district" :items="this.allDistricts" 
                             bg-color="lime-lighten-2" label="District" v-model="district">
-                        </v-select>
+                        </v-autocomplete>
                     </div>
                     <div class="d-flex">
                         <v-text-field class="mr-2" clearable label="Postal Code" bg-color="lime-lighten-2"
                             placeholder="Write your postal code here" v-model="postalcode"></v-text-field>
-                        <v-text-field class="ml-2" clearable label="School" bg-color="lime-lighten-2"
-                            placeholder="Write your school name here" v-model="school"></v-text-field>
+                        <v-autocomplete class="ml-2" clearable label="School" bg-color="lime-lighten-2" 
+                            :items="this.allSchools" v-model="school">
+                        </v-autocomplete>
                     </div>
                     <div class="d-flex">
                         <v-text-field class="mr-2" :readonly="loading" :rules="[required]" clearable label="Password"
                             bg-color="lime-lighten-2" type="password" placeholder="Write your password here"
                             v-model="pw"></v-text-field>
-                        <v-text-field class="ml-2" :readonly="loading" :rules="[required]" clearable label="Password"
+                        <v-text-field class="ml-2" :readonly="loading" :rules="[required]" clearable label="Confirm Password"
                             bg-color="lime-lighten-2" type="password" placeholder="Write again you password here"
                             v-model="checkPw"></v-text-field>
                     </div>
@@ -81,13 +83,15 @@
 <script>
 
 import { userStore } from '../stores/user'
+import { schoolStore } from '../stores/school'
 
-export default {
+export default{
     name: 'signup',
     props: ['inputEmailLP'],
     data() {
         return {
             userStore: userStore(),
+            schoolStore: schoolStore(),
             name: '',
             username: '',
             email: '',
@@ -99,6 +103,10 @@ export default {
             school: '',
             pw: '',
             checkPw: '',
+            allDistricts: [],
+            allCities: [],
+            allSchools: [],
+            schoolData: '',
             emailExist: false,
             currentUser: '',
             alert: false,
@@ -109,7 +117,7 @@ export default {
         }
     },
     methods: {
-        createAccount() {
+        async createAccount() {
             if (this.birthday.split('/').length == 3 && this.birthday.split('/')[0] < 32 && this.birthday.split('/')[1] < 13)
                 this.birthday.split('/').reverse().join('-');
             else {
@@ -127,13 +135,20 @@ export default {
                         this.alert = false
                         this.sucess = true
 
-                        this.userStore.addUser(this.username, this.name, this.email, this.birthday, this.gender, this.city, this.district, this.postalcode, this.school, this.pw)
+                        // this.userStore.addUser(this.username, this.name, this.email, this.birthday, this.gender, this.city, this.district, this.postalcode, this.school, this.pw)
 
-                        this.currentUser = this.userStore.getUserId(this.username)
+                        if(this.gender == 'male') this.gender = 'M'
+                        if(this.gender == 'female') this.gender = 'F'
+                        if(this.gender == 'other') this.gender = 'OTHER'
+
+                        await this.userStore.createUser(this.name, this.username, this.email, this.pw, this.school, 
+                                                            await this.schoolStore.getSchoolByName(this.school), this.birthday)
+
+                        // this.currentUser = this.userStore.getUserId(this.username)
 
                         localStorage.setItem('currentUser', JSON.stringify(this.userStore.getUserById(this.currentUser)))
 
-                        this.$router.push({ name: 'home' })
+                        this.$router.push({ name: 'signin' })
 
                     } else {
                         this.alertEmail = false
@@ -167,7 +182,21 @@ export default {
             }
         },
     },
-    created() {
+    async created() {
+
+        this.schoolData = await this.schoolStore.fetchAllSchools()
+
+        this.schoolData.forEach(data => {
+            if(!this.allDistricts.find(district => district == data.district)){
+                this.allDistricts.push(data.district)
+            }
+            if(!this.allCities.find(municipality => municipality == data.municipality)){
+                this.allCities.push(data.municipality)
+            }
+            if(!this.allSchools.find(school => school == data.school)){
+                this.allSchools.push(data.school)
+            }
+        })
 
         if (JSON.parse(localStorage.getItem('currentUser'))) {
             this.$router.push({ name: 'home' })

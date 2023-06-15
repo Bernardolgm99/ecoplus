@@ -85,6 +85,22 @@ export const userStore = defineStore('user', {
     addJoinedEvent(eventId) {
       this.joined.eventId.push(eventId)
     },
+    async createUser(name, username, email, password, schoolDesc, schoolId, birthDate){
+
+      let user = {
+        name: name, 
+        username: username, 
+        email: email, 
+        password: password, 
+        schoolDesc: schoolDesc,
+        schoolId: schoolId, 
+        birthDate: birthDate,
+        icone: '/src/assets/perfil/yoda.jpeg'
+      }
+
+      await axios.post(`${API}/users`, user)
+
+    },
     async logIn(username, password) {
       try {
         let response = await fetch(API + '/users/login', {
