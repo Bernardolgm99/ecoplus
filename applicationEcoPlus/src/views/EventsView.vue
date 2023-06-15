@@ -11,11 +11,11 @@
         <v-col>
           <v-sheet class="pa-2 border-page" style="background-color: rgba(255, 250, 246, 1);">
             <!-- content -->
-            <v-container class="d-flex flex-column align-center contentColumn">
+            <v-container class="d-flex flex-column align-center contentColumn" @scroll="scrollEnd">
             <div v-for="post in feed" class="content">
 
               <div class="card">
-                  <div class="image"  :style="`background: url(${post.image});`">
+                  <div class="image"  :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${post.image});`">
                       <div class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
@@ -26,7 +26,7 @@
                               <span class="textMediumLarge">{{ post.name }}</span> &nbsp;
                             </div>
                             <div class="location">
-                              <span class="textSmall txtLocation">{{ post.location }}</span>
+                              <span class="textSmall text txtLocation">{{ post.location }}</span>
                             </div>
                           </div>
                         </div>
@@ -78,7 +78,8 @@ export default {
       userStore: userStore(),
       eventStore: eventStore(),
       feed: [],
-      user: {}
+      user: {},
+      canPaginate: true,
     }
   },
 
@@ -94,6 +95,18 @@ export default {
       this.feed.push(event)
     }
   },
+
+  methods: {
+    async scrollEnd(e) {
+      if (e.target.offsetHeight + e.target.scrollTop + 1 >= e.target.scrollHeight && this.canPaginate) {
+        this.canPaginate = false;
+        await this.eventStore.fetchAllEvents();
+        this.feed = await this.eventStore.getEvents;
+        this.canPaginate = true;
+      }
+    }
+  },
+
 }
 </script>
 
