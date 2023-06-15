@@ -11,7 +11,7 @@
                 <v-col>
                     <v-sheet class="pa-2 border-page">
                         <div>
-                            <img class="img-thumbnail" :src="event.image" />
+                            <img class="img-thumbnail" :src="`data:image/webp;jpg;png;jpeg;base64,${event.image}`" />
                         </div>
                         <v-container>
                             <div class="d-flex mt-2 mb-12">
@@ -54,13 +54,15 @@
                                                 <div>FILES</div>
                                                 <div>MAPS</div>
                                             </v-window-item> -->
-                                            <Comments :id="path.id" :type="path.type" :user="user" />
+                                            <v-window-item value="comments">
+                                                <Comments :id="path.id" :type="path.type" :user="user" />
+                                            </v-window-item>
                                             <v-window-item value="members">
                                                 <div class="d-flex flex-column align-center" v-for="member in members">
                                                     <RouterLink class="w-100" RouterLink style="color: black;"
                                                         :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
                                                         <div class="members d-flex mx-auto">
-                                                            <img class="img-members" :src="member.perfilImage" />
+                                                            <img class="img-members" :src="`data:image/webp;jpg;png;jpeg;base64,${user.icon}`" />
                                                             <div class="ml-6 d-flex flex-column justify-center">
                                                                 <h2 class="mb-1">
                                                                     {{ member.username }}
@@ -127,21 +129,16 @@ export default {
         }
         await this.eventStore.fetchEventId(this.path.id);
         this.event = await this.eventStore.getEvent;
-        console.log(this.members)
         this.members = this.event.users;
-        console.log(this.members)
         await this.userStore.fetchLoggedUser();
         this.user = await this.userStore.getUser;
     },
 
     methods: {
         async subscribe(areadySubscribed) {
-            console.log(this.members);
-            console.log(this.members.findIndex(sub => sub.username == this.user.username));
             await this.eventStore.subscribe(this.path.id, areadySubscribed);
             if (areadySubscribed) this.members.splice(this.members.findIndex(sub => sub.username == this.user.username), 1);
             else this.members.push(this.user);
-            console.log(this.members, 1);
         },
     }
 }
