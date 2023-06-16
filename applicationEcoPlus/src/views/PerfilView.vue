@@ -333,7 +333,7 @@ export default {
         await this.userStore.fetchAllUsers();
         this.user = this.userStore.getUser
         if (this.user.genreDesc == 'M') this.user.genreDesc = 'Male'
-        else if(this.user.genreDesc == 'F') this.user.genreDesc = 'Female'
+        else if (this.user.genreDesc == 'F') this.user.genreDesc = 'Female'
         else this.user.genreDesc = 'Other'
         /* close dialog box */
         this.dialog = false
@@ -382,16 +382,32 @@ export default {
     this.changeMunicipality = this.school.municipality
     this.changeSchool = this.school.school
 
+    /* creates an object that has as attibutes the names of the districts. the districts are objects that have municipalities, and municipalities have arrays with the schools. something like this:
+    {
+      AVEIRO: {
+        Águeda: [..., Escola EB de Valongo do Vouga, ...],
+        Anadia: [...]
+      },
+      BEJA : {...}
+      ...
+    } 
+    then the v-auto-complete has as Object.keys(theAboveObject) essencialy transforms the object in an array,
+    Object.keys(this.districts) = [AVEIRO, BEJA, ...]
+    Object.keys(this.districts[district]) = [Águeda, Anadia, ...]
+    this.districts[district][municipality] = [Escola EB de Valongo do Vouga, ...]
+    the "district", and "municipality" are changed to the users request, selectedDistrict and selectedMunicipality, respectively.
+    */
     this.schoolStore.getSchools.forEach(obj => {
       if (!(obj.district in this.districts)) this.districts[obj.district] = {};
       if (!(obj.municipality in this.districts[obj.district])) this.districts[obj.district][obj.municipality] = []; // Create an empty array for the municipality
       this.districts[obj.district][obj.municipality].push(obj.school);
     });
+    
     this.selectedDistrict = this.school.district
     this.selectedMunicipality = this.school.municipality
     this.selectedSchool = this.school.school
     this.selectedDate = this.user.birthDate.substr(0, 10)
-
+    
     if (this.user.genreDesc == 'M') this.user.genreDesc = 'Male'
     else if (this.user.genreDesc == 'F') this.user.genreDesc = 'Female'
     else this.user.genreDesc = 'Other'

@@ -35,44 +35,11 @@ export const userStore = defineStore('user', {
       return userNameChecked.id
     },
     getUserById: (state) => (userId) => state.users.find(user => user.id == userId),
-    getUserMissionState: (state) => (userId) => {
-      let user = state.users.find(user => user.id == userId)
-      return user.missionsState
-    },
     getUserEventsOccurrences: state => state.userEventsOccurrences,
     getUserEvents: state => state.userEvents,
     getUserOccurrences: state => state.userOccurrences,
   },
   actions: {
-    addUser(username, name, email, birthday, gender, city, district, postalcode, school, password) {
-      this.users.push({
-        id: this.users[this.users.length - 1].id + 1,
-        username: username,
-        name: name,
-        perfilImage: '/src/assets/perfil/yoda.jpeg',
-        perfilBgImage: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-        email: email,
-        password: password,
-        gender: gender,
-        city: city,
-        postalcode: postalcode,
-        birthDate: birthday,
-        district: district,
-        school: school,
-        joined: {
-          eventId: [],
-          activityId: []
-        },
-        occurrenceId: [],
-        missionsState: [],
-        badgesState: [],
-        title: 'User',
-        blocked: false,
-      }
-      )
-
-      localStorage.setItem('users', JSON.stringify(this.users))
-    },
     updateUsers() {
       localStorage.setItem('users', JSON.stringify(this.users))
     },
