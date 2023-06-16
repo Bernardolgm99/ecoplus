@@ -15,6 +15,33 @@ export const occurrenceStore = defineStore('occurrence', {
     getOccurrence: (state) => state.occurrence
   },
   actions: {
+    async fetchCreateOccurrence(name, description, locationDescription, location, image){
+
+      // Needed to upload an image
+      // This code can be used as an example to upload an image with the code in PostOccurrenceView from 115 to 145
+      const formData = new FormData();
+      formData.append('name', name)
+      formData.append('description', description)
+      formData.append('locationDescription', locationDescription)
+      formData.append('location', location)
+      formData.append('image', image)
+
+      const occurrence = {
+        name: name,
+        description: description,
+        locationDescription: locationDescription,
+        location: location,
+        image: image
+      }
+
+      await axios.post(`${API}/occurrences`, occurrence, {
+                                                          headers: {
+                                                            Authorization: cookie.getCookie('token'),
+                                                            'Content-Type': 'multipart/form-data'
+                                                          }
+                                                        })
+
+    },
     async fetchOccurrenceId(id) {
       await axios.get(`${API}/occurrences/${id}`).then((response) => { this.occurrence = response.data; });
     },

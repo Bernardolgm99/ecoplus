@@ -35,10 +35,6 @@ export const userStore = defineStore('user', {
       return userNameChecked.id
     },
     getUserById: (state) => (userId) => state.users.find(user => user.id == userId),
-    getUserMissionState: (state) => (userId) => {
-      let user = state.users.find(user => user.id == userId)
-      return user.missionsState
-    },
     getUserEventsOccurrences: state => state.userEventsOccurrences,
     getUserEvents: state => state.userEvents,
     getUserOccurrences: state => state.userOccurrences,

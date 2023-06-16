@@ -67,7 +67,7 @@
             <div id="bot">
                 <div id="perfil" class="textMediumLarge d-flex" @click="navigateToPerfil()">
                     <div id="perfilIcon">
-                        <v-img id="perfil" :src="user.icon"></v-img>
+                        <v-img id="perfil" :src="`data:image/webp;jpg;png;jpeg;base64,${user.icon}`"></v-img>
                     </div>
                     <div id="perfilInfos">
                         <div>{{ user.username }}

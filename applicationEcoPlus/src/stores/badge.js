@@ -27,7 +27,7 @@ export const badgeStore = defineStore('badge', {
                 if (response.ok) //TRUE if response status code in the range 200-299
                     this.badges = await response.json(); // parse the response as JSON
                 else
-                    alert("HTTP error: " + response.status)
+                    console.log("HTTP error: " + response.status)
             }
             catch (e) {
                 throw Error(e)
