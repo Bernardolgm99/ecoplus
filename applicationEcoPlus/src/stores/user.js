@@ -44,56 +44,16 @@ export const userStore = defineStore('user', {
     getUserOccurrences: state => state.userOccurrences,
   },
   actions: {
-    addUser(username, name, email, birthday, gender, city, district, postalcode, school, password) {
-      this.users.push({
-        id: this.users[this.users.length - 1].id + 1,
-        username: username,
-        name: name,
-        perfilImage: '/src/assets/perfil/yoda.jpeg',
-        perfilBgImage: 'https://sm.ign.com/ign_pt/screenshot/default/bumblebee-1280a_kck5.jpg',
-        email: email,
-        password: password,
-        gender: gender,
-        city: city,
-        postalcode: postalcode,
-        birthDate: birthday,
-        district: district,
-        school: school,
-        joined: {
-          eventId: [],
-          activityId: []
-        },
-        occurrenceId: [],
-        missionsState: [],
-        badgesState: [],
-        title: 'User',
-        blocked: false,
-      }
-      )
 
-      localStorage.setItem('users', JSON.stringify(this.users))
-    },
-    updateUsers() {
-      localStorage.setItem('users', JSON.stringify(this.users))
-    },
-    addOccurrence(occurrenceId) {
-      this.occurrenceId.push(occurrenceId)
-    },
-    addJoinedActivity(activityId) {
-      this.joined.activityId = activityId
-    },
-    addJoinedEvent(eventId) {
-      this.joined.eventId.push(eventId)
-    },
-    async createUser(name, username, email, password, schoolDesc, schoolId, birthDate){
+    async createUser(name, username, email, password, schoolDesc, schoolId, birthDate) {
 
       let user = {
-        name: name, 
-        username: username, 
-        email: email, 
-        password: password, 
+        name: name,
+        username: username,
+        email: email,
+        password: password,
         schoolDesc: schoolDesc,
-        schoolId: schoolId, 
+        schoolId: schoolId,
         birthDate: birthDate,
         icone: '/src/assets/perfil/yoda.jpeg'
       }
@@ -234,5 +194,29 @@ export const userStore = defineStore('user', {
         throw Error(err)
       }
     },
+
+    async fetchUpdateRoleOrBlock(userId, body) {
+      try {
+        await axios.patch(`${API}/users/${userId}`, body, {
+          headers: {
+            Authorization: cookie.getCookie('token')
+          }
+        })
+      } catch (err) {
+        throw Error(err)
+      };
+    },
+
+    async fetchDelete(userId) {
+      try {
+        await axios.delete(`${API}/users/${userId}`, {
+          headers: {
+            Authorization: cookie.getCookie('token')
+          }
+        })
+      } catch (err) {
+        throw Error(err)
+      };
+    }
   },
 })

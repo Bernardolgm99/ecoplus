@@ -29,9 +29,6 @@ export const eventStore = defineStore('event', {
       await axios.get(`${API}/events/${id}`).then((response) => { this.event = response.data; });
     },
 
-    addEvent(userId, title, subtitle, image, location, description) {
-    },
-
     async subscribe(eventId, areadySubscribed) {
       if (!areadySubscribed) {
         await axios.post(`${API}/events/${eventId}/users`, {}, {
@@ -53,9 +50,12 @@ export const eventStore = defineStore('event', {
       }
     },
 
-    updateEvent(event) {
-    },
-    updateEvents() {
-    },
+    async fetchDelete(eventId){
+      await axios.delete(`${API}/events/${eventId}`, {
+        headers: {
+          Authorization: cookie.getCookie('token')
+        }
+      })
+    }
   },
 })

@@ -40,20 +40,38 @@ export const occurrenceStore = defineStore('occurrence', {
       )
       localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
     },
-    updateOccurrences() {
-      localStorage.setItem('occurrences', JSON.stringify(this.occurrences))
+
+    async fetchUpdateOccurrences(occurrenceId, status) {
+      await axios.patch(`${API}/occurrences/${occurrenceId}`, status, {
+        headers: {
+          Authorization: cookie.getCookie('token')
+        }
+      })
     },
-    async fetchOccurrences(){ 
+
+    async fetchOccurrences(limit = 3) {
       try {
-        await axios.get(`${API}/occurrences?limit=${this.limit}&page=${this.page}`)
-        .then((response) => { 
-          this.occurrences = this.occurrences.concat(response.data); 
-          this.page += response.data.length;
-        });
+        if (limit) this.limit = limit;
+        await axios.get(`${API}/occurrences?limit=${this.limit}&page=${this.page}`, {
+          headers: { Authorization: cookie.getCookie('token') }
+        })
+          .then((response) => {
+            this.occurrences = this.occurrences.concat(response.data);
+            this.page += response.data.length;
+          });
       }
       catch (e) {
         throw Error(e)
       }
     },
+
+    async fetchDelete(occurrenceId) {
+      await axios.delete(`${API}/occurrences/${occurrenceId}`, {
+        headers: {
+          Authorization: cookie.getCookie('token')
+        }
+      })
+    }
+
   },
 })

@@ -32,15 +32,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in userStore.getUsers" :key="item.id">
+        <tr v-for="item in users" :key="item.id">
           <td>{{ item.id }}</td>
           <td>{{ item.username }}</td>
           <td>
-            <v-select v-model="item.title" @update:modelValue="changeUserTitle" style="max-width: 200px" label="Select"
-              :items="userTitle" :hint="'Title'" persistent-hint return-object single-line variant="solo"></v-select>
+            <v-select v-model="item.role" @update:modelValue="changeUserTitle(item)" style="max-width: 200px"
+              label="Select" :items="userTitle" :hint="'Title'" persistent-hint return-object single-line
+              variant="solo"></v-select>
           </td>
           <td class="text-center">
-            <v-btn v-if="item.blocked" @click="blockUser(item)" class="mx-2" color="" icon="mdi-lock"></v-btn>
+            <v-btn v-if="!item.block" @click="blockUser(item)" class="mx-2" color="" icon="mdi-lock-open"></v-btn>
             <v-btn v-else class="mx-2" @click="blockUser(item)" color="warning" icon="mdi-lock"></v-btn>
           </td>
           <td class="text-center">
@@ -64,6 +65,9 @@
             Title
           </th>
           <th class="text-left">
+            UserID
+          </th>
+          <th class="text-left">
             Img
           </th>
           <th class="text-left">
@@ -75,13 +79,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in occurrenceStore.getOccurrences" :key="item.id">
+        <tr v-for="item in occurrences" :key="item.id">
           <td>{{ item.id }}</td>
-          <td>{{ item.title }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.userId }}</td>
           <td><img height="50" :src="item.image" /></td>
           <td>
-            <v-select v-model="item.stage" @update:modelValue="changeStageOccurrence" style="max-width: 200px"
-              label="Select" :items="['To Do', 'Doing', 'Done']" :hint="'Situation of occurrence'" persistent-hint
+            <v-select v-model="item.status" @update:modelValue="changeStageOccurrence(item)" style="max-width: 200px"
+              label="Select" :items="[0,1,2]" :hint="'Situation of occurrence'" persistent-hint
               return-object single-line variant="solo"></v-select>
           </td>
           <td class="text-center">
@@ -110,9 +115,9 @@
           <th class="text-left">
             Img
           </th>
-          <th class="text-center">
+          <!-- <th class="text-center">
             Member List
-          </th>
+          </th> -->
           <th class="text-center">
             Edit
           </th>
@@ -122,14 +127,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in eventStore.getEvents" :key="item.id">
+        <tr v-for="item in events" :key="item.id">
           <td>{{ item.id }}</td>
-          <td>{{ item.title }}</td>
+          <td>{{ item.name }}</td>
           <td><img height="50" :src="item.image" /></td>
-          <td class="text-center">
-            <v-btn class="mx-2" @click="downloadArrayAsCSV(item, 'event' + item.title)" color="purple"
+          <!-- <td class="text-center">
+            <v-btn class="mx-2" @click="downloadArrayAsCSV(item, 'event' + item.name)" color="purple"
               icon="mdi-download"></v-btn>
-          </td>
+          </td> -->
           <td class="text-center">
             <v-btn class="mx-2" @click="toEditEvent(item)" color="secondary" icon="mdi-pencil"></v-btn>
           </td>
@@ -140,6 +145,7 @@
       </tbody>
     </v-table>
   </v-container>
+
   <!-- ADD EVENT -->
   <v-row justify="center">
     <v-dialog v-model="modalCreateEvent" persistent>
@@ -152,7 +158,7 @@
             <v-row>
               <v-col cols="6">
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="newEvent.title" label="Title" required></v-text-field>
+                  <v-text-field v-model="newEvent.name" label="Title" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field v-model="newEvent.subtitle" label="Subtitle" required></v-text-field>
@@ -184,6 +190,7 @@
       </v-card>
     </v-dialog>
   </v-row>
+
   <!-- EDIT EVENT -->
   <v-row justify="center">
     <v-dialog v-model="modalEditEvent" persistent>
@@ -196,7 +203,7 @@
             <v-row>
               <v-col cols="6">
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editEvent.title" label="Title" required></v-text-field>
+                  <v-text-field v-model="editEvent.name" label="Title" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field v-model="editEvent.subtitle" label="Subtitle" required></v-text-field>
@@ -247,9 +254,9 @@
           <th class="text-left">
             Img
           </th>
-          <th class="text-center">
+          <!-- <th class="text-center">
             Member List
-          </th>
+          </th> -->
           <th class="text-center">
             Edit
           </th>
@@ -259,14 +266,14 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="item in activityStore.getActivities" :key="item.id">
+        <tr v-for="item in activities" :key="item.id">
           <td>{{ item.id }}</td>
-          <td>{{ item.title }}</td>
+          <td>{{ item.name }}</td>
           <td><img height="50" :src="item.image" /></td>
-          <td class="text-center">
-            <v-btn class="mx-2" @click="downloadArrayAsCSV(item, 'activity' + item.title)" color="purple"
+          <!-- <td class="text-center">
+            <v-btn class="mx-2" @click="downloadArrayAsCSV(item, 'activity' + item.name)" color="purple"
               icon="mdi-download"></v-btn>
-          </td>
+          </td> -->
           <td class="text-center">
             <v-btn class="mx-2" @click="toEditActivity(item)" color="secondary" icon="mdi-pencil"></v-btn>
           </td>
@@ -277,6 +284,7 @@
       </tbody>
     </v-table>
   </v-container>
+
   <!-- ADD ACTIVITY -->
   <v-row justify="center">
     <v-dialog v-model="modalCreateActivity" persistent>
@@ -289,7 +297,7 @@
             <v-row>
               <v-col cols="6">
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="newActivity.title" label="Title" required></v-text-field>
+                  <v-text-field v-model="newActivity.name" label="Title" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field v-model="newActivity.diagnosis" label="Diagnosis" required></v-text-field>
@@ -315,10 +323,10 @@
                   <v-file-input v-model="newActivity.image" label="Image" required></v-file-input>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="newActivity.evaluationInd" label="Evaluation Ind." required></v-text-field>
+                  <v-text-field v-model="newActivity.evaluation_ind" label="Evaluation Ind." required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="newActivity.evaluationInst" label="Evaluation Inst." required></v-text-field>
+                  <v-text-field v-model="newActivity.evaluation_inst" label="Evaluation Inst." required></v-text-field>
                 </v-col>
               </v-col>
             </v-row>
@@ -336,6 +344,7 @@
       </v-card>
     </v-dialog>
   </v-row>
+
   <!-- EDIT ACTIVITY -->
   <v-row justify="center">
     <v-dialog v-model="modalEditActivity" persistent>
@@ -348,7 +357,7 @@
             <v-row>
               <v-col cols="6">
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editActivity.title" label="Title" required></v-text-field>
+                  <v-text-field v-model="editActivity.name" label="Title" required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
                   <v-text-field v-model="editActivity.diagnosis" label="Diagnosis" required></v-text-field>
@@ -374,10 +383,10 @@
                   <v-file-input v-model="editActivity.image" label="Image" required></v-file-input>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editActivity.evaluationInd" label="Evaluation Ind." required></v-text-field>
+                  <v-text-field v-model="editActivity.evaluation_ind" label="Evaluation Ind." required></v-text-field>
                 </v-col>
                 <v-col cols="12" sm="6" md="4">
-                  <v-text-field v-model="editActivity.evaluationInst" label="Evaluation Inst." required></v-text-field>
+                  <v-text-field v-model="editActivity.evaluation_inst" label="Evaluation Inst." required></v-text-field>
                 </v-col>
               </v-col>
             </v-row>
@@ -446,6 +455,7 @@ import { logStore } from '../stores/log'
 import { missionStore } from '../stores/mission'
 import { occurrenceStore } from '../stores/occurrence'
 import { userStore } from '../stores/user'
+import { cookie } from '../utilities/cookieFunctions'
 
 export default {
   data() {
@@ -457,57 +467,55 @@ export default {
       missionStore: missionStore(),
       occurrenceStore: occurrenceStore(),
       userStore: userStore(),
-      user: JSON.parse(localStorage.getItem('currentUser')),
-      userTitle: ['Admin', 'User', 'EcoEscolas'],
+      users: [],
+      user: {},
+      userTitle: ['admin', 'user', 'ecoescolas'],
+      occurrences: [],
+      occurrenceStatus: ['To Do', 'Doing', 'Done'],
+      events: [],
+      activities: [],
       modalCreateEvent: false,
       modalCreateActivity: false,
       modalEditEvent: false,
       modalEditActivity: false,
       newEvent: {
-        title: '',
+        name: '',
         subtitle: '',
         image: '',
         location: '',
         description: '',
-        members: [],
-        comments: [],
         type: 'event',
       },
       newActivity: {
-        title: '',
+        name: '',
         diagnosis: '',
-        schedule: '',
+        schedule: '', // **********************************************************************TROCA ESSA MERDA DEPOIS
         objectives: '',
         resources: '',
         participants: '',
-        evaluationInd: '',
-        evaluationInst: '',
+        evaluation_ind: '',
+        evaluation_inst: '',
         description: '',
         image: '',
-        members: [],
-        comments: [],
         type: 'activity',
       },
       editEvent: {
-        userId: '',
-        title: '',
+        name: '',
         subtitle: '',
         image: '',
         location: '',
         description: '',
-        members: [],
-        comments: [],
         type: 'event',
       },
       editActivity: {
-        title: '',
+        name: '',
         diagnosis: '',
         schedule: '',
         objectives: '',
         resources: '',
         participants: '',
-        evaluationInd: '',
-        evaluationInst: '',
+        evaluation_ind: '',
+        evaluation_inst: '',
         description: '',
         image: '',
         members: [],
@@ -517,48 +525,58 @@ export default {
     }
   },
 
-  created() {
-    if (JSON.parse(localStorage.getItem('currentUser')).title != 'Admin') {
-      this.$router.push({ name: 'home' })
-    }
+  async created() {
+    await this.userStore.fetchLoggedUser();
+    this.user = await this.userStore.getUser;
+
+    await this.userStore.fetchAllUsers();
+    this.users = await this.userStore.getUsers;
+
+    await this.occurrenceStore.fetchOccurrences(3);
+    this.occurrences = await this.occurrenceStore.getOccurrences
+
+    await this.eventStore.fetchAllEvents();
+    this.events = await this.eventStore.getEvents;
+
+    await this.activityStore.fetchAllActivities();
+    this.activities = await this.activityStore.getActivities;
   },
 
   methods: {
 
     exitAdmin() {
-      localStorage.removeItem('currentUser')
-      this.$router.push({ name: 'landingPage' })
+      cookie.deleteCookie('token');
+      this.$router.push({ name: 'signin' })
     },
 
-    blockUser(item) {
-      let user = this.userStore.getUserById(item.id)
-      if (user.blocked) {
-        user.blocked = false
-        this.userStore.updateUsers()
-      } else {
-        user.blocked = true
-        this.userStore.updateUsers()
+    blockUser(user) {
+      if (user.block) {
+        user.block = false
+        this.userStore.fetchUpdateRoleOrBlock(user.id, { block: false })
+      }
+      else {
+        user.block = true
+        this.userStore.fetchUpdateRoleOrBlock(user.id, { block: true })
       }
     },
 
-    deleteUser(item) {
-      let index = this.userStore.getUsers.findIndex(user => user.id == item.id)
-      this.userStore.getUsers.splice(index, 1)
-      this.userStore.updateUsers()
+    deleteUser(user) {
+      this.users.splice(this.users.indexOf(user), 1);
+      this.userStore.fetchDelete(user.id)
     },
 
-    changeUserTitle() {
-      this.userStore.updateUsers()
+    changeUserTitle(user) {
+      this.userStore.fetchUpdateRoleOrBlock(user.id, { role: user.role })
     },
 
-    changeStageOccurrence() {
-      this.occurrenceStore.updateOccurrences()
+    changeStageOccurrence(occurrence) {
+      console.log(occurrence.status);
+      this.occurrenceStore.fetchUpdateOccurrences(occurrence.id, { status: occurrence.status})
     },
 
-    deleteOccurrence(item) {
-      let index = this.occurrenceStore.getOccurrences.findIndex(occurrence => occurrence.id == item.id)
-      this.occurrenceStore.getOccurrences.splice(index, 1)
-      this.occurrenceStore.updateOccurrences()
+    deleteOccurrence(occurrence) {
+      this.occurrences.splice(this.occurrences.indexOf(occurrence), 1);
+      this.occurrenceStore.fetchDelete(occurrence.id);
     },
 
     createEvent() {
@@ -656,22 +674,21 @@ export default {
 
     resetCreateActivity() {
       this.newActivity.title = '',
-      this.newActivity.diagnosis = '',
-      this.newActivity.schedule = '',
-      this.newActivity.objectives = '',
-      this.newActivity.resources = '',
-      this.newActivity.participants = '',
-      this.newActivity.evaluationInd = '',
-      this.newActivity.evaluationInst = '',
-      this.newActivity.description = '',
-      this.newActivity.image = '',
-      this.modalCreateActivity = false
+        this.newActivity.diagnosis = '',
+        this.newActivity.schedule = '',
+        this.newActivity.objectives = '',
+        this.newActivity.resources = '',
+        this.newActivity.participants = '',
+        this.newActivity.evaluationInd = '',
+        this.newActivity.evaluationInst = '',
+        this.newActivity.description = '',
+        this.newActivity.image = '',
+        this.modalCreateActivity = false
     },
 
-    deleteEvent(item) {
-      let index = this.eventStore.getEvents.findIndex(event => event.id == item.id)
-      this.eventStore.getEvents.splice(index, 1)
-      this.eventStore.updateEvents()
+    deleteEvent(event) {
+      this.events.splice(this.events.indexOf(event), 1);
+      this.eventStore.fetchDelete(event.id);
     },
 
     deleteBadge(item) {
@@ -680,10 +697,9 @@ export default {
       this.badgeStore.updateBadges()
     },
 
-    deleteActivity(item) {
-      let index = this.activityStore.getActivities.findIndex(activity => activity.id == item.id)
-      this.activityStore.getActivities.splice(index, 1)
-      this.activityStore.updateActivities()
+    deleteActivity(activity) {
+      this.activities.splice(this.activities.indexOf(activity), 1);
+      this.activityStore.fetchDelete(activity.id);
     },
 
     downloadArrayAsCSV(array, filename) {
@@ -712,6 +728,4 @@ export default {
 //************************************************ REMAINING SUGGESTIONS AND MISSIONS ************************************************
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

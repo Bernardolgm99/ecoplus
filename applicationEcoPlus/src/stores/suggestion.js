@@ -1,45 +1,29 @@
 import { defineStore } from 'pinia'
+import { cookie } from '../utilities/cookieFunctions'
+import axios from 'axios';
+import API from '../../config'
 
-let suggestions
-
-if(!JSON.parse(localStorage.getItem('suggestions'))){
-  suggestions = [
-    {id: 0, 
-    title: 'sugestion',
-      userId: 0,
-      description: 'meter bancos em cima de árvores para ver melhor o pôr do sol :3',
-      location: 'School'
-      }
-  ]
-  localStorage.setItem('suggestions', JSON.stringify(suggestions))
-} else {
-  suggestions = JSON.parse(localStorage.getItem('suggestions'))
-}
 
 export const suggestionStore = defineStore('suggestion', {
   state: () => ({
-    suggestions: suggestions
+    suggestions: []
   }),
   getters: {
-    getId: (state) => state.id,
-    getTitle: (state) => state.title,
-    getLocation: (state) => state.location,
-    getUserId: (state) => state.userId,
-    getDescription: (state) => state.description,
-    getSugestionById: (state) =>
-    (suggestionId) => state.suggestions.find(suggestion => suggestion.id == suggestionId)
+    getSuggestions: async (state) => await state.suggestions
   },
   actions: {
-    addSuggestion(title, userId, description, location = "Dentro do Recinto Escolar"){
-      this.suggestions.push({
-        id: this.suggestions[this.suggestions.length - 1].id + 1,
-        title: title,
-        userId: userId,
-        descripton: description,
-        location: location
+    async addSuggestion(suggestion) {
+      return await axios.post(`${API}/suggestions`, suggestion, {
+        headers: {
+          Authorization: cookie.getCookie("token")
         }
-      )
-      localStorage.setItem('suggestions', JSON.stringify(this.suggestions))
+      }).then(response => { if (response.data) return true; else return false; });
+    },
+
+    async fetchAllSuggestions() {
+      await axios.get(`${API}/suggestions`, {
+        headers: { Authorization: cookie.getCookie("token") }
+      }).then(result => { this.suggestions = result.data; })
     }
-  },
+  }
 })
