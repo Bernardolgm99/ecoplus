@@ -138,7 +138,7 @@ import ButtonGoBack from "../components/ButtonGoBack.vue";
                   this.alert = false
                   await this.occurrenceStore.fetchCreateOccurrence(this.title, this.desc, this.locationDesc, this.location, this.image64)
                   console.log('yau')
-                  // this.$router.push('/home')  
+                  this.$router.push('/home')  
                 } else {
                   this.alert = true
                 }
