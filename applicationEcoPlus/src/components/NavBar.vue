@@ -66,8 +66,11 @@
         <div class="d-flex justify-space-between align-center">
             <div id="bot">
                 <div id="perfil" class="textMediumLarge d-flex" @click="navigateToPerfil()">
-                    <div id="perfilIcon">
+                    <div v-if="user.image" id="perfilIcon">
                         <v-img id="perfil" :src="`data:image/webp;jpg;png;jpeg;base64,${user.icon}`"></v-img>
+                    </div>
+                    <div v-else id="perfilIcon">
+                        <v-img id="perfil" :src="'/src/assets/perfil/yoda.jpeg'"></v-img>
                     </div>
                     <div id="perfilInfos">
                         <div>{{ user.username }}
