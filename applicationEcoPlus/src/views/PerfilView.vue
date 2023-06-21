@@ -10,7 +10,7 @@
         </v-col>
         <v-col>
           <!-- perfil content -->
-          <div class="perfilHeader bannerPerfil" :style="{ 'background-image': 'url(' + user.perfilBgImage + ')' }">
+          <div class="perfilHeader bannerPerfil" :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${user.image})`">
             <!-- pop up -->
             <!-- call by btn -->
             <v-dialog v-model="dialog">
@@ -29,13 +29,13 @@
                         <!-- change icon -->
                         <v-col cols="12" md="4">
                           <div class="changeImgPerfil mx-auto my-1"
-                            :style="{ 'background-image': 'url(' + this.user.icon + ')' }">
+                            :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${user.icone})`">
                             <v-file-input v-model="this.icon" prepend-icon="undefined" class="file"></v-file-input>
                           </div>
                         </v-col>
                         <!-- change banner -->
                         <v-col cols="12" md="8" class="changeBannerPerfil mb-5"
-                          :style="{ 'background-image': 'url(' + this.user.image + ')' }">
+                          :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${user.image})`">
                           <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                         </v-col>
                       </v-row>
@@ -111,7 +111,7 @@
           </div>
           <div class="containUserInfo">
             <div class="perfilElements row">
-              <img :src="user.image" class="imgPerfil">
+              <img :src="`data:image/webp;jpg;png;jpeg;base64,${user.icone}`" class="imgPerfil">
               <div class="perfilTextElements">
                 <p class="perfilName">{{ user.username }}</p>
                 <p class="perfilDesc">{{ school.school }}</p>
@@ -132,7 +132,7 @@
               <v-window-item value="all">
                 <div v-for="post in feedAll()" class="content">
                   <div class="card">
-                    <div class="image" :style="`background: url(${post.image});`">
+                    <div class="image" :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${post.image})`">
 
                       <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
                         <div class="infoCardContent">
@@ -176,7 +176,7 @@
               <v-window-item value="events">
                 <div v-for="post in feedEvents()" class="content">
                   <div class="card">
-                    <div class="image" :style="`background: url(${post.image});`">
+                    <div class="image" :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${post.image})`">
                       <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
@@ -200,7 +200,7 @@
                 <div v-for="post in feedOccurrences()" class="content">
 
                   <div class="card">
-                    <div class="image" :style="`background: url(${post.image});`">
+                    <div class="image" :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${post.image})`">
                       <div class="topperIconsOccurrence">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
@@ -378,6 +378,7 @@ export default {
     this.user = await this.userStore.fetchUserById(this.$route.params.perfilid)
     this.school = await this.schoolStore.fetchSchool(this.user.schoolId);
 
+    console.log(this.user)
     this.changeDistrict = this.school.district
     this.changeMunicipality = this.school.municipality
     this.changeSchool = this.school.school

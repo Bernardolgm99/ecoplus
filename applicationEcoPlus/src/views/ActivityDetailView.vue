@@ -11,7 +11,7 @@
                 <v-col>
                     <v-sheet class="pa-2 border-page">
                         <!-- content -->
-                        <img class="img-thumbnail" :src="activity.image" />
+                        <img class="img-thumbnail" :src="`data:image/webp;jpg;png;jpeg;base64,${activity.image}`" />
                         <v-container>
                             <div>
                                 <div class="d-flex mt-2 mb-12">

@@ -406,7 +406,7 @@
   </v-row>
 
   <!-- BADGES -->
-  <v-container class="mt-6">
+  <!-- <v-container class="mt-6">
     <div class="d-flex">
       <h1>Badges</h1>
       <v-btn class="mx-2" @click="deleteUser(item)" color="primary" icon="mdi-plus"></v-btn>
@@ -445,7 +445,7 @@
         </tr>
       </tbody>
     </v-table>
-  </v-container>
+  </v-container> -->
 </template>
 <script>
 import { activityStore } from '../stores/activity'

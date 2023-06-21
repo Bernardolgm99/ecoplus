@@ -90,7 +90,6 @@ export default {
     await this.userStore.fetchLoggedUser();
     this.user = await this.userStore.getUser;
     this.date = await new Date(this.occurrence.createdAt)
-    console.log(this.date);
   },
 }
 </script>

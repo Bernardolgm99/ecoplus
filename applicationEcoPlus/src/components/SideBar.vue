@@ -91,7 +91,6 @@
           </div>
           <div class="orderColumnCenter tooltipBadges mr-1" v-for="badge in getBadges('activity')">
             <img :src="badge.logo" class="badgeImg">
-            <div>{{ badge.name }}</div>
             <div class="tooltiptextBadges">
               <p><strong>{{ badge.name }}</strong></p>
               <p>{{ badge.description }}</p>
@@ -115,7 +114,6 @@
           <!-- container item -->
           <div class="orderColumnCenter tooltipBadges mr-1" v-for="badge in getBadges('occurrence')">
             <img :src="badge.logo" class="badgeImg">
-            <div>{{ badge.name }}</div>
             <div class="tooltiptextBadges">
               <p><strong>{{ badge.name }}</strong></p>
               <p>{{ badge.description }}</p>
@@ -136,7 +134,6 @@
           <!-- container item -->
           <div class="orderColumnCenter tooltipBadges mr-1" v-for="badge in getBadges('other')">
             <img :src="badge.logo" class="badgeImg">
-            <div>{{ badge.name }}</div>
             <div class="tooltiptextBadges">
               <p><strong>{{ badge.name }}</strong></p>
               <p>{{ badge.description }}</p>
