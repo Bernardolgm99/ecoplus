@@ -25,10 +25,10 @@ export default {
     await this.userStore.fetchLoggedUser();
     this.user = await this.userStore.getUser;
     
-    this.feed = await this.eventOccurrenceStore.getEventsOccurrences;
+    this.feed = await this.eventOccurrenceStore.getEventsOccurrencesHome;
     if (this.feed.length == 0) {
-    await this.eventOccurrenceStore.fetchAllEventsOccurrences();
-    this.feed = await this.eventOccurrenceStore.getEventsOccurrences;
+    await this.eventOccurrenceStore.fetchAllEventsOccurrencesHome();
+    this.feed = await this.eventOccurrenceStore.getEventsOccurrencesHome;
     }
 
   },
