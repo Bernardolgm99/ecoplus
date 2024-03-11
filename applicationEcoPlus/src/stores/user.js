@@ -41,7 +41,7 @@ export const userStore = defineStore('user', {
   },
   actions: {
 
-    async createUser(name, username, email, password, schoolDesc, schoolId, birthDate) {
+    async createUser(name, username, email, password, schoolDesc, schoolId, birthDate, gender) {
 
       let user = {
         name: name,
@@ -51,6 +51,7 @@ export const userStore = defineStore('user', {
         schoolDesc: schoolDesc,
         schoolId: schoolId,
         birthDate: birthDate,
+        genreDesc: gender,
         icone: '/src/assets/perfil/yoda.jpeg'
       }
 
