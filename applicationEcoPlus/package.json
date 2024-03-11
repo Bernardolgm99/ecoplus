@@ -18,6 +18,10 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^3.2.0",
     "sass": "^1.56.1",
+<<<<<<< HEAD
     "vite": "^4.5.0"
+=======
+    "vite": "^4.0.4"
+>>>>>>> 8ac8a48833b99047f878b7b44e8154383d5ada63
   }
 }

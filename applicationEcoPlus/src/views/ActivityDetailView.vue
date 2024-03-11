@@ -11,8 +11,12 @@
                 <v-col>
                     <v-sheet class="pa-2 border-page">
                         <!-- content -->
+<<<<<<< HEAD
                         <v-container class="d-flex flex-column contentColumn ma-0 pa-0"  @scroll="scrollEnd">
                         <img class="img-thumbnail" :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${activity.image})`" />
+=======
+                        <img class="img-thumbnail" :src="`data:image/webp;jpg;png;jpeg;base64,${activity.image}`" />
+>>>>>>> 8ac8a48833b99047f878b7b44e8154383d5ada63
                         <v-container>
                             <div>
                                 <div class="d-flex mt-2 mb-12">

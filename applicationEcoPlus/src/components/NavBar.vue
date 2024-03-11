@@ -2,12 +2,12 @@
     <div id="bg" class="textBig">
         <div id="top">
             <div id="icon">
-                <v-img id="logoIcon" @click="this.$router.push" :src="ecoIcon"></v-img>
+                <img id="logoIcon" @click="this.$router.push" src="/src/assets/icons/logo.svg" />
             </div>
             <div id="topperLinks">
                 <div id="home" class="topperRow">
                     <div id="firstIcon">
-                        <v-img id="homeIcon" :src="homeIcon"></v-img>
+                        <img id="homeIcon" src="/src/assets/icons/home.svg" />
                     </div>
                     <div id="firstLink">
                         <RouterLink :to="{ name: 'home' }">Home</RouterLink>
@@ -15,7 +15,7 @@
                 </div>
                 <div id="occurrences" class="topperRow">
                     <div id="secondIcon">
-                        <v-img id="occurrenceIcon" :src="occurrenceIcon"></v-img>
+                        <img id="occurrenceIcon" src="/src/assets/icons/tool.svg" />
                     </div>
                     <div id="secondLink">
                         <RouterLink :to="{ name: 'occurrences' }">Occurrences</RouterLink>
@@ -23,7 +23,7 @@
                 </div>
                 <div id="events" class="topperRow">
                     <div id="thirdIcon">
-                        <v-img id="eventIcon" :src="eventIcon"></v-img>
+                        <img id="eventIcon" src="/src/assets/icons/calendar.svg" />
                     </div>
                     <div id="thirdLink">
                         <RouterLink :to="{ name: 'events' }">Events</RouterLink>
@@ -36,7 +36,7 @@
             <div id="bottomLinks">
                 <div id="activities" class="bottomRow">
                     <div id="forthIcon">
-                        <v-img id="activityIcon" :src="activityIcon"></v-img>
+                        <img id="activityIcon" src="/src/assets/icons/pin.svg" />
                     </div>
                     <div id="forthLink">
                         <RouterLink :to="{ name: 'activities' }">Activities</RouterLink>
@@ -44,7 +44,7 @@
                 </div>
                 <div id="suggestions" class="bottomRow">
                     <div id="fifthIcon">
-                        <v-img id="suggestionIcon" :src="suggestionIcon"></v-img>
+                        <img id="suggestionIcon" src="/src/assets/icons/file.svg" />
                     </div>
                     <div id="fifthLink">
                         <RouterLink :to="{ name: 'suggestions' }">Suggestions</RouterLink>
@@ -56,7 +56,7 @@
                     <v-btn id="postOccurrence" rounded color="primary" dark
                         @click="this.$router.push('/postOccurrence')">
                         <div id="sixthIcon">
-                            <v-img id="postIcon" :src="postIcon"></v-img>
+                            <img id="postIcon" src="/src/assets/icons/cam.svg" />
                         </div>
                         Post Occurrence
                     </v-btn>
@@ -66,8 +66,16 @@
         <div class="d-flex justify-space-between align-center">
             <div id="bot">
                 <div id="perfil" class="textMediumLarge d-flex" @click="navigateToPerfil()">
+<<<<<<< HEAD
                     <div id="perfilIcon">
                         <v-img id="perfil" :src="this.userIcon"></v-img>
+=======
+                    <div v-if="user.image" id="perfilIcon">
+                        <img id="perfil" :src="`data:image/webp;jpg;png;jpeg;base64,${user.icon}`" />
+                    </div>
+                    <div v-else id="perfilIcon">
+                        <img id="perfil" src='/src/assets/perfil/yoda.jpeg' />
+>>>>>>> 8ac8a48833b99047f878b7b44e8154383d5ada63
                     </div>
                     <div id="perfilInfos">
                         <div>{{ user.username }}
@@ -95,6 +103,7 @@ export default {
             type: Object,
         },
     },
+<<<<<<< HEAD
     
     data() {
         return {
@@ -109,6 +118,8 @@ export default {
             userIcon: ''
         }
     },
+=======
+>>>>>>> 8ac8a48833b99047f878b7b44e8154383d5ada63
 
     methods: {
         funcLogOut() {

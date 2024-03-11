@@ -66,7 +66,7 @@ export default {
                     <div v-if="post.status == 1" class="topperIconsOccurrence">
                       <div class="infoCardContent">
                         <div class="postIconBackground">
-                          <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                          <img class="postIcon" src="/src/assets/icons/tool.svg">
                         </div>
                         <div class="infos">
                           <div class="title">
@@ -85,7 +85,7 @@ export default {
                       <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'src/assets/icons/calendar.svg'">
+                            <img class="postIcon" src="/src/assets/icons/calendar.svg">
                           </div>
                           <div class="infos">
                             <div class="title">

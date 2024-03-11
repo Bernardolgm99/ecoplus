@@ -35,7 +35,7 @@
                         </v-col>
                         <!-- change banner -->
                         <v-col cols="12" md="8" class="changeBannerPerfil mb-5"
-                          :style="{ 'background-image': 'url(' + this.user.image + ')' }">
+                          :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${user.image})`">
                           <v-file-input v-model="this.image" prepend-icon="undefined" class="file"></v-file-input>
                         </v-col>
                       </v-row>
@@ -380,6 +380,7 @@ export default {
     this.user = await this.userStore.fetchUserById(this.$route.params.perfilid)
     this.school = await this.schoolStore.fetchSchool(this.user.schoolId);
 
+    console.log(this.user)
     this.changeDistrict = this.school.district
     this.changeMunicipality = this.school.municipality
     this.changeSchool = this.school.school

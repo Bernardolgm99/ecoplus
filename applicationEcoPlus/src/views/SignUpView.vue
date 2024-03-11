@@ -142,7 +142,7 @@ export default{
                         if(this.gender == 'other') this.gender = 'OTHER'
 
                         await this.userStore.createUser(this.name, this.username, this.email, this.pw, this.school, 
-                                                            await this.schoolStore.getSchoolByName(this.school), this.birthday)
+                                                            await this.schoolStore.getSchoolByName(this.school), this.birthday, this.gender)
 
                         // this.currentUser = this.userStore.getUserId(this.username)
 
