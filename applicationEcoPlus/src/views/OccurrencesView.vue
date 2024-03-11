@@ -20,7 +20,7 @@
                     <div class="topperIconsOccurrence">
                       <div class="infoCardContent">
                         <div class="postIconBackground">
-                          <img class="postIcon" :src="'src/assets/icons/tool.svg'">
+                          <img class="postIcon" src="/src/assets/icons/tool.svg">
                         </div>
                         <div class="infos">
                           <div class="title">
