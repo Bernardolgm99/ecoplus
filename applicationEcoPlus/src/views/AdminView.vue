@@ -83,7 +83,7 @@
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.userId }}</td>
-          <td><img height="50" :src="item.image" /></td>
+          <td><img height="50" :src="`data:image/webp;jpg;png;jpeg;base64,${item.image}`" /></td>
           <td>
             <v-select v-model="item.status" @update:modelValue="changeStageOccurrence(item)" style="max-width: 200px"
               label="Select" :items="[0,1,2]" :hint="'Situation of occurrence'" persistent-hint
@@ -130,7 +130,7 @@
         <tr v-for="item in events" :key="item.id">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
-          <td><img height="50" :src="item.image" /></td>
+          <td><img height="50" :src="`data:image/webp;jpg;png;jpeg;base64,${item.image}`" /></td>
           <!-- <td class="text-center">
             <v-btn class="mx-2" @click="downloadArrayAsCSV(item, 'event' + item.name)" color="purple"
               icon="mdi-download"></v-btn>
@@ -269,7 +269,7 @@
         <tr v-for="item in activities" :key="item.id">
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
-          <td><img height="50" :src="item.image" /></td>
+          <td><img height="50" :src="`data:image/webp;jpg;png;jpeg;base64,${item.image}`" /></td>
           <!-- <td class="text-center">
             <v-btn class="mx-2" @click="downloadArrayAsCSV(item, 'activity' + item.name)" color="purple"
               icon="mdi-download"></v-btn>
@@ -435,7 +435,7 @@
         <tr v-for="item in badgeStore.getBadges" :key="item.id">
           <td>{{ item.id }}</td>
           <td>{{ item.title }}</td>
-          <td><img height="50" :src="item.image" /></td>
+          <td><img height="50" :src="`data:image/webp;jpg;png;jpeg;base64,${item.image}`" /></td>
           <td class="text-center">
             <v-btn class="mx-2" @click="deleteUser(item)" color="secondary" icon="mdi-pencil"></v-btn>
           </td>

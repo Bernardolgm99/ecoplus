@@ -11,7 +11,8 @@
                 <v-col>
                     <v-sheet class="pa-2 border-page">
                         <!-- content -->
-                        <img class="img-thumbnail" :src="activity.image" />
+                        <v-container class="d-flex flex-column contentColumn ma-0 pa-0"  @scroll="scrollEnd">
+                        <img class="img-thumbnail" :style="`background-image: url(data:image/webp;jpg;png;jpeg;base64,${activity.image})`" />
                         <v-container>
                             <div>
                                 <div class="d-flex mt-2 mb-12">
@@ -111,7 +112,7 @@
                                                         <RouterLink class="w-100" RouterLink style="color: black;"
                                                             :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
                                                             <div class="members d-flex mx-auto">
-                                                                <img class="img-members" :src="member.perfilImage" />
+                                                                <img class="img-members" :src="`/src/assets/perfil/yoda.jpeg`" />
                                                                 <div class="ml-6 d-flex flex-column justify-center">
                                                                     <h2 class="mb-1">
                                                                         {{ member.username }}
@@ -132,6 +133,7 @@
                                 </div>
                             </div>
                         </v-container>
+                    </v-container>
                     </v-sheet>
                 </v-col>
                 <v-col cols="3">
@@ -188,6 +190,7 @@ export default {
         await this.activityStore.fetchActivityId(this.path.id);
         this.activity = await this.activityStore.getActivity
         this.members = this.activity.users;
+        this.members.
         console.log(this.activity.users[0].username);
 
         this.date.start = new Date(this.activity.start)

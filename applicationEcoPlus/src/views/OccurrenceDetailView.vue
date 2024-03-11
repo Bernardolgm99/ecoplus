@@ -11,7 +11,7 @@
         <v-col>
           <v-sheet class="pa-2 border-page">
             <!-- content -->
-            <v-container>
+            <v-container class="d-flex flex-column contentColumn" @scroll="scrollEnd">
               <div class="d-flex flex-column mb-6">
                 <div class="d-flex">
                   <ButtonGoBack />

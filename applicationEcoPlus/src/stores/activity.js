@@ -26,7 +26,10 @@ export const activityStore = defineStore('activity', {
     },
 
     async fetchActivityId(id) {
-      await axios.get(`${API}/activities/${id}`).then((response) => { this.activity = response.data; });
+      await axios.get(`${API}/activities/${id}`).then((response) => { 
+        this.activity = response.data 
+        console.log(response.data)
+      });
     },
 
     async subscribe(activityId, areadySubscribed) {

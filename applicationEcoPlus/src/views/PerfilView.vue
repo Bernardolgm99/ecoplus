@@ -10,7 +10,7 @@
         </v-col>
         <v-col>
           <!-- perfil content -->
-          <div class="perfilHeader bannerPerfil" :style="{ 'background-image': 'url(' + user.perfilBgImage + ')' }">
+          <div class="perfilHeader bannerPerfil" :style="{ 'background-image': 'url(' + this.userBanner + ')' }">
             <!-- pop up -->
             <!-- call by btn -->
             <v-dialog v-model="dialog">
@@ -29,7 +29,7 @@
                         <!-- change icon -->
                         <v-col cols="12" md="4">
                           <div class="changeImgPerfil mx-auto my-1"
-                            :style="{ 'background-image': 'url(' + this.user.icon + ')' }">
+                            :style="{ 'background-image': 'url(' + this.userIcon + ')' }">
                             <v-file-input v-model="this.icon" prepend-icon="undefined" class="file"></v-file-input>
                           </div>
                         </v-col>
@@ -111,7 +111,7 @@
           </div>
           <div class="containUserInfo">
             <div class="perfilElements row">
-              <img :src="user.image" class="imgPerfil">
+              <img :src="this.userIcon" class="imgPerfil">
               <div class="perfilTextElements">
                 <p class="perfilName">{{ user.username }}</p>
                 <p class="perfilDesc">{{ school.school }}</p>
@@ -132,12 +132,12 @@
               <v-window-item value="all">
                 <div v-for="post in feedAll()" class="content">
                   <div class="card">
-                    <div class="image" :style="`background: url(${post.image});`">
+                    <div class="image" :style="`background: url(data:image/webp;jpg;png;jpeg;base64,${post.image});`">
 
                       <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'../src/assets/icons/calendar.svg'">
+                            <img class="postIcon" src="/src/assets/icons/calendar.svg">
                           </div>
                           <div class="infos">
                             <div class="title">
@@ -153,7 +153,7 @@
                       <div v-else class="topperIconsOccurrence">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'../src/assets/icons/tool.svg'">
+                            <img class="postIcon" src="/src/assets/icons/tool.svg">
                           </div>
                           <div class="infos">
                             <div class="title">
@@ -176,11 +176,11 @@
               <v-window-item value="events">
                 <div v-for="post in feedEvents()" class="content">
                   <div class="card">
-                    <div class="image" :style="`background: url(${post.image});`">
+                    <div class="image" :style="`background: url(data:image/webp;jpg;png;jpeg;base64,${post.image});`">
                       <div v-if="post.IdCreator != undefined" class="topperIconsEvent">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'../src/assets/icons/calendar.svg'">
+                            <img class="postIcon" src="/src/assets/icons/calendar.svg">
                           </div>
                           <div class="infos">
                             <div class="title">
@@ -200,11 +200,11 @@
                 <div v-for="post in feedOccurrences()" class="content">
 
                   <div class="card">
-                    <div class="image" :style="`background: url(${post.image});`">
+                    <div class="image" :style="`background: url(data:image/webp;jpg;png;jpeg;base64,${post.image});`">
                       <div class="topperIconsOccurrence">
                         <div class="infoCardContent">
                           <div class="postIconBackground">
-                            <img class="postIcon" :src="'../src/assets/icons/tool.svg'">
+                            <img class="postIcon" src="/src/assets/icons/tool.svg">
                           </div>
                           <div class="infos">
                             <div class="title">
@@ -274,6 +274,8 @@ export default {
       show1: false,
       show2: false,
       selectedDate: '',
+      userBanner: '',
+      userIcon: '',
       rules: {
         password: [
           (v) => !v || (!!v && v.length >= 5) || 'Password must be at least 5 characters',
@@ -381,6 +383,19 @@ export default {
     this.changeDistrict = this.school.district
     this.changeMunicipality = this.school.municipality
     this.changeSchool = this.school.school
+
+    if (this.user.perfilBgImage === undefined) {
+      this.userBanner = '/src/assets/images/example2.jpg'
+    } else {
+      this.userBanner = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.perfilBgImage
+    }
+
+    
+    if (this.user.icone === undefined) {
+      this.userIcon = '/src/assets/perfil/yoda.jpeg'
+    } else {
+      this.userIcon = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.icone
+    }
 
     /* creates an object that has as attibutes the names of the districts. the districts are objects that have municipalities, and municipalities have arrays with the schools. something like this:
     {

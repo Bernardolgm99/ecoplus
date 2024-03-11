@@ -66,11 +66,8 @@
         <div class="d-flex justify-space-between align-center">
             <div id="bot">
                 <div id="perfil" class="textMediumLarge d-flex" @click="navigateToPerfil()">
-                    <div v-if="user.image" id="perfilIcon">
-                        <v-img id="perfil" :src="`data:image/webp;jpg;png;jpeg;base64,${user.icon}`"></v-img>
-                    </div>
-                    <div v-else id="perfilIcon">
-                        <v-img id="perfil" :src="'/src/assets/perfil/yoda.jpeg'"></v-img>
+                    <div id="perfilIcon">
+                        <v-img id="perfil" :src="this.userIcon"></v-img>
                     </div>
                     <div id="perfilInfos">
                         <div>{{ user.username }}
@@ -89,6 +86,7 @@
 </template>
 
 <script>
+import { userStore } from '../stores/user';
 import { cookie } from '../utilities/cookieFunctions'
 
 export default {
@@ -100,6 +98,7 @@ export default {
     
     data() {
         return {
+            userStore: userStore(),
             ecoIcon: '/src/assets/icons/logo.svg',
             homeIcon: '/src/assets/icons/home.svg',
             occurrenceIcon: '/src/assets/icons/tool.svg',
@@ -107,6 +106,7 @@ export default {
             activityIcon: '/src/assets/icons/pin.svg',
             suggestionIcon: '/src/assets/icons/file.svg',
             postIcon: '/src/assets/icons/cam.svg',
+            userIcon: ''
         }
     },
 
@@ -118,6 +118,18 @@ export default {
         navigateToPerfil() {
             this.$router.push({ name: 'perfil', params: { perfilid: this.user.id } });
         }
+    },
+    created() {
+        console.log(this.user.id);
+
+        setTimeout(() => {
+            if (this.user.icone === undefined) {
+                this.userIcon = '/src/assets/perfil/yoda.jpeg'
+            } else {
+                this.userIcon = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.icone
+            };  
+        }, 1500)
+        
     }
 }
 </script>

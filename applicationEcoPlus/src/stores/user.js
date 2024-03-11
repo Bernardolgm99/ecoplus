@@ -163,28 +163,31 @@ export const userStore = defineStore('user', {
         throw Error(err)
       }
     },
-    async fetchUserEvent(userId) {
+    async fetchUserEvent(userId, page = 0, limit = 5) {
       try {
-        let page = 0, limit = 5, createdAt = "2023-07-01";
-        let userEvent = await axios.get(`${API}/users/${userId}/events?page=${page}&limit=${limit}&createdAt=${createdAt}`).then((response) => { return response.data; });
+        let userEvent = await axios.get(`${API}/users/${userId}/events?page=${page}&limit=${limit}`).then((response) => { 
+          return response.data; 
+        });
         this.userEvents = userEvent
       } catch (err) {
         throw Error(err)
       }
     },
-    async fetchUserOccurrence(userId) {
+    async fetchUserOccurrence(userId, page = 0, limit = 5) {
       try {
-        let page = 0, limit = 5, createdAt = "2023-07-01";
-        let userOccurrence = await axios.get(`${API}/users/${userId}/occurrences?page=${page}&limit=${limit}&createdAt=${createdAt}`).then((response) => { return response.data; });
+        let userOccurrence = await axios.get(`${API}/users/${userId}/occurrences?page=${page}&limit=${limit}`).then((response) => { 
+          return response.data;
+        });
         this.userOccurrences = userOccurrence
       } catch (err) {
         throw Error(err)
       }
     },
-    async fetchUserEventOccurrence(userId) {
+    async fetchUserEventOccurrence(userId, page = 0, limit = 5) {
       try {
-        let page = 0, limit = 5, createdAt = "2023-07-01";
-        let userAll = await axios.get(`${API}/users/${userId}/eventsOccurrences?page=${page}&limit=${limit}&createdAt=${createdAt}`).then((response) => { return response.data; });
+        let userAll = await axios.get(`${API}/users/${userId}/eventsOccurrences?page=${page}&limit=${limit}`).then((response) => { 
+          return response.data; 
+        });
         this.userEventsOccurrences = userAll
       } catch (err) {
         throw Error(err)
