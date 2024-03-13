@@ -61,8 +61,19 @@
                                                 <div class="d-flex flex-column align-center" v-for="member in members">
                                                     <RouterLink class="w-100" RouterLink style="color: black;"
                                                         :to="{ name: 'perfil', params: { perfilid: userStore.getUserId(member.username) } }">
-                                                        <div class="members d-flex mx-auto">
+                                                        <div v-if="user.icon !== undefined && user.icon !== '' && user.icon !== null" class="members d-flex mx-auto">
                                                             <img class="img-members" :src="`data:image/webp;jpg;png;jpeg;base64,${user.icon}`" />
+                                                            <div class="ml-6 d-flex flex-column justify-center">
+                                                                <h2 class="mb-1">
+                                                                    {{ member.username }}
+                                                                </h2>
+                                                                <h3 class="mt-1">
+                                                                    {{ member.title }}
+                                                                </h3>
+                                                            </div>
+                                                        </div>
+                                                        <div v-else class="members d-flex mx-auto">
+                                                            <img class="img-members" :src="`/src/assets/perfil/yoda.jpeg`" />
                                                             <div class="ml-6 d-flex flex-column justify-center">
                                                                 <h2 class="mb-1">
                                                                     {{ member.username }}

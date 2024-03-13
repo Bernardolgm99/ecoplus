@@ -52,7 +52,6 @@ export const userStore = defineStore('user', {
         schoolId: schoolId,
         birthDate: birthDate,
         genreDesc: gender,
-        icone: '/src/assets/perfil/yoda.jpeg'
       }
 
       await axios.post(`${API}/users`, user)

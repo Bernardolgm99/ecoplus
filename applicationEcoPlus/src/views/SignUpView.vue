@@ -21,7 +21,7 @@
                         <v-text-field class="mr-2" prepend-inner-icon="mdi-calendar-account" label="Birthday"
                             placeholder="dd/mm/yyyy" bg-color="lime-lighten-2" v-model="birthday"></v-text-field>
                         <v-select class="ml-2" prepend-inner-icon="mdi-gender-male-female" id="gender" name="gender"
-                            v-model="gender" :items="['male', 'famale', 'other']" bg-color="lime-lighten-2"
+                            v-model="gender" :items="['male', 'female', 'other']" bg-color="lime-lighten-2"
                             label="Gender"></v-select>
                     </div>
                     <div class="d-flex">

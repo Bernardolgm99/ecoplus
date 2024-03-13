@@ -66,16 +66,8 @@
         <div class="d-flex justify-space-between align-center">
             <div id="bot">
                 <div id="perfil" class="textMediumLarge d-flex" @click="navigateToPerfil()">
-<<<<<<< HEAD
                     <div id="perfilIcon">
                         <v-img id="perfil" :src="this.userIcon"></v-img>
-=======
-                    <div v-if="user.image" id="perfilIcon">
-                        <img id="perfil" :src="`data:image/webp;jpg;png;jpeg;base64,${user.icon}`" />
-                    </div>
-                    <div v-else id="perfilIcon">
-                        <img id="perfil" src='/src/assets/perfil/yoda.jpeg' />
->>>>>>> 8ac8a48833b99047f878b7b44e8154383d5ada63
                     </div>
                     <div id="perfilInfos">
                         <div>{{ user.username }}
@@ -103,7 +95,6 @@ export default {
             type: Object,
         },
     },
-<<<<<<< HEAD
     
     data() {
         return {
@@ -118,8 +109,6 @@ export default {
             userIcon: ''
         }
     },
-=======
->>>>>>> 8ac8a48833b99047f878b7b44e8154383d5ada63
 
     methods: {
         funcLogOut() {
@@ -131,15 +120,14 @@ export default {
         }
     },
     created() {
-        console.log(this.user.id);
-
         setTimeout(() => {
-            if (this.user.icone === undefined) {
-                this.userIcon = '/src/assets/perfil/yoda.jpeg'
-            } else {
+            if (this.user.icone) {
                 this.userIcon = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.icone
+            } else {
+                this.userIcon = '/src/assets/perfil/yoda.jpeg'
             };  
-        }, 1500)
+            console.log(this.userIcon);
+        }, 1500);
         
     }
 }

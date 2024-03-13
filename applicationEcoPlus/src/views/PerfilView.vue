@@ -385,18 +385,18 @@ export default {
     this.changeMunicipality = this.school.municipality
     this.changeSchool = this.school.school
 
-    if (this.user.perfilBgImage === undefined) {
-      this.userBanner = '/src/assets/images/example2.jpg'
-    } else {
+    if (this.user.perfilBgImage) {
       this.userBanner = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.perfilBgImage
+    } else {
+      this.userBanner = '/src/assets/images/example2.jpg'
     }
 
     
-    if (this.user.icone === undefined) {
-      this.userIcon = '/src/assets/perfil/yoda.jpeg'
+    if (this.user.icone) {
+        this.userIcon = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.icone
     } else {
-      this.userIcon = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.icone
-    }
+        this.userIcon = '/src/assets/perfil/yoda.jpeg'
+    };  
 
     /* creates an object that has as attibutes the names of the districts. the districts are objects that have municipalities, and municipalities have arrays with the schools. something like this:
     {
