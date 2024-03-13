@@ -58,7 +58,9 @@
                         <div id="sixthIcon">
                             <img id="postIcon" src="/src/assets/icons/cam.svg" />
                         </div>
-                        Post Occurrence
+                        <div id="postTxt">
+                            Post Occurrence
+                        </div>
                     </v-btn>
                 </div>
             </div>

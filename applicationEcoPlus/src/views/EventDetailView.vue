@@ -73,7 +73,7 @@
                                                             </div>
                                                         </div>
                                                         <div v-else class="members d-flex mx-auto">
-                                                            <img class="img-members" :src="`/src/assets/perfil/yoda.jpeg`" />
+                                                            <img class="img-members" src="/src/assets/perfil/yoda.jpeg" />
                                                             <div class="ml-6 d-flex flex-column justify-center">
                                                                 <h2 class="mb-1">
                                                                     {{ member.username }}
