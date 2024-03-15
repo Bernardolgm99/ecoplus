@@ -391,7 +391,6 @@ export default {
       this.userBanner = '/src/assets/images/example2.jpg'
     }
 
-    
     if (this.user.icone) {
         this.userIcon = 'data:image/webp;jpg;png;jpeg;base64,' + this.user.icone
     } else {

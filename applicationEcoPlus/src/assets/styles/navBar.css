@@ -16,6 +16,10 @@
     color: rgba(60, 120, 78, 1);
 }
 
+#postTxt{
+    margin-left: 10px;
+}
+
 #logOut:active {
     background-color: rgb(107, 190, 132);
     color: rgba(60, 120, 78, 1);
