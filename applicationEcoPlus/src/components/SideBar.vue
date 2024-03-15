@@ -236,7 +236,7 @@ export default {
 
       /* ranking */
       selected: '',
-      rankingImg: ['/src/assets/icons/leafFirstPlace.svg', '/src/assets/icons/leafSecondPlace.svg', '/src/assets/icons/leafThirdPlace.svg'],
+      rankingImg: ['/assets/icons/leafFirstPlace.svg', '/assets/icons/leafSecondPlace.svg', '/assets/icons/leafThirdPlace.svg'],
       rankingBackground: ['rgba(156, 209, 171, 0.9)', 'rgba(156, 209, 171, 0.5)', 'rgba(156, 209, 171, 0.3)'],
       rankByFilter: 'badges'
     }
